@@ -15,10 +15,12 @@
 
 // The Kaleidoscope core
 #include "Kaleidoscope.h"
+#include "KeyboardioHID.h"
 
 // Support for macros
 #include "Kaleidoscope-Macros.h"
-
+// Support for keys that move the mouse
+#include "Kaleidoscope-MouseKeys.h"
 // Support for controlling the keyboard's LEDs
 //#include "Kaleidoscope-LEDControl.h"
 
@@ -36,8 +38,8 @@
   * a macro key is pressed.
   */
 
-enum { MACRO_VERSION_INFO,
-       MACRO_ANY
+enum { MACRO_FTAP,
+       MACRO_MTAP
      };
 
 
@@ -94,32 +96,32 @@ enum { QWERTY, FUNCTION }; // layers
 KEYMAPS(
 /*   
  * ,------------------------------------------------------.       ,------------------------------------------------------.
- * | Prog/+=    |   1  |   2  |   3  |   4  |   5  | Rofi |       |TDBLD |   6  |   7  |   8  |   9  |   0  |    NumLck  |
+ * | Prog/+=    |   1  |   2  |   3  |   4  |   5  | ESC  |       |TDBLD |   6  |   7  |   8  |   9  |   0  |    NumLck  |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
  * |    Tab     |   Q  |   W  |   E  |   R  |   T  |      |       |  Ent |   Y  |   U  |   I  |   O  |   P  |    +=      |
  * |------------+------+------+------+------+------|  Tab |       |      |------+------+------+------+------+------------|
  * | Shft       |   A  |   S  |   D  |   F  |   G  |------|       |------|   H  |   J  |   K  |   L  |   ;  |    '"      |
  * |------------+------+------+------+------+------|      |       | CTRL |------+------+------+------+------+------------|
- * | Ctrl       |   Z  |   X  |   C  |   V  |   B  |  Esc |       |+SPC  |   N  |   M  |   ,  |   .  |  /   |    _-      |
+ * | Ctrl       |   Z  |   X  |   C  |   V  |   B  |M_FTAP|       |+SPC  |   N  |   M  |   ,  |   .  |  /   |    _-      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           |   F   |Space |  G   |  R   |       | Shft | Ent  |BckSP | _-   |
+ *                           | M_MTAP|Space |  G   |  R   |       | Shft | Ent  |BckSP | _-   |
  *                           `----------------------------'       `---------------------------'
  */
 
   [QWERTY] = KEYMAP_STACKED
-  (___,             Key_1, Key_2, Key_3, Key_4, Key_5, ___,
+  (___,             Key_1, Key_2, Key_3, Key_4, Key_5, Key_Escape,
    Key_Tab,         Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Tab,
    Key_LeftShift,   Key_A, Key_S, Key_D, Key_F, Key_G,
-   Key_LeftControl, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
-   Key_F,           Key_Spacebar, Key_G, Key_R,
+   Key_LeftControl, Key_Z, Key_X, Key_C, Key_V, Key_B, M(MACRO_FTAP),
+   M(MACRO_MTAP),           Key_Spacebar, Key_G, Key_R,
    ShiftToLayer(FUNCTION),
 
-   M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         ___,
+   ___,  Key_6, Key_7, Key_8,     Key_9,         Key_0,         ___,
    Key_Enter,     Key_Y, Key_U, Key_I,     Key_O,         Key_P,         Key_Equals,
                   Key_H, Key_J, Key_K,     Key_L,         Key_Semicolon, Key_Quote,
    Key_RightAlt,  Key_N, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
+   Key_RightShift, Key_LeftAlt, Key_Backspace, Key_RightControl,
    ShiftToLayer(FUNCTION)),
 
  /*  
@@ -157,35 +159,30 @@ ___),
 /* Re-enable astyle's indent enforcement */
 // *INDENT-ON*
 
-/** versionInfoMacro handles the 'firmware version info' macro
- *  When a key bound to the macro is pressed, this macro
- *  prints out the firmware build information as virtual keystrokes
- */
 
-static void versionInfoMacro(uint8_t keyState) {
-  if (keyToggledOn(keyState)) {
-    Macros.type(PSTR("Keyboardio Model 01 - Kaleidoscope "));
-    Macros.type(PSTR(BUILD_INFORMATION));
+static void tapM(uint8_t keyState) {
+  if (keyIsPressed(keyState))
+  {
+    Mouse.click();
+    Mouse.sendReport();
+    Mouse.click();
+    Mouse.sendReport();
+    Mouse.click();
+    Mouse.sendReport();
+    Mouse.click();
+    Mouse.sendReport();
+    Mouse.click();
+    Mouse.sendReport();
+
   }
 }
 
-/** anyKeyMacro is used to provide the functionality of the 'Any' key.
- *
- * When the 'any key' macro is toggled on, a random alphanumeric key is
- * selected. While the key is held, the function generates a synthetic
- * keypress event repeating that randomly selected key.
- *
- */
 
-static void anyKeyMacro(uint8_t keyState) {
-  static Key lastKey;
-  if (keyToggledOn(keyState))
-    lastKey.keyCode = Key_A.keyCode + (uint8_t)(millis() % 36);
-
-  if (keyIsPressed(keyState))
-    kaleidoscope::hid::pressKey(lastKey);
+static void tapF(uint8_t keyState) {
+  if (keyToggledOn(keyState)) {
+  MACRODOWN(T(F), W(20), T(F), W(20), T(F));
+  }
 }
-
 
 /** macroAction dispatches keymap events that are tied to a macro
     to that macro. It takes two uint8_t parameters.
@@ -202,13 +199,13 @@ static void anyKeyMacro(uint8_t keyState) {
 const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   switch (macroIndex) {
 
-  case MACRO_VERSION_INFO:
-    versionInfoMacro(keyState);
+  case MACRO_FTAP:
+    return  MACRODOWN(T(F), W(20), T(F), W(20), T(F));
     break;
-
-  case MACRO_ANY:
-    anyKeyMacro(keyState);
+  case MACRO_MTAP:
+    tapM(keyState);
     break;
+  
   }
   return MACRO_NONE;
 }
@@ -219,7 +216,7 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   * Kaleidoscope and any plugins.
   */
 
-void setup() {
+void setup() { 
   // First, call Kaleidoscope's internal setup function
   Kaleidoscope.setup();
 
