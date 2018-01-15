@@ -4,9 +4,10 @@
 #include "layers.h"
 #include <Kaleidoscope-OneShot.h>
 
+// http://www.color-hex.com/color-palette/5361
 cRGB layer0_color = CRGB(0x0, 0x0, 0x0);
-cRGB layer1_color = CRGB(0x56, 0x80, 0x78);
-cRGB layer2_color = CRGB(0x00, 0xff, 0xff);
+cRGB layer1_color = CRGB(0xba, 0xff, 0xc9);
+cRGB layer2_color = CRGB(0xff, 0xdf, 0xba);
 namespace kaleidoscope {
   void LayerColor_::begin(void) {
     Kaleidoscope.useLoopHook(loopHook);
