@@ -6,7 +6,6 @@
 #define BUILD_INFORMATION "locally built"
 #endif
 
-
 /**
    These #include directives pull in the Kaleidoscope firmware core,
    as well as the Kaleidoscope plugins we use in the Model 01's firmware
@@ -34,6 +33,18 @@
 #include <Kaleidoscope-Colormap.h>
 #include <Kaleidoscope-Focus.h>
 #include "src/Kaleidoscope-LayerColor.h"
+
+
+#define Key_AT    LSHIFT(Key_2)
+#define Key_STAR  LSHIFT(Key_8)
+#define Key_DOLLR LSHIFT(Key_4)
+#define Key_CARET LSHIFT(Key_6)
+#define Key_PRCNT LSHIFT(Key_5)
+#define Key_EXCLM LSHIFT(Key_1)
+#define Key_HASH  LSHIFT(Key_3)
+#define Key_AND   LSHIFT(Key_7)
+#define Key_LCB   LSHIFT(Key_LeftBracket)
+#define Key_RCB   LSHIFT(Key_RightBracket)
 
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
@@ -114,7 +125,7 @@ KEYMAPS(
 /*   
 
  * ,------------------------------------------------------.       ,------------------------------------------------------.
- * | Prog       |   1  |   2  |   3  |   4  |   5  | Rofi |       |TDBLD |   6  |   7  |   8  |   9  |   0  |    NumLck  |
+ * | Prog       |   {  |   @  |   *  |   $  |   ^  | Rofi |       |TDBLD |   %  |   !  |   #  |   &  |   }  |    NumLck  |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
  * |    Tab     |   Q  |   W  |   E  |   R  |   T  |      |       |  Ent |   Y  |   U  |   I  |   O  |   P  |    +=      |
  * |------------+------+------+------+------+------|  Tab |       |      |------+------+------+------+------+------------|
@@ -123,22 +134,26 @@ KEYMAPS(
  * | Ctrl       |   Z  |   X  |   C  |   V  |   B  |  :/; |       |      |   N  |   M  |   ,  |   .  |  /   |    _-      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           | Ctrl  |Space | Alt  | Esc  |       | Shft | Shft |BckSP | Alt  |
+ *                           | Ctrl  |Space | Alt  | Esc  |       | Shft |Space |BckSP | Alt  |
  *                           `----------------------------'       `---------------------------'
+ *
+ *                                    ,-----------.                        ,-----------.
+ *                                    | Layer NUM |                        | Layer FUN |
+ *                                    `-----------'                        `-----------'
  */
   [QWERTY] = KEYMAP_STACKED
-  (___,                  Key_1, Key_2, Key_3, Key_4, Key_5, LALT(Key_P),
-   Key_Tab,              Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Tab,
-   OSM(LeftControl),     Key_A,  Key_S, Key_D, Key_F, Key_G,
-   OSM(LeftShift),       Key_Z, Key_X, Key_C, Key_V, Key_B, TD(CT_CLN),
+  (___,                  Key_LCB, Key_AT, Key_STAR, Key_DOLLR, Key_CARET, LALT(Key_P),
+   Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_Tab,
+   OSM(LeftControl),     Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
+   OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     TD(CT_CLN),
    OSM(LeftControl), Key_Spacebar, OSM(LeftAlt), Key_Escape,
    ShiftToLayer(NUMPAD),
 
-   TD(CT_BLD),       Key_6, Key_7, Key_8,     Key_9,         Key_0,         M(MACRO_NUMLCK),
-   Key_Enter,        Key_Y, Key_U, Key_I,     Key_O,         Key_P,         Key_Equals,
-                     Key_H, Key_J, Key_K,     Key_L,         Key_Semicolon, Key_Quote,
-   TD(CT_MNS),       Key_N, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   OSM(LeftShift), OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
+   TD(CT_BLD),       Key_PRCNT, Key_EXCLM, Key_HASH,  Key_AND,    Key_RCB,       M(MACRO_NUMLCK),
+   Key_Enter,        Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
+                     Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
+   TD(CT_MNS),       Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
+   OSM(LeftShift), Key_Spacebar, Key_Backspace, OSM(LeftAlt),
    ShiftToLayer(FUNCTION)),
 
 
@@ -146,14 +161,14 @@ KEYMAPS(
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |            |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |PTrck |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |    tab     |   |  |   %  |   {  |   }  |   &  |      |       |      | NTrck|   {  |  }   |  [   |   ]  |    F12     |
+ * |    tab     |   |  |   %  |   {  |   }  |   &  |      |       |      | NTrck|   (  |  )   |  [   |   ]  |    F12     |
  * |------------+------+------+------+------+------|      |       |  P/P |------+------+------+------+------+------------|
  * |     Home   |   #  |   $  |   (  |   )  |   *  |------|       |------| Left | Down |  Up  |Right |   ;  | (un)lck    |
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
- * |     End    |   @  |   ^  |   [  |   ]  |   ~  |      |       |      |      |      |      |      |   \  |     |      |
+ * |     End    |   @  |   ^  |   [  |   ]  |   ~  |      |       |      |Mute  | VolDn|VolUp |      |   \  |     |      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           |  Ctrl |  Del |      |      |       |      |      | Del  |      |
+ *                           |  Ctrl |  Del |      |      |       | Shft |      | Del  |      |
  *                           `----------------------------'       `---------------------------'
  */
 
@@ -166,10 +181,10 @@ KEYMAPS(
    ___,
 
    Consumer_ScanPreviousTrack, Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
-   Consumer_PlaySlashPause,    Consumer_ScanNextTrack, Key_LeftCurlyBracket,     Key_RightCurlyBracket,    Key_LeftBracket, Key_RightBracket, Key_F12,
+   Consumer_PlaySlashPause,    Consumer_ScanNextTrack, Key_LeftParen,           Key_RightParen,           Key_LeftBracket, Key_RightBracket, Key_F12,
                                Key_LeftArrow,          Key_DownArrow,            Key_UpArrow,              Key_RightArrow,  ___,              TD(CT_LCK),
-   Key_PcApplication,          Key_Mute,               Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
-   ___, ___, Key_Delete, ___,
+   Key_PcApplication,          Consumer_Mute,          Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
+   OSM(LeftShift), ___, Key_Delete, ___,
    ___),
 
 /*  
