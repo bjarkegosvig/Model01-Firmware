@@ -45,6 +45,7 @@
 #define Key_AND   LSHIFT(Key_7)
 #define Key_LCB   LSHIFT(Key_LeftBracket)
 #define Key_RCB   LSHIFT(Key_RightBracket)
+#define Key_TILDE LSHIFT(Key_Backtick)
 
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
@@ -138,22 +139,22 @@ KEYMAPS(
  *                           `----------------------------'       `---------------------------'
  *
  *                                    ,-----------.                        ,-----------.
- *                                    | Layer NUM |                        | Layer FUN |
+ *                                    | Layer FUN |                        | Layer FUN |
  *                                    `-----------'                        `-----------'
  */
   [QWERTY] = KEYMAP_STACKED
-  (___,                  Key_LCB, Key_AT, Key_STAR, Key_DOLLR, Key_CARET, LALT(Key_P),
+  (___,                  Key_1,   Key_2,  Key_3,    Key_4,     Key_5, LALT(Key_P),
    Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_Tab,
    OSM(LeftControl),     Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
    OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     TD(CT_CLN),
    OSM(LeftControl), Key_Spacebar, OSM(LeftAlt), Key_Escape,
-   ShiftToLayer(NUMPAD),
+   ShiftToLayer(FUNCTION),
 
-   TD(CT_BLD),       Key_PRCNT, Key_EXCLM, Key_HASH,  Key_AND,    Key_RCB,       M(MACRO_NUMLCK),
+   TD(CT_BLD),       Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         M(MACRO_NUMLCK),
    Key_Enter,        Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    TD(CT_MNS),       Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
-   OSM(LeftShift), Key_Spacebar, Key_Backspace, OSM(LeftAlt),
+   OSM(LeftShift), Key_Spacebar, Key_Backspace, Key_LeftGui,
    ShiftToLayer(FUNCTION)),
 
 
@@ -161,10 +162,10 @@ KEYMAPS(
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |            |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |PTrck |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |    tab     |   |  |   %  |   {  |   }  |   &  |      |       |      | NTrck|   (  |  )   |  [   |   ]  |    F12     |
- * |------------+------+------+------+------+------|      |       |  P/P |------+------+------+------+------+------------|
- * |     Home   |   #  |   $  |   (  |   )  |   *  |------|       |------| Left | Down |  Up  |Right |   ;  | (un)lck    |
- * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
+ * |    tab     |   |  |   %  |   {  |   }  |   &  |      |       |      | NTrck| Home |  Up  | End  |Insert|    F12     |
+ * |------------+------+------+------+------+------| PgUp |       |  P/P |------+------+------+------+------+------------|
+ * |     Home   |   #  |   $  |   (  |   )  |   *  |------|       |------|      | Left | Down |Right |      | (un)lck    |
+ * |------------+------+------+------+------+------| PgDn |       |      |------+------+------+------+------+------------|
  * |     End    |   @  |   ^  |   [  |   ]  |   ~  |      |       |      |Mute  | VolDn|VolUp |      |   \  |     |      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
@@ -174,16 +175,16 @@ KEYMAPS(
 
   [FUNCTION] =  KEYMAP_STACKED
   (___,      Key_F1,        Key_F2,        Key_F3,               Key_F4,                Key_F5,              XXX,
-   Key_Tab,  Key_Pipe,      LSHIFT(Key_5), Key_LeftCurlyBracket, Key_RightCurlyBracket, LSHIFT(Key_7),        ___,
-   Key_Home, LSHIFT(Key_3), LSHIFT(Key_4), Key_LeftParen,        Key_RightParen,         LSHIFT(Key_8), 
-   Key_End,  LSHIFT(Key_2), LSHIFT(Key_6), Key_LeftBracket,      Key_RightBracket,      LSHIFT(Key_Backtick), ___,
+   ___,      Key_Pipe,      Key_PRCNT,     Key_LeftCurlyBracket, Key_RightCurlyBracket, Key_AND,             Key_PageUp,
+   Key_Home, Key_HASH,      Key_DOLLR,     Key_LeftParen,        Key_RightParen,        Key_STAR, 
+   Key_End,  Key_AT,        Key_CARET,     Key_LeftBracket,      Key_RightBracket,      Key_TILDE,           Key_PageDown,
    OSM(LeftControl), Key_Delete, ___, ___,
    ___,
 
    Consumer_ScanPreviousTrack, Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
-   Consumer_PlaySlashPause,    Consumer_ScanNextTrack, Key_LeftParen,           Key_RightParen,           Key_LeftBracket, Key_RightBracket, Key_F12,
-                               Key_LeftArrow,          Key_DownArrow,            Key_UpArrow,              Key_RightArrow,  ___,              TD(CT_LCK),
-   Key_PcApplication,          Consumer_Mute,          Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
+   Consumer_PlaySlashPause,    Consumer_ScanNextTrack, Key_Home,                 Key_UpArrow,              Key_End,         Key_Insert,       Key_F12,
+                               XXX,                    Key_LeftArrow,            Key_DownArrow,            Key_RightArrow,  ___,              TD(CT_LCK),
+   System_MainMenu,            Consumer_Mute,          Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
    OSM(LeftShift), ___, Key_Delete, ___,
    ___),
 
@@ -331,8 +332,8 @@ void setup() {
   LEDOff.activate();
 
   // http://www.color-hex.com/color-palette/5361
-  ActiveModColorEffect.highlight_color = CRGB(0xba, 0xe1, 0xff);
-  ActiveModColorEffect.sticky_color = CRGB(0xff, 0xff, 0xba);
+  ActiveModColorEffect.highlight_color = CRGB(0x26, 0x8b, 0xd2);
+  ActiveModColorEffect.sticky_color = CRGB(0xd3, 0x36, 0x82);
 }
 
 /** loop is the second of the standard Arduino sketch functions.
