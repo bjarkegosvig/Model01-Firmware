@@ -28,7 +28,6 @@
 
 #include <Kaleidoscope-OneShot.h>
 #include <Kaleidoscope-Escape-OneShot.h>
-#include <kaleidoscope/hid.h>
 #include <Kaleidoscope-LED-ActiveModColor.h>
 #include <Kaleidoscope-Colormap.h>
 #include <Kaleidoscope-Focus.h>
@@ -46,6 +45,8 @@
 #define Key_LCB   LSHIFT(Key_LeftBracket)
 #define Key_RCB   LSHIFT(Key_RightBracket)
 #define Key_TILDE LSHIFT(Key_Backtick)
+#define Key_LT    LSHIFT(Key_Comma)
+#define Key_GT    LSHIFT(Key_Period)
 
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
@@ -126,16 +127,16 @@ KEYMAPS(
 /*   
 
  * ,------------------------------------------------------.       ,------------------------------------------------------.
- * | Prog       |   {  |   @  |   *  |   $  |   ^  | Rofi |       |TDBLD |   %  |   !  |   #  |   &  |   }  |    NumLck  |
+ * | Prog       |   1  |   2  |   3  |   4  |   5  | Rofi |       |TDBLD |   6  |   7  |   8  |   9  |   0  |    NumLck  |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |    Tab     |   Q  |   W  |   E  |   R  |   T  |      |       |  Ent |   Y  |   U  |   I  |   O  |   P  |    +=      |
- * |------------+------+------+------+------+------|  Tab |       |      |------+------+------+------+------+------------|
- * | Shft       |   A  |   S  |   D  |   F  |   G  |------|       |------|   H  |   J  |   K  |   L  |   ;  |    '"      |
- * |------------+------+------+------+------+------|      |       |  _-  |------+------+------+------+------+------------|
- * | Ctrl       |   Z  |   X  |   C  |   V  |   B  |  :/; |       |      |   N  |   M  |   ,  |   .  |  /   |    _-      |
+ * |    Tab     |   Q  |   W  |   E  |   R  |   T  |      |       |      |   Y  |   U  |   I  |   O  |   P  |    +=      |
+ * |------------+------+------+------+------+------| :/;  |       | -/_  |------+------+------+------+------+------------|
+ * |    Shft    |   A  |   S  |   D  |   F  |   G  |------|       |------|   H  |   J  |   K  |   L  |   ;  |    '"      |
+ * |------------+------+------+------+------+------|      |       |  Alt |------+------+------+------+------+------------|
+ * |    Ctrl    |   Z  |   X  |   C  |   V  |   B  |  Esc |       |      |   N  |   M  |   ,  |   .  |  /   |    _-      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           | Ctrl  |Space | Alt  | Esc  |       | Shft |Space |BckSP | Alt  |
+ *                           | Ctrl  |Space | Ent  |      |       |      | Shft |BckSP | Alt  |
  *                           `----------------------------'       `---------------------------'
  *
  *                                    ,-----------.                        ,-----------.
@@ -143,49 +144,49 @@ KEYMAPS(
  *                                    `-----------'                        `-----------'
  */
   [QWERTY] = KEYMAP_STACKED
-  (___,                  Key_1,   Key_2,  Key_3,    Key_4,     Key_5, LALT(Key_P),
-   Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_Tab,
+  (___,                  Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     LALT(Key_P),
+   Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     TD(CT_CLN),
    OSM(LeftControl),     Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
-   OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     TD(CT_CLN),
-   OSM(LeftControl), Key_Spacebar, OSM(LeftAlt), Key_Escape,
+   OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     Key_Escape,
+   OSM(LeftControl), Key_Spacebar, Key_Enter, XXX,
    ShiftToLayer(FUNCTION),
 
    TD(CT_BLD),       Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         M(MACRO_NUMLCK),
-   Key_Enter,        Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
+   TD(CT_MNS),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
-   TD(CT_MNS),       Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
-   OSM(LeftShift), Key_Spacebar, Key_Backspace, Key_LeftGui,
+   OSM(LeftAlt),     Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
+   XXX, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
    ShiftToLayer(FUNCTION)),
 
 
 /*  
  * ,------------------------------------------------------.       ,------------------------------------------------------.
- * |            |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |PTrck |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
+ * |            |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |      |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |    tab     |   |  |   %  |   {  |   }  |   &  |      |       |      | NTrck| Home |  Up  | End  |Insert|    F12     |
- * |------------+------+------+------+------+------| PgUp |       |  P/P |------+------+------+------+------+------------|
- * |     Home   |   #  |   $  |   (  |   )  |   *  |------|       |------|      | Left | Down |Right |      | (un)lck    |
- * |------------+------+------+------+------+------| PgDn |       |      |------+------+------+------+------+------------|
- * |     End    |   @  |   ^  |   [  |   ]  |   ~  |      |       |      |Mute  | VolDn|VolUp |      |   \  |     |      |
+ * |    Tab     |   |  |   %  |   {  |   }  |   &  |      |       |      |      | Home |  Up  | End  |Insert|    F12     |
+ * |------------+------+------+------+------+------|  <   |       |  >   |------+------+------+------+------+------------|
+ * |    Home    |   #  |   $  |   (  |   )  |   *  |------|       |------|      | Left | Down |Right |      | (un)lck    |
+ * |------------+------+------+------+------+------| PgDn |       | PgDn |------+------+------+------+------+------------|
+ * |    End     |   @  |   ^  |   [  |   ]  |   ~  |      |       |      |Mute  | VolDn|VolUp |      |   \  |     |      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           |  Ctrl |  Del |      |      |       | Shft |      | Del  |      |
+ *                           |  Ctrl |  Del |      |      |       | Shft |  GUI  | Del  |     |
  *                           `----------------------------'       `---------------------------'
  */
 
   [FUNCTION] =  KEYMAP_STACKED
-  (___,      Key_F1,        Key_F2,        Key_F3,               Key_F4,                Key_F5,              XXX,
-   ___,      Key_Pipe,      Key_PRCNT,     Key_LeftCurlyBracket, Key_RightCurlyBracket, Key_AND,             Key_PageUp,
+  (___,      Key_F1,        Key_F2,        Key_F3,               Key_F4,                Key_F5,              ___,
+   ___,      Key_Pipe,      Key_PRCNT,     Key_LeftCurlyBracket, Key_RightCurlyBracket, Key_AND,             Key_LT,
    Key_Home, Key_HASH,      Key_DOLLR,     Key_LeftParen,        Key_RightParen,        Key_STAR, 
-   Key_End,  Key_AT,        Key_CARET,     Key_LeftBracket,      Key_RightBracket,      Key_TILDE,           Key_PageDown,
+   Key_End,  Key_AT,        Key_CARET,     Key_LeftBracket,      Key_RightBracket,      Key_TILDE,           Key_PageUp,
    OSM(LeftControl), Key_Delete, ___, ___,
    ___,
 
-   Consumer_ScanPreviousTrack, Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
-   Consumer_PlaySlashPause,    Consumer_ScanNextTrack, Key_Home,                 Key_UpArrow,              Key_End,         Key_Insert,       Key_F12,
-                               XXX,                    Key_LeftArrow,            Key_DownArrow,            Key_RightArrow,  ___,              TD(CT_LCK),
-   System_MainMenu,            Consumer_Mute,          Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
-   OSM(LeftShift), ___, Key_Delete, ___,
+   XXX,            Key_F6,         Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
+   Key_GT,         XXX,            Key_Home,                 Key_UpArrow,              Key_End,         Key_Insert,       Key_F12,
+                   XXX,            Key_LeftArrow,            Key_DownArrow,            Key_RightArrow,  ___,              TD(CT_LCK),
+   Key_PageDown,   Consumer_Mute,  Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
+   OSM(LeftShift), Key_LeftGui, Key_Delete, ___,
    ___),
 
 /*  
@@ -332,8 +333,8 @@ void setup() {
   LEDOff.activate();
 
   // http://www.color-hex.com/color-palette/5361
-  ActiveModColorEffect.highlight_color = CRGB(0x26, 0x8b, 0xd2);
-  ActiveModColorEffect.sticky_color = CRGB(0xd3, 0x36, 0x82);
+  ActiveModColorEffect.highlight_color = CRGB(0x23, 0x9b, 0xdb);
+  ActiveModColorEffect.sticky_color = CRGB(0xbc, 0x00, 0x14);
 }
 
 /** loop is the second of the standard Arduino sketch functions.
