@@ -1,0 +1,44 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
+                "C:\\Users\\bgknudsen\\Documents\\Arduino\\Model01-Firmware\\src",
+                "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Model01-Firmware\\src",
+                "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\KeyboardioHID\\src",
+                "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope\\src",
+                "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-Macros\\src",
+                "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-TapDance\\src",
+                "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-LEDControl\\src",
+                "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-OneShot\\src",
+                "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-Escape-OneShot\\src",
+                "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-LED-ActiveModColor\\src",
+                "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-Colormap\\src",
+                "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-Focus\\src"
+
+                
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": false,
+                "path": [
+                    "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
+                    "C:\\Users\\bgknudsen\\Documents\\Arduino\\Model01-Firmware\\src",
+                    "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Model01-Firmware\\src",
+                    "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\KeyboardioHID\\src",
+                    "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope\\src",
+                    "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-Macros\\src",
+                    "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-TapDance\\src",
+                    "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-LEDControl\\src",
+                    "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-OneShot\\src",
+                    "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-Escape-OneShot\\src",
+                    "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-LED-ActiveModColor\\src",
+                    "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-Colormap\\src",
+                    "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-Focus\\src"
+                ]
+            },
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 3
+}
