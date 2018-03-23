@@ -136,7 +136,7 @@ KEYMAPS(
  * |    Ctrl    |   Z  |   X  |   C  |   V  |   B  |  Esc |       |      |   N  |   M  |   ,  |   .  |  /   |    _-      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           | Ctrl  |Space | Ent  |      |       |      | Shft |BckSP | Alt  |
+ *                           | Ctrl  |Space | Ent  | Shft |       |   /   | Shft |BckSP | Alt  |
  *                           `----------------------------'       `---------------------------'
  *
  *                                    ,-----------.                        ,-----------.
@@ -148,14 +148,14 @@ KEYMAPS(
    Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     TD(CT_CLN),
    OSM(LeftControl),     Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
    OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     Key_Escape,
-   OSM(LeftControl), Key_Spacebar, Key_Enter, XXX,
+   OSM(LeftControl), Key_Spacebar, Key_Enter, OSM(LeftShift),
    ShiftToLayer(FUNCTION),
 
    TD(CT_BLD),       Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         M(MACRO_NUMLCK),
    TD(CT_MNS),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    OSM(LeftAlt),     Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
-   XXX, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
+   Key_Slash, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
    ShiftToLayer(FUNCTION)),
 
 
@@ -163,22 +163,22 @@ KEYMAPS(
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |            |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |      |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |    Tab     |   |  |   %  |   {  |   }  |   &  |      |       |      |      | Home |  Up  | End  |Insert|    F12     |
+ * |            |   |  |   %  |   {  |   }  |   &  |      |       |      |      | Home |  Up  | End  |Insert|    F12     |
  * |------------+------+------+------+------+------|  <   |       |  >   |------+------+------+------+------+------------|
- * |    Home    |   #  |   $  |   (  |   )  |   *  |------|       |------|      | Left | Down |Right |      | (un)lck    |
+ * |            |   #  |   $  |   (  |   )  |   *  |------|       |------|      | Left | Down |Right |      | (un)lck    |
  * |------------+------+------+------+------+------| PgDn |       | PgDn |------+------+------+------+------+------------|
- * |    End     |   @  |   ^  |   [  |   ]  |   ~  |      |       |      |Mute  | VolDn|VolUp |      |   \  |     |      |
+ * |            |   @  |   ^  |   [  |   ]  |   ~  |      |       |      |Mute  | VolDn|VolUp |      |   \  |     |      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           |  Ctrl |  Del |      |      |       | Shft |  GUI  | Del  |     |
+ *                           |  Ctrl |  Del |      |      |       | GUI  |      | Del  |      |
  *                           `----------------------------'       `---------------------------'
  */
 
   [FUNCTION] =  KEYMAP_STACKED
   (___,      Key_F1,        Key_F2,        Key_F3,               Key_F4,                Key_F5,              ___,
    ___,      Key_Pipe,      Key_PRCNT,     Key_LeftCurlyBracket, Key_RightCurlyBracket, Key_AND,             Key_LT,
-   Key_Home, Key_HASH,      Key_DOLLR,     Key_LeftParen,        Key_RightParen,        Key_STAR, 
-   Key_End,  Key_AT,        Key_CARET,     Key_LeftBracket,      Key_RightBracket,      Key_TILDE,           Key_PageUp,
+   ___,      Key_HASH,      Key_DOLLR,     Key_LeftParen,        Key_RightParen,        Key_STAR, 
+   ___,      Key_AT,        Key_CARET,     Key_LeftBracket,      Key_RightBracket,      Key_TILDE,           Key_PageUp,
    OSM(LeftControl), Key_Delete, ___, ___,
    ___,
 
@@ -186,7 +186,7 @@ KEYMAPS(
    Key_GT,         XXX,            Key_Home,                 Key_UpArrow,              Key_End,         Key_Insert,       Key_F12,
                    XXX,            Key_LeftArrow,            Key_DownArrow,            Key_RightArrow,  ___,              TD(CT_LCK),
    Key_PageDown,   Consumer_Mute,  Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
-   OSM(LeftShift), Key_LeftGui, Key_Delete, ___,
+   Key_LeftGui, ___, Key_Delete, ___,
    ___),
 
 /*  
