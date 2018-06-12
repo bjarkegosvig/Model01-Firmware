@@ -15,26 +15,38 @@
 // green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
 
 cRGB layer0_color = CRGB(0x0, 0x0, 0x0);
+cRGB layer01_color = CRGB(0x255, 0x0, 0x0);
+cRGB layer02_color = CRGB(0x0, 0x255, 0x0);
 cRGB layer1_color = CRGB(0x92, 0xb9, 0x38);
 cRGB layer2_color = CRGB(0xf3, 0xce, 0x0);
 namespace kaleidoscope {
-  void LayerColor_::begin(void) {
-    Kaleidoscope.useLoopHook(loopHook);
-  }
+kaleidoscope::EventHandlerResult LayerColor_::onSetup(void) {
 
-  void LayerColor_::loopHook(bool postClear) {
-    if (!postClear)
-      return;
+  return kaleidoscope::EventHandlerResult::OK;
+}
 
-      if (Layer.isOn(2)) {
-        setLayerColor(2,layer2_color);
+kaleidoscope::EventHandlerResult LayerColor_::afterEachCycle() {
+
+      if (Layer.isOn(4)) {
+        setLayerColor(4,layer2_color);
+      }
+      else if (Layer.isOn(3)) {
+        setLayerColor(3,layer1_color); 
+      }
+      else if (Layer.isOn(2)) {
+         setLayerColor(2,layer0_color);
+         ::LEDControl.setCrgbAt(0, 0, CRGB(230, 128, 255));
       }
       else if (Layer.isOn(1)) {
-        setLayerColor(1,layer1_color); 
+         setLayerColor(1,layer0_color);
+         ::LEDControl.setCrgbAt(0, 0, CRGB(128, 150, 255));
       }
       else if (Layer.isOn(0)) {
          setLayerColor(0,layer0_color);
+         ::LEDControl.setCrgbAt(0, 0, CRGB(190, 255, 60));
       }
+
+      return kaleidoscope::EventHandlerResult::OK;
   }
 
 
