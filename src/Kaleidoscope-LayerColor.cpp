@@ -17,8 +17,9 @@
 cRGB layer0_color = CRGB(0x0, 0x0, 0x0);
 cRGB layer01_color = CRGB(0x255, 0x0, 0x0);
 cRGB layer02_color = CRGB(0x0, 0x255, 0x0);
-cRGB layer1_color = CRGB(0x92, 0xb9, 0x38);
-cRGB layer2_color = CRGB(0xf3, 0xce, 0x0);
+//cRGB layer1_color = CRGB(0x92, 0xb9, 0x38);
+cRGB layer1_color = CRGB(106, 90, 205);
+cRGB layer2_color = CRGB(127, 255, 212);
 namespace kaleidoscope {
 kaleidoscope::EventHandlerResult LayerColor_::onSetup(void) {
 

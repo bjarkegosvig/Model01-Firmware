@@ -130,7 +130,7 @@ enum {CT_LCK,
     the numbers 0, 1 and 2.
 */
 
-enum { QWERTY, COLEMAK, GAME, FUNCTION, NUMPAD}; // layers
+enum { QWERTY, COLEMAK, GAME, FUNCTION, NUMPAD}; // layer
 /* This comment temporarily turns off astyle's indent enforcement
      so we can make the keymaps actually resemble the physical key layout better
 */
@@ -139,16 +139,16 @@ enum { QWERTY, COLEMAK, GAME, FUNCTION, NUMPAD}; // layers
 KEYMAPS(
 /*   
  * ,------------------------------------------------------.       ,------------------------------------------------------.
- * |Sft+Tab/prg |   1  |   2  |   3  |   4  |   5  | Rofi |       |TDBLD |   6  |   7  |   8  |   9  |   0  |    NumLck  |
+*  |  Esc/prg   |   1  |   2  |   3  |   4  |   5  | Rofi |       |  GUI |   6  |   7  |   8  |   9  |   0  |    NumLck  |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
  * |    Tab     |   Q  |   W  |   E  |   R  |   T  |      |       |      |   Y  |   U  |   I  |   O  |   P  |    +=      |
  * |------------+------+------+------+------+------| :/;  |       | -/_  |------+------+------+------+------+------------|
  * |    Shft    |   A  |   S  |   D  |   F  |   G  |------|       |------|   H  |   J  |   K  |   L  |   ;  |    '"      |
- * |------------+------+------+------+------+------|      |       |  Alt |------+------+------+------+------+------------|
+ * |------------+------+------+------+------+------|      |       | Del  |------+------+------+------+------+------------|
  * |    Ctrl    |   Z  |   X  |   C  |   V  |   B  |  Esc |       |      |   N  |   M  |   ,  |   .  |  /   |    _-      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           | Ctrl  |Space | Ent  | Shft |       | Del  | Shft |BckSP | Alt  |
+ *                           | Ctrl  |Space | Ent  | Shft |       | Alt  | Shft |BckSP | Ctrl |
  *                           `----------------------------'       `---------------------------'
  *
  *                                    ,-----------.                        ,-----------.
@@ -161,27 +161,27 @@ KEYMAPS(
    OSM(LeftControl),     Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
    OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     Key_Escape,
    OSM(LeftControl), Key_Spacebar, Key_Enter, OSM(LeftShift),
-   ShiftToLayer(FUNCTION),
+   ShiftToLayer(NUMPAD),
 
-   TD(CT_BLD),       Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
+   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
    TD(CT_MNS),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
-   OSM(LeftAlt),     Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
-   Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
+   Key_Delete,       Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
+   OSM(LeftAlt), OSM(LeftShift), Key_Backspace, OSM(RightControl),
    ShiftToLayer(FUNCTION)),
 
  /*   Colemake DH Matrix https://colemakmods.github.io/mod-dh/keyboards.html
  * ,------------------------------------------------------.       ,------------------------------------------------------.
- * |Sft+Tab/prg |   1  |   2  |   3  |   4  |   5  | Rofi |       |TDBLD |   6  |   7  |   8  |   9  |   0  |    NumLck  |
+ * |  Esc/prg   |   1  |   2  |   3  |   4  |   5  | Rofi |       |  GUI |   6  |   7  |   8  |   9  |   0  |    NumLck  |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
  * |    Tab     |   Q  |   W  |   F  |   P  |   B  |      |       |      |   J  |   L  |   U  |   Y  |   ;  |    +=      |
  * |------------+------+------+------+------+------| :/;  |       | -/_  |------+------+------+------+------+------------|
- * |    Shft    |   A  |   R  |   S  |   T  |   G  |------|       |------|   M  |   N  |   E  |   L  |   O  |    '"      |
- * |------------+------+------+------+------+------|      |       |  Alt |------+------+------+------+------+------------|
+* |    Shft     |   A  |   R  |   S  |   T  |   G  |------|       |------|   M  |   N  |   E  |   I  |   O  |    '"      |
+ * |------------+------+------+------+------+------|      |       | Del  |------+------+------+------+------+------------|
  * |    Ctrl    |   Z  |   X  |   C  |   D  |   V  |  Esc |       |      |   K  |   H  |   ,  |   .  |  /   |    _-      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           | Ctrl  |Space | Ent  | Shft |       | Del  | Shft |BckSP | Alt  |
+ *                           | Ctrl  |Space | Ent  | Shft |       | Alt  | Shft |BckSP | Ctrl  |
  *                           `----------------------------'       `---------------------------'
  *
  *                                    ,-----------.                        ,-----------.
@@ -194,42 +194,42 @@ KEYMAPS(
    OSM(LeftControl),     Key_A,   Key_R,  Key_S,    Key_T,     Key_G,
    OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_D,     Key_V,     Key_Escape,
    OSM(LeftControl), Key_Spacebar, Key_Enter, OSM(LeftShift),
-   ShiftToLayer(FUNCTION),
+   ShiftToLayer(NUMPAD),
 
-   TD(CT_BLD),       Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
-   TD(CT_MNS),       Key_J,     Key_L,     Key_U,     Key_U,      Key_Semicolon, Key_Equals,
-                     Key_M,     Key_N,     Key_E,     Key_L,      Key_O,         Key_Quote,
-   OSM(LeftAlt),     Key_K,     Key_H,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
-   Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
+   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
+   TD(CT_MNS),       Key_J,     Key_L,     Key_U,     Key_Y,      Key_Semicolon, Key_Equals,
+                     Key_M,     Key_N,     Key_E,     Key_I,      Key_O,         Key_Quote,
+   Key_Delete,       Key_K,     Key_H,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
+   OSM(LeftAlt), OSM(LeftShift), Key_Backspace, OSM(RightControl),
    ShiftToLayer(FUNCTION)),
 
 /* Gaming  
  * ,------------------------------------------------------.       ,------------------------------------------------------.
- * |Sft+Tab/prg |   1  |   2  |   3  |   4  |   5  | Rofi |       |TDBLD |   6  |   7  |   8  |   9  |   0  |    NumLck  |
+ * |  Esc/prg   |   1  |   2  |   3  |   4  |   5  |  N   |       |  GUI |   6  |   7  |   8  |   9  |   0  |    NumLck  |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
  * |    Tab     |   Q  |   W  |   E  |   R  |   T  |      |       |      |   Y  |   U  |   I  |   O  |   P  |    +=      |
- * |------------+------+------+------+------+------| :/;  |       | -/_  |------+------+------+------+------+------------|
+ * |------------+------+------+------+------+------|  M   |       | -/_  |------+------+------+------+------+------------|
  * |    Shft    |   A  |   S  |   D  |   F  |   G  |------|       |------|   H  |   J  |   K  |   L  |   ;  |    '"      |
  * |------------+------+------+------+------+------|      |       |  Alt |------+------+------+------+------+------------|
- * |    Ctrl    |   Z  |   X  |   C  |   V  |   B  |  Esc |       |      |   N  |   M  |   ,  |   .  |  /   |    _-      |
+ * |    Ctrl    |   Z  |   X  |   C  |   V  |   B  |  Ent |       |      |   N  |   M  |   ,  |   .  |  /   |    _-      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           | Ctrl  |Space | Ent  | Shft |       | Del  | Shft |BckSP | Alt  |
+ *                           | Ctrl  |Space | Shft | Alt  |       | Del  | Shft |BckSP | Alt  |
  *                           `----------------------------'       `---------------------------'
  *
  *                                    ,-----------.                        ,-----------.
  *                                    | Layer FUN |                        | Layer FUN |
  *                                    `-----------'                        `-----------'
  */
-  [GAME] = KEYMAP_STACKED
-  (TD(CT_ST),            Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     LALT(Key_P),
-   Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     TD(CT_CLN),
-   OSM(LeftControl),     Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
-   OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     Key_Escape,
-   OSM(LeftControl), Key_Spacebar, Key_Enter, OSM(LeftShift),
+[GAME] = KEYMAP_STACKED
+  (TD(CT_ST),            Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     Key_N,
+   Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_M,
+   Key_LeftControl,      Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
+   Key_LeftShift,        Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     Key_Enter,
+   Key_LeftControl, Key_Spacebar, Key_LeftShift,    Key_LeftAlt,
    ShiftToLayer(FUNCTION),
 
-   TD(CT_BLD),       Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
+   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
    TD(CT_MNS),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    OSM(LeftAlt),     Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
@@ -248,7 +248,7 @@ KEYMAPS(
  * |            |   @  |   ^  |   [  |   ]  |   ~  |      |       |      |Mute  | VolDn|VolUp |      |   \  |     |      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           |  Ctrl |      |      |      |       | GUI  |      | Del  |      |
+ *                           |  Ctrl |      |      |      |       |      |      | Del  |      |
  *                           `----------------------------'       `---------------------------'
 */
 
@@ -264,7 +264,7 @@ M(MACRO_VERSION_INFO),            Key_F6,         Key_F7,                   Key_
    Key_GT,         XXX,            Key_Home,                 Key_UpArrow,              Key_End,         Key_Insert,       Key_F12,
                    XXX,            Key_LeftArrow,            Key_DownArrow,            Key_RightArrow,  ___,              TD(CT_LCK),
    Key_PageDown,   Consumer_Mute,  Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
-   Key_LeftGui, ___, Key_Delete, ___,
+   ___, ___, Key_Delete, ___,
    ___),
 
 /*  
@@ -333,11 +333,11 @@ static void macroSwitchGame(uint8_t keyState) {
   if (keyToggledOn(keyState))
   {
     UnlockLayer(NUMPAD);
-Layer.defaultLayer(GAME);
+    Layer.defaultLayer(GAME);
   }
 }
 
-/** macroAction dispatches keymap events that are tied to a macro  
+/** macroAction dispatches keymap events that are tied to a macro
     to that macro. It takes two uint8_t parameters.
 
     The first is the macro being called (the entry in the 'enum' earlier in this file).
@@ -366,7 +366,7 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
       break;
   }
 
-    
+
   return MACRO_NONE;
 }
 
@@ -388,33 +388,33 @@ void tapDanceAction(uint8_t tap_dance_index, byte row, byte col, uint8_t tap_cou
                                 Key_Minus,
                                 LSHIFT(Key_Minus));
     case CT_ST:
-  return tapDanceActionKeys(tap_count, tap_dance_action, LSHIFT(Key_Tab), ___ );
+      return tapDanceActionKeys(tap_count, tap_dance_action, Key_Esc, ___ );
   }
 }
 
 /** toggleLedsOnSuspendResume toggles the LEDs off when the host goes to sleep,
- * and turns them back on when it wakes up.
- */
+   and turns them back on when it wakes up.
+*/
 void toggleLedsOnSuspendResume(kaleidoscope::HostPowerManagement::Event event) {
   switch (event) {
-  case kaleidoscope::HostPowerManagement::Suspend:
-    LEDControl.paused = true;
-    LEDControl.set_all_leds_to({0, 0, 0});
-    LEDControl.syncLeds();
-    break;
-  case kaleidoscope::HostPowerManagement::Resume:
-    LEDControl.paused = false;
-    LEDControl.refreshAll();
-    break;
-  case kaleidoscope::HostPowerManagement::Sleep:
-    break;
+    case kaleidoscope::HostPowerManagement::Suspend:
+      LEDControl.paused = true;
+      LEDControl.set_all_leds_to({0, 0, 0});
+      LEDControl.syncLeds();
+      break;
+    case kaleidoscope::HostPowerManagement::Resume:
+      LEDControl.paused = false;
+      LEDControl.refreshAll();
+      break;
+    case kaleidoscope::HostPowerManagement::Sleep:
+      break;
   }
 }
 
 /** hostPowerManagementEventHandler dispatches power management events (suspend,
- * resume, and sleep) to other functions that perform action based on these
- * events.
- */
+   resume, and sleep) to other functions that perform action based on these
+   events.
+*/
 void hostPowerManagementEventHandler(kaleidoscope::HostPowerManagement::Event event) {
   toggleLedsOnSuspendResume(event);
 }
@@ -427,11 +427,11 @@ KALEIDOSCOPE_INIT_PLUGINS(LEDControl,
                           ActiveModColorEffect,
                           EscapeOneShot,
                           LayerColor,
-                        // The HostPowerManagement plugin allows us to turn LEDs off when then host
-                        // goes to sleep, and resume them when it wakes up.
+                          // The HostPowerManagement plugin allows us to turn LEDs off when then host
+                          // goes to sleep, and resume them when it wakes up.
                           HostPowerManagement
-                        
-                          );
+
+                         );
 
 
 
@@ -440,15 +440,16 @@ KALEIDOSCOPE_INIT_PLUGINS(LEDControl,
     Kaleidoscope and any plugins.
 */
 
-void setup() {  
+void setup() {
   // First, call Kaleidoscope's internal setup function
-  Kaleidoscope.setup(); 
+  Kaleidoscope.setup();
 
+  OneShot.double_tap_sticky = false;
   // http://www.color-hex.com/color-palette/5361
   ActiveModColorEffect.highlight_color = CRGB(0xba, 0xff, 0xc9);
   ActiveModColorEffect.sticky_color = CRGB(0xff, 0xdf, 0xba);
-  TapDance.time_out=170;
- LEDOff.activate();
+  TapDance.time_out = 170;
+  LEDOff.activate();
 }
 
 /** loop is the second of the standard Arduino sketch functions.
