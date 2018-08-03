@@ -2,5 +2,5 @@
     "board": "keyboardio:avr:model01",
     "sketch": "Model01-Firmware.ino",
     "output": "build",
-    "port": "COM7"
+    "port": "COM19"
 }

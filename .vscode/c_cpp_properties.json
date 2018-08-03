@@ -16,8 +16,6 @@
                 "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-LED-ActiveModColor\\src",
                 "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-Colormap\\src",
                 "C:\\Users\\bgknudsen\\Documents\\Arduino\\hardware\\keyboardio\\avr\\libraries\\Kaleidoscope-Focus\\src"
-
-                
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": false,
@@ -40,5 +38,5 @@
             "intelliSenseMode": "clang-x64"
         }
     ],
-    "version": 3
+    "version": 4
 }

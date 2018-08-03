@@ -30,6 +30,10 @@ kaleidoscope::EventHandlerResult LayerColor_::afterEachCycle() {
 
       if (Layer.isOn(4)) {
         setLayerColor(4,layer2_color);
+        //  https://github.com/keyboardio/Kaleidoscope-MagicCombo
+        ::LEDControl.setCrgbAt(1, 1, CRGB(190, 255, 60));
+        ::LEDControl.setCrgbAt(1, 2, CRGB(128, 150, 255));
+        ::LEDControl.setCrgbAt(1, 3, CRGB(230, 128, 255));
       }
       else if (Layer.isOn(3)) {
         setLayerColor(3,layer1_color); 

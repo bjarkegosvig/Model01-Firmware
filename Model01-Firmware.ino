@@ -13,9 +13,7 @@
    https://bitbucket.org/jamesnvc/keyboardiolayout
 */
 
-// The Kaleidoscope core
-#include "Kaleidoscope.h"
-
+// The Kaleido
 // Support for macros
 #include "Kaleidoscope-Macros.h"
 
@@ -33,6 +31,8 @@
 
 // Support for host power management (suspend & wakeup)
 #include "Kaleidoscope-HostPowerManagement.h"
+
+#include <Kaleidoscope-MouseKeys.h>
 
 #include <Kaleidoscope-OneShot.h>
 #include <Kaleidoscope-Escape-OneShot.h>
@@ -156,7 +156,7 @@ KEYMAPS(
  *                                    `-----------'                        `-----------'
  */
   [QWERTY] = KEYMAP_STACKED
-  (TD(CT_ST),            Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     LALT(Key_P),
+  (Key_Escape,           Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     LALT(Key_P),
    Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     TD(CT_CLN),
    OSM(LeftControl),     Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
    OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     Key_Escape,
@@ -176,7 +176,7 @@ KEYMAPS(
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
  * |    Tab     |   Q  |   W  |   F  |   P  |   B  |      |       |      |   J  |   L  |   U  |   Y  |   ;  |    +=      |
  * |------------+------+------+------+------+------| :/;  |       | -/_  |------+------+------+------+------+------------|
-* |    Shft     |   A  |   R  |   S  |   T  |   G  |------|       |------|   M  |   N  |   E  |   I  |   O  |    '"      |
+ * |    Shft    |   A  |   R  |   S  |   T  |   G  |------|       |------|   M  |   N  |   E  |   I  |   O  |    '"      |
  * |------------+------+------+------+------+------|      |       | Del  |------+------+------+------+------+------------|
  * |    Ctrl    |   Z  |   X  |   C  |   D  |   V  |  Esc |       |      |   K  |   H  |   ,  |   .  |  /   |    _-      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
@@ -189,7 +189,7 @@ KEYMAPS(
  *                                    `-----------'                        `-----------'
  */
   [COLEMAK] = KEYMAP_STACKED
-  (TD(CT_ST),            Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     LALT(Key_P),
+  (Key_Escape,           Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     LALT(Key_P),
    Key_Tab,              Key_Q,   Key_W,  Key_F,    Key_P,     Key_B,     TD(CT_CLN),
    OSM(LeftControl),     Key_A,   Key_R,  Key_S,    Key_T,     Key_G,
    OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_D,     Key_V,     Key_Escape,
@@ -222,7 +222,7 @@ KEYMAPS(
  *                                    `-----------'                        `-----------'
  */
 [GAME] = KEYMAP_STACKED
-  (TD(CT_ST),            Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     Key_N,
+  (Key_Escape,           Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     Key_N,
    Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_M,
    Key_LeftControl,      Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
    Key_LeftShift,        Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     Key_Enter,
@@ -269,30 +269,32 @@ M(MACRO_VERSION_INFO),            Key_F6,         Key_F7,                   Key_
 
 /*  
  * ,------------------------------------------------------.       ,------------------------------------------------------.
- * |            |      |      |      |      |      |      |       |      |      |   7  |   8  |   9  |   -  |            |
+ * |            |      |      |      |      |      |      |       |      |      |      |      |      |   -  |            |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |            |      |      |      |      |      |      |       |      |      |   4  |   5  |   6  |   +  |            |
+ * |            |Qwerty|Colmak| Game |      |      |      |       |      |      |   1  |   2  |   3  |   +  |      *     |
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
- * |            |Qwerty|Colmak| Game |      |      |------|       |------|      |   1  |   2  |   3  |   =  |      '     |
+ * |            |      |      |  MSD | MSU  |      |------|       |------|   0  |   4  |   5  |   6  |   =  |      '     |
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
- * |            |      |      |      |      |      |      |       |      |      |   0  |   .  |   *  |   /  |  Enter     |
+ * |            |      |      |      |      |      |      |       |      |      |   7  |   8  |   9  |   /  |  Enter     |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
  *                           |       |      |      |      |       |      |      |      |      |
  *                           `----------------------------'       `---------------------------'
  */
   [NUMPAD] =  KEYMAP_STACKED
-  (___, ___,     ___,     ___,     ___, ___, ___,
-   ___, ___,     ___,     ___,     ___, ___, ___,
-   ___, M(M_SQ), M(M_SC), M(M_SG), ___, ___,
-   ___, ___,     ___,     ___,     ___, ___, ___,
+  (___, ___,     ___,     ___,               ___, ___, ___,
+   ___, M(M_SQ), M(M_SC), M(M_SG),           ___, ___, ___,
+   ___, ___,     ___,     Key_mouseScrollDn, Key_mouseScrollUp, ___,
+   ___, ___,     ___,     ___,               ___, ___, ___,
    ___, ___, ___, ___,
    ___,
 
-M(MACRO_VERSION_INFO),  ___, Key_7, Key_8,      Key_9,         Key_Minus,          UnlockLayer(NUMPAD),
-   ___,                    ___, Key_4, Key_5,      Key_6,         LSHIFT(Key_Equals), ___,
-                           ___, Key_1, Key_2,      Key_3,         Key_Equals,         Key_Quote,
-   ___,                    ___, Key_0, Key_Period, LSHIFT(Key_9), Key_Slash,          Key_Enter,
+
+|
+M(MACRO_VERSION_INFO),     ___,   XXX,   XXX,        XXX,           Key_Minus,          UnlockLayer(NUMPAD),
+   ___,                    ___,   Key_1, Key_2,      Key_3,         LSHIFT(Key_Equals), LSHIFT(Key_9),
+                           Key_0, Key_4, Key_5,      Key_6,         Key_Equals,         Key_Quote,
+   ___,                    ___,   Key_7, Key_8,      Key_9,         Key_Slash,          Key_Enter,
    ___, ___, ___, ___,
    ___),
 
@@ -427,6 +429,7 @@ KALEIDOSCOPE_INIT_PLUGINS(LEDControl,
                           ActiveModColorEffect,
                           EscapeOneShot,
                           LayerColor,
+                          MouseKeys,
                           // The HostPowerManagement plugin allows us to turn LEDs off when then host
                           // goes to sleep, and resume them when it wakes up.
                           HostPowerManagement
@@ -449,6 +452,8 @@ void setup() {
   ActiveModColorEffect.highlight_color = CRGB(0xba, 0xff, 0xc9);
   ActiveModColorEffect.sticky_color = CRGB(0xff, 0xdf, 0xba);
   TapDance.time_out = 170;
+  MouseKeys.wheelDelay = 20;
+  MouseKeys.wheelSpeed = 2;
   LEDOff.activate();
 }
 
