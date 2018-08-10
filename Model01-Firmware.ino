@@ -13,6 +13,8 @@
    https://bitbucket.org/jamesnvc/keyboardiolayout
 */
 
+#include <avr/wdt.h>
+
 // The Kaleido
 // Support for macros
 #include "Kaleidoscope-Macros.h"
@@ -76,7 +78,8 @@ enum { MACRO_VERSION_INFO,
        MACRO_ANY,
        M_SQ,
        M_SC,
-       M_SG
+       M_SG,
+       M_RS
      };
 
 /** Tapdance enum
@@ -239,7 +242,7 @@ KEYMAPS(
 
 /* 
  * ,------------------------------------------------------.       ,------------------------------------------------------.
- * |            |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |      |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
+ * |            |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |  Rst |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
  * |            |   |  |   %  |   {  |   }  |   &  |      |       |      |      | Home |  Up  | End  |Insert|    F12     |
  * |------------+------+------+------+------+------|  <   |       |  >   |------+------+------+------+------+------------|
@@ -260,7 +263,7 @@ KEYMAPS(
    OSM(LeftControl), ___, ___, ___,
    ___,
 
-M(MACRO_VERSION_INFO),            Key_F6,         Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
+   M(M_RS),        Key_F6,         Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
    Key_GT,         XXX,            Key_Home,                 Key_UpArrow,              Key_End,         Key_Insert,       Key_F12,
                    XXX,            Key_LeftArrow,            Key_DownArrow,            Key_RightArrow,  ___,              TD(CT_LCK),
    Key_PageDown,   Consumer_Mute,  Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
@@ -271,11 +274,11 @@ M(MACRO_VERSION_INFO),            Key_F6,         Key_F7,                   Key_
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |            |      |      |      |      |      |      |       |      |      |      |      |      |   -  |            |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |            |Qwerty|Colmak| Game |      |      |      |       |      |      |   1  |   2  |   3  |   +  |      *     |
+ * |            |Qwerty|Colmak| Game |      |      |      |       |      |   .  |   1  |   2  |   3  |   +  |      *     |
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
  * |            |      |      |  MSD | MSU  |      |------|       |------|   0  |   4  |   5  |   6  |   =  |      '     |
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
- * |            |      |      |      |      |      |      |       |      |      |   7  |   8  |   9  |   /  |  Enter     |
+ * |            |      |      |      |      |      |      |       |      |   ,  |   7  |   8  |   9  |   /  |  Enter     |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
  *                           |       |      |      |      |       |      |      |      |      |
@@ -290,11 +293,11 @@ M(MACRO_VERSION_INFO),            Key_F6,         Key_F7,                   Key_
    ___,
 
 
-|
-M(MACRO_VERSION_INFO),     ___,   XXX,   XXX,        XXX,           Key_Minus,          UnlockLayer(NUMPAD),
-   ___,                    ___,   Key_1, Key_2,      Key_3,         LSHIFT(Key_Equals), LSHIFT(Key_9),
-                           Key_0, Key_4, Key_5,      Key_6,         Key_Equals,         Key_Quote,
-   ___,                    ___,   Key_7, Key_8,      Key_9,         Key_Slash,          Key_Enter,
+
+M(MACRO_VERSION_INFO),     ___,         XXX,   XXX,        XXX,           Key_Minus,          UnlockLayer(NUMPAD),
+   ___,                    Key_Period,  Key_1, Key_2,      Key_3,         LSHIFT(Key_Equals), LSHIFT(Key_9),
+                           Key_0,       Key_4, Key_5,      Key_6,         Key_Equals,         Key_Quote,
+   ___,                    Key_Comma,   Key_7, Key_8,      Key_9,         Key_Slash,          Key_Enter,
    ___, ___, ___, ___,
    ___),
 
@@ -339,6 +342,14 @@ static void macroSwitchGame(uint8_t keyState) {
   }
 }
 
+static void macroReset(uint8_t keyState) {
+  if (keyToggledOn(keyState))
+  {
+    wdt_enable(WDTO_120MS);
+    while (1) {}
+  }
+}
+
 /** macroAction dispatches keymap events that are tied to a macro
     to that macro. It takes two uint8_t parameters.
 
@@ -365,6 +376,9 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
       break;
     case M_SG:
       macroSwitchGame(keyState);
+      break;
+      case M_RS:
+      macroReset(keyState);
       break;
   }
 
