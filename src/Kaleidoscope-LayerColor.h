@@ -1,8 +1,7 @@
 #pragma once
-
+#include <Kaleidoscope.h>
 #include "Kaleidoscope-LEDControl.h"
-#include "Kaleidoscope-Macros.h"
-#include "LEDUtils.h"
+
 namespace kaleidoscope {
 	class LayerColor_ : public kaleidoscope::Plugin {
 	 public:

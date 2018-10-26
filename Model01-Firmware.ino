@@ -40,7 +40,7 @@
 #include <Kaleidoscope-Escape-OneShot.h>
 #include <Kaleidoscope-LED-ActiveModColor.h>
 #include <Kaleidoscope-Colormap.h>
-#include <Kaleidoscope-Focus.h>
+//#include <Kaleidoscope-Focus.h>
 #include <Kaleidoscope-LEDEffect-BootGreeting.h>
 #include <Kaleidoscope-SpaceCadet.h>
 #include "src/Kaleidoscope-LayerColor.h"

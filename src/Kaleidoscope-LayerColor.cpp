@@ -1,7 +1,5 @@
 #include "Kaleidoscope-LayerColor.h"
-#include "LEDUtils.h"
-#include "Kaleidoscope.h"
-#include "layers.h"
+// #include <Kaleidoscope.h>
 #include <Kaleidoscope-OneShot.h>
 
 // http://www.color-hex.com/color-palette/5361
@@ -14,9 +12,9 @@
 // cyan      #2aa198  6/6 cyan      37 #00afaf 60 -35 -05  42 161 152 175  74  63
 // green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
 
-cRGB layer0_color = CRGB(0x0, 0x0, 0x0);
-cRGB layer01_color = CRGB(0x255, 0x0, 0x0);
-cRGB layer02_color = CRGB(0x0, 0x255, 0x0);
+cRGB layer0_color = CRGB(0, 0, 0);
+cRGB layer01_color = CRGB(255, 0, 0);
+cRGB layer02_color = CRGB(0, 255, 0);
 //cRGB layer1_color = CRGB(0x92, 0xb9, 0x38);
 cRGB layer1_color = CRGB(106, 90, 205);
 cRGB layer2_color = CRGB(127, 255, 212);
