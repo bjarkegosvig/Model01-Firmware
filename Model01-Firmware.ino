@@ -13,26 +13,25 @@
    https://bitbucket.org/jamesnvc/keyboardiolayout
 */
 
+// avr watchdog for timeout reset
 #include <avr/wdt.h>
 
-// The Kaleido
+// The Kaleidoscope core
+#include <Kaleidoscope.h>
+
+#include <Kaleidoscope-SpaceCadet.h>
+
 // Support for macros
-#include "Kaleidoscope-Macros.h"
+#include <Kaleidoscope-Macros.h>
 
 // Support for TapDance
-#include "Kaleidoscope-TapDance.h"
+#include <Kaleidoscope-TapDance.h>
 
 // Support for controlling the keyboard's LEDs
-#include "Kaleidoscope-LEDControl.h"
-
-// Support for "Numpad" mode, which is mostly just the Numpad specific LED mode
-#include "Kaleidoscope-NumPad.h"
-
-// Support for an "LED off mode"
-#include "LED-Off.h"
+#include <Kaleidoscope-LEDControl.h>
 
 // Support for host power management (suspend & wakeup)
-#include "Kaleidoscope-HostPowerManagement.h"
+#include <Kaleidoscope-HostPowerManagement.h>
 
 #include <Kaleidoscope-MouseKeys.h>
 
@@ -40,9 +39,7 @@
 #include <Kaleidoscope-Escape-OneShot.h>
 #include <Kaleidoscope-LED-ActiveModColor.h>
 #include <Kaleidoscope-Colormap.h>
-//#include <Kaleidoscope-Focus.h>
 #include <Kaleidoscope-LEDEffect-BootGreeting.h>
-#include <Kaleidoscope-SpaceCadet.h>
 #include "src/Kaleidoscope-LayerColor.h"
 
 
@@ -469,6 +466,7 @@ void setup() {
   MouseKeys.wheelDelay = 20;
   MouseKeys.wheelSpeed = 2;
   LEDOff.activate();
+  Layer.defaultLayer(QWERTY);
 }
 
 /** loop is the second of the standard Arduino sketch functions.

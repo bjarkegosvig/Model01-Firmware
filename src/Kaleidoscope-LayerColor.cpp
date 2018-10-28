@@ -1,5 +1,5 @@
 #include "Kaleidoscope-LayerColor.h"
-// #include <Kaleidoscope.h>
+
 #include <Kaleidoscope-OneShot.h>
 
 // http://www.color-hex.com/color-palette/5361
@@ -13,64 +13,72 @@
 // green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
 
 cRGB layer0_color = CRGB(0, 0, 0);
-cRGB layer01_color = CRGB(255, 0, 0);
-cRGB layer02_color = CRGB(0, 255, 0);
-//cRGB layer1_color = CRGB(0x92, 0xb9, 0x38);
 cRGB layer1_color = CRGB(106, 90, 205);
 cRGB layer2_color = CRGB(127, 255, 212);
 namespace kaleidoscope {
-kaleidoscope::EventHandlerResult LayerColor_::onSetup(void) {
+  namespace plugin {
 
-  return kaleidoscope::EventHandlerResult::OK;
-}
+    kaleidoscope::EventHandlerResult LayerColor_::onSetup(void) {
 
-kaleidoscope::EventHandlerResult LayerColor_::afterEachCycle() {
+      return kaleidoscope::EventHandlerResult::OK;
+    }
+
+    kaleidoscope::EventHandlerResult LayerColor_::afterEachCycle() {
 
       if (Layer.isOn(4)) {
-        setLayerColor(4,layer2_color);
+        setLayerColor(4, layer2_color);
         //  https://github.com/keyboardio/Kaleidoscope-MagicCombo
-        ::LEDControl.setCrgbAt(1, 1, CRGB(190, 255, 60));
-        ::LEDControl.setCrgbAt(1, 2, CRGB(128, 150, 255));
-        ::LEDControl.setCrgbAt(1, 3, CRGB(230, 128, 255));
+        // ::LEDControl.setCrgbAt(1, 1, CRGB(190, 255, 60));
+        // ::LEDControl.setCrgbAt(1, 2, CRGB(128, 150, 255));
+        // ::LEDControl.setCrgbAt(1, 3, CRGB(230, 128, 255));
+
+        ::LEDControl.setCrgbAt(1, 1, breath_compute(100));
+        ::LEDControl.setCrgbAt(1, 2, breath_compute(200));
+        ::LEDControl.setCrgbAt(1, 3, breath_compute(150));
       }
       else if (Layer.isOn(3)) {
-        setLayerColor(3,layer1_color); 
+        setLayerColor(3,layer1_color);
       }
       else if (Layer.isOn(2)) {
-         setLayerColor(2,layer0_color);
-         ::LEDControl.setCrgbAt(0, 0, CRGB(230, 128, 255));
+        setLayerColor(2,layer0_color);
+        // ::LEDControl.setCrgbAt(0, 0, CRGB(230, 128, 255));
+        ::LEDControl.setCrgbAt(0, 0, breath_compute(150));
       }
       else if (Layer.isOn(1)) {
-         setLayerColor(1,layer0_color);
-         ::LEDControl.setCrgbAt(0, 0, CRGB(128, 150, 255));
+        setLayerColor(1,layer0_color);
+        // ::LEDControl.setCrgbAt(0, 0, CRGB(128, 150, 255));
+        ::LEDControl.setCrgbAt(0, 0, breath_compute(200));
       }
       else if (Layer.isOn(0)) {
-         setLayerColor(0,layer0_color);
-         ::LEDControl.setCrgbAt(0, 0, CRGB(190, 255, 60));
+        setLayerColor(0,layer0_color);
+        // ::LEDControl.setCrgbAt(0, 0, CRGB(190, 255, 60));
+        ::LEDControl.setCrgbAt(0, 0, breath_compute(100));
       }
 
       return kaleidoscope::EventHandlerResult::OK;
-  }
+    }
 
 
-  void LayerColor_::setLayerColor(uint8_t currrentLayer, cRGB layerColor) 
-  {
-    for (uint8_t r = 0; r < ROWS; r++) {
-      for (uint8_t c = 0; c < COLS; c++) {
-        Key k = Layer.lookupOnActiveLayer(r, c);
-        Key layer_key = Layer.getKey(currrentLayer, r, c);
+    void LayerColor_::setLayerColor(uint8_t currrentLayer, cRGB layerColor) {
+      
+      for (uint8_t r = 0; r < ROWS; r++) {
+        for (uint8_t c = 0; c < COLS; c++) {
+          Key k = Layer.lookupOnActiveLayer(r, c);
+          Key layer_key = Layer.getKey(currrentLayer, r, c);
 
-      if (::OneShot.isOneShotKey(k)) {
-        // do nothing to allow activeModColorEffect to function
-      }
-
-       else if ((k != layer_key)) {
-          ::LEDControl.refreshAt(r, c);
-        } else {
-          ::LEDControl.setCrgbAt(r, c, layerColor);
+        if (::OneShot.isOneShotKey(k)) {
+          // do nothing to allow activeModColorEffect to function
         }
-      }
-    } 
-  };
-}
-kaleidoscope::LayerColor_ LayerColor;
+
+        else if ((k != layer_key)) {
+            ::LEDControl.refreshAt(r, c);
+          } else {
+            ::LEDControl.setCrgbAt(r, c, layerColor);
+          }
+        }
+      } 
+    }
+  
+  } // end plugin namespace
+} // end kaleidoscope namespace
+kaleidoscope::plugin::LayerColor_ LayerColor;
