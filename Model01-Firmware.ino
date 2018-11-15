@@ -9,8 +9,6 @@
 /**
    These #include directives pull in the Kaleidoscope firmware core,
    as well as the Kaleidoscope plugins we use in the Model 01's firmware
-
-   https://bitbucket.org/jamesnvc/keyboardiolayout
 */
 
 // avr watchdog for timeout reset
@@ -18,6 +16,8 @@
 
 // The Kaleidoscope core
 #include <Kaleidoscope.h>
+
+#include "Kaleidoscope-LEDEffect-BootGreeting.h"
 
 #include <Kaleidoscope-SpaceCadet.h>
 
@@ -40,7 +40,12 @@
 #include <Kaleidoscope-LED-ActiveModColor.h>
 #include <Kaleidoscope-Colormap.h>
 #include <Kaleidoscope-LEDEffect-BootGreeting.h>
-#include "src/Kaleidoscope-LayerColor.h"
+//#include "src/Kaleidoscope-LayerColor.h"
+
+#include <Kaleidoscope-FocusSerial.h>
+#include <Kaleidoscope-EEPROM-Settings.h>
+#include <Kaleidoscope-LED-Palette-Theme.h>
+#include <Kaleidoscope-Colormap.h>
 
 
 #define Key_AT    LSHIFT(Key_2)
@@ -130,7 +135,7 @@ enum {CT_LCK,
     the numbers 0, 1 and 2.
 */
 
-enum { QWERTY, COLEMAK, GAME, FUNCTION, NUMPAD}; // layer
+enum { QWERTY, COLEMAK, GAME, FUNCTION, NUMPAD, MaxLayerNum}; // layer
 /* This comment temporarily turns off astyle's indent enforcement
      so we can make the keymaps actually resemble the physical key layout better
 */
@@ -163,7 +168,7 @@ KEYMAPS(
    OSM(LeftControl), Key_Spacebar, Key_Enter, OSM(LeftShift),
    ShiftToLayer(NUMPAD),
 
-   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
+   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         Key_Keymap4,
    TD(CT_MNS),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    Key_Delete,       Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
@@ -283,7 +288,7 @@ KEYMAPS(
  */
   [NUMPAD] =  KEYMAP_STACKED
   (___, ___,     ___,     ___,               ___, ___, ___,
-   ___, M(M_SQ), M(M_SC), M(M_SG),           ___, ___, ___,
+   ___, M(M_SQ), M(M_SC), M(M_SG),               ___, ___, ___,
    ___, ___,     ___,     Key_mouseScrollDn, Key_mouseScrollUp, ___,
    ___, ___,     ___,     ___,               ___, ___, ___,
    ___, ___, ___, ___,
@@ -318,7 +323,7 @@ static void versionInfoMacro(uint8_t keyState) {
 static void macroSwitchQwerty(uint8_t keyState) {
   if (keyToggledOn(keyState))
   {
-    UnlockLayer(NUMPAD);
+    Layer.off(NUMPAD);
     Layer.defaultLayer(QWERTY);
   }
 }
@@ -326,7 +331,7 @@ static void macroSwitchQwerty(uint8_t keyState) {
 static void macroSwitchColemak(uint8_t keyState) {
   if (keyToggledOn(keyState))
   {
-    UnlockLayer(NUMPAD);
+    Layer.off(NUMPAD);
     Layer.defaultLayer(COLEMAK);
   }
 }
@@ -334,10 +339,11 @@ static void macroSwitchColemak(uint8_t keyState) {
 static void macroSwitchGame(uint8_t keyState) {
   if (keyToggledOn(keyState))
   {
-    UnlockLayer(NUMPAD);
+    Layer.off(NUMPAD);
     Layer.defaultLayer(GAME);
   }
 }
+
 
 static void macroReset(uint8_t keyState) {
   if (keyToggledOn(keyState))
@@ -374,7 +380,7 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
     case M_SG:
       macroSwitchGame(keyState);
       break;
-      case M_RS:
+    case M_RS:
       macroReset(keyState);
       break;
   }
@@ -432,15 +438,18 @@ void hostPowerManagementEventHandler(kaleidoscope::HostPowerManagement::Event ev
   toggleLedsOnSuspendResume(event);
 }
 
-KALEIDOSCOPE_INIT_PLUGINS(LEDControl,
-                          LEDOff,
+KALEIDOSCOPE_INIT_PLUGINS(
+                          LEDControl,
                           Macros,
                           TapDance,
                           OneShot,
                           ActiveModColorEffect,
                           EscapeOneShot,
-                          LayerColor,
                           MouseKeys,
+                          Focus,
+                          EEPROMSettings,
+                          LEDPaletteTheme,
+                          ColormapEffect,
                           // The HostPowerManagement plugin allows us to turn LEDs off when then host
                           // goes to sleep, and resume them when it wakes up.
                           HostPowerManagement
@@ -458,6 +467,12 @@ void setup() {
   // First, call Kaleidoscope's internal setup function
   Kaleidoscope.setup();
 
+    // Important for LED Custom Palette, how many paletts we should reserve
+  ColormapEffect.max_layers(MaxLayerNum);  
+  ColormapEffect.activate();
+  // Let the keyboard know we're done with adding EEPROM plugins
+  EEPROMSettings.seal();
+
   OneShot.double_tap_sticky = false;
   // http://www.color-hex.com/color-palette/5361
   ActiveModColorEffect.highlight_color = CRGB(0xba, 0xff, 0xc9);
@@ -465,7 +480,6 @@ void setup() {
   TapDance.time_out = 170;
   MouseKeys.wheelDelay = 20;
   MouseKeys.wheelSpeed = 2;
-  LEDOff.activate();
   Layer.defaultLayer(QWERTY);
 }
 
