@@ -1,4 +1,4 @@
-// -*- mode: c++ -*-
+    // -*- mode: c++ -*-
 // Copyright 2016 Keyboardio, inc. <jesse@keyboard.io>
 // See "LICENSE" for license details
 
@@ -81,7 +81,10 @@ enum { MACRO_VERSION_INFO,
        M_SQ,
        M_SC,
        M_SG,
-       M_RS
+       M_RS,
+       L_AE,
+       L_OE,
+       L_AA
      };
 
 /** Tapdance enum
@@ -168,11 +171,11 @@ KEYMAPS(
    OSM(LeftControl), Key_Spacebar, Key_Enter, OSM(LeftShift),
    ShiftToLayer(NUMPAD),
 
-   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         Key_Keymap4,
+   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         ___,
    TD(CT_MNS),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    Key_Delete,       Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
-   OSM(LeftAlt), OSM(LeftShift), Key_Backspace, OSM(RightControl),
+   OSM(LeftAlt), OSM(LeftShift), Key_Backspace, OSM(LeftControl),
    ShiftToLayer(FUNCTION)),
 
  /*   Colemake DH Matrix https://colemakmods.github.io/mod-dh/keyboards.html
@@ -201,7 +204,7 @@ KEYMAPS(
    OSM(LeftControl), Key_Spacebar, Key_Enter, OSM(LeftShift),
    ShiftToLayer(NUMPAD),
 
-   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
+   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         ___,
    TD(CT_MNS),       Key_J,     Key_L,     Key_U,     Key_Y,      Key_Semicolon, Key_Equals,
                      Key_M,     Key_N,     Key_E,     Key_I,      Key_O,         Key_Quote,
    Key_Delete,       Key_K,     Key_H,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
@@ -234,12 +237,12 @@ KEYMAPS(
    Key_LeftControl, Key_Spacebar, Key_LeftShift,    Key_LeftAlt,
    ShiftToLayer(FUNCTION),
 
-   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
+   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         ___,
    TD(CT_MNS),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    OSM(LeftAlt),     Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
    Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
-   ShiftToLayer(FUNCTION)),
+   ShiftToLayer(NUMPAD)),
 
 
 /* 
@@ -290,13 +293,13 @@ KEYMAPS(
   (___, ___,     ___,     ___,               ___, ___, ___,
    ___, M(M_SQ), M(M_SC), M(M_SG),               ___, ___, ___,
    ___, ___,     ___,     Key_mouseScrollDn, Key_mouseScrollUp, ___,
-   ___, ___,     ___,     ___,               ___, ___, ___,
+   ___, M(L_AE), M(L_OE), M(L_AA),               ___, ___, ___,
    ___, ___, ___, ___,
    ___,
 
 
 
-M(MACRO_VERSION_INFO),     ___,         XXX,   XXX,        XXX,           Key_Minus,          UnlockLayer(NUMPAD),
+M(MACRO_VERSION_INFO),     ___,         XXX,   XXX,        XXX,           Key_Minus,          ___,
    ___,                    Key_Period,  Key_1, Key_2,      Key_3,         LSHIFT(Key_Equals), LSHIFT(Key_9),
                            Key_0,       Key_4, Key_5,      Key_6,         Key_Equals,         Key_Quote,
    ___,                    Key_Comma,   Key_7, Key_8,      Key_9,         Key_Slash,          Key_Enter,
@@ -322,25 +325,31 @@ static void versionInfoMacro(uint8_t keyState) {
 
 static void macroSwitchQwerty(uint8_t keyState) {
   if (keyToggledOn(keyState))
-  {
-    Layer.off(NUMPAD);
-    Layer.defaultLayer(QWERTY);
+  {     
+    Layer.deactivate(NUMPAD);
+    Layer.move(QWERTY);
+    Layer.activate(QWERTY);
+    OneShot.enableStickabilityForModifiers();
   }
 }
 
 static void macroSwitchColemak(uint8_t keyState) {
   if (keyToggledOn(keyState))
-  {
-    Layer.off(NUMPAD);
-    Layer.defaultLayer(COLEMAK);
+  { 
+   Layer.deactivate(NUMPAD); 
+    Layer.move(COLEMAK);
+    Layer.activate(COLEMAK);
+    OneShot.enableStickabilityForModifiers();
   }
 }
 
 static void macroSwitchGame(uint8_t keyState) {
   if (keyToggledOn(keyState))
   {
-    Layer.off(NUMPAD);
-    Layer.defaultLayer(GAME);
+    Layer.deactivate(NUMPAD);
+    Layer.move(GAME);
+    Layer.activate(GAME);
+    OneShot.disableStickabilityForModifiers();
   }
 }
 
@@ -383,16 +392,58 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
     case M_RS:
       macroReset(keyState);
       break;
+     case L_AE:
+      compose2(Key_A, true, Key_E, true, keyState);
+      break;
+    case L_OE:
+      compose2(Key_Slash, false, Key_O, true, keyState);
+      break;
+    case L_AA:
+      compose2(Key_O, false, Key_A, true, keyState);
+      break;
   }
 
 
   return MACRO_NONE;
 }
 
+// compose2, press, release and tap functions are taken from https://github.com/lldata/Model01-Firmware/blob/master/Model01-Firmware.ino
+// uses right alt as compose key
+static void compose2(Key key1, bool shift1, Key key2, bool shift2, uint8_t keyState) {
+  if (!keyToggledOn(keyState)) {
+    return;
+  }
+    bool shifted = kaleidoscope::hid::wasModifierKeyActive(Key_LeftShift)
+  || kaleidoscope::hid::wasModifierKeyActive(Key_RightShift);
+
+  tap(Key_RightAlt);
+  if (shifted && shift1) press(Key_LeftShift);
+  tap(key1);
+  if (shifted && shift1) release(Key_LeftShift);
+  if (shifted && shift2) press(Key_LeftShift);
+  tap(key2);
+  if (shifted && shift2) release(Key_LeftShift);
+  //release(Key_RightAlt);
+}
+
+static void press(Key key) {
+  kaleidoscope::hid::pressKey(key);
+  kaleidoscope::hid::sendKeyboardReport();
+}
+
+static void release(Key key) {
+  kaleidoscope::hid::releaseKey(key);
+  kaleidoscope::hid::sendKeyboardReport();
+}
+
+static void tap(Key key) {
+  press(key);
+  release(key);
+}
 
 /**  Tapdance imp
 */
-void tapDanceAction(uint8_t tap_dance_index, byte row, byte col, uint8_t tap_count, kaleidoscope::TapDance::ActionType tap_dance_action) {
+void tapDanceAction(uint8_t tap_dance_index, byte row, byte col, uint8_t tap_count, kaleidoscope::plugin::TapDance::ActionType tap_dance_action) {
   switch (tap_dance_index) {
     case CT_LCK:
       return tapDanceActionKeys(tap_count, tap_dance_action, LGUI(Key_L), LCTRL(LALT(Key_Delete)));
@@ -442,9 +493,9 @@ KALEIDOSCOPE_INIT_PLUGINS(
                           LEDControl,
                           Macros,
                           TapDance,
+                          EscapeOneShot,
                           OneShot,
                           ActiveModColorEffect,
-                          EscapeOneShot,
                           MouseKeys,
                           Focus,
                           EEPROMSettings,
@@ -473,14 +524,15 @@ void setup() {
   // Let the keyboard know we're done with adding EEPROM plugins
   EEPROMSettings.seal();
 
-  OneShot.double_tap_sticky = false;
+  OneShot.double_tap_time_out = 5;
+
   // http://www.color-hex.com/color-palette/5361
   ActiveModColorEffect.highlight_color = CRGB(0xba, 0xff, 0xc9);
   ActiveModColorEffect.sticky_color = CRGB(0xff, 0xdf, 0xba);
   TapDance.time_out = 170;
   MouseKeys.wheelDelay = 20;
   MouseKeys.wheelSpeed = 2;
-  Layer.defaultLayer(QWERTY);
+  Layer.move(QWERTY);
 }
 
 /** loop is the second of the standard Arduino sketch functions.
