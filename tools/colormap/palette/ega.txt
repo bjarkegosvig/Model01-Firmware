@@ -1,0 +1,17 @@
+palette
+  0   0   0 # Black
+  0   0 170 # Blue
+  0 170   0 # Green
+  0 170 170 # Cyan
+170   0   0 # Red
+170   0 170 # Magenta
+170  85   0 # Brown
+170 170 170 # Light grey
+ 85  85  85 # Dark grey
+ 85  85 255 # Bright blue
+ 85 255  85 # Bright green
+ 85 255 255 # Bright cyan
+255  85  85 # Bright red
+255  85 255 # Bright Magenta
+255 255  85 # yellow
+255 255 255 # white / transparent

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+PALETTE=${1:-ega}
+
+clean_command () {
+    sed -e "s,#.*,,"
+}
+
+FOCUS="$(dirname $0)/../focus"
+
+PALETTE="$(echo $(grep -v "^#" "$(dirname $0)/palette/${PALETTE}.txt" | clean_command))"
+${FOCUS} "${PALETTE}"
+
+COLORMAP="$(echo $(grep -v "^#" "$(dirname $0)/colormap.txt" | clean_command))"
+${FOCUS} "${COLORMAP}"

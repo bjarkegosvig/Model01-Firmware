@@ -1,0 +1,18 @@
+palette
+
+  0   0   0 # Black                  -  0
+150 221 243 # Blue                   -  1 *
+155 243 150 # Green                  -  2 *
+100 245 200 # Cyan                   -  3
+230 119 107 # Red                    -  4 *
+230 128 255 # Magenta                -  5
+255 170 200 # Pink                   -  6
+242 228 110 # Yellow                 -  7 *
+229 119 107 # Peach                  -  8 *
+242 242 242 # White                  -  9
+  0   0   0 # Unused                 - 10
+  0   0   0 # Unused                 - 11
+  0   0   0 # Unused                 - 12
+  0   0   0 # Unused                 - 13
+  0   0   0 # Unused                 - 14
+  0   0   0 # Transparent            - 15
