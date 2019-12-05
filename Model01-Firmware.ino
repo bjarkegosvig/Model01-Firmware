@@ -304,8 +304,8 @@ KEYMAPS(
    ShiftToLayer(LAYSEL),
 
    M(M_RS),        Key_F6,         Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
-   Key_GT,         XXX,            Key_Home,                 Key_UpArrow,              Key_End,         Key_Insert,       Key_F12,
-                   XXX,            Key_LeftArrow,            Key_DownArrow,            Key_RightArrow,  ___,              TD(CT_LCK),
+   Key_GT,         Consumer_ScanNextTrack,            Key_Home,                 Key_UpArrow,              Key_End,         Key_Insert,       Key_F12,
+                   Consumer_PlaySlashPause,            Key_LeftArrow,            Key_DownArrow,            Key_RightArrow,  ___,              TD(CT_LCK),
    Key_PageDown,   Consumer_Mute,  Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
    ___, ___, Key_Delete, ___,
    ___),
