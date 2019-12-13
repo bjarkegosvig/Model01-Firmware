@@ -284,11 +284,11 @@ KEYMAPS(
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |            |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |  Rst |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |            |   |  |   %  |   {  |   }  |   &  |      |       |      |      | Home |  Up  | End  |Insert|    F12     |
+ * |            |   |  |   %  |   {  |   }  |   &  |      |       |      | Mute | Home |  Up  | End  |Insert|    F12     |
  * |------------+------+------+------+------+------|  <   |       |  >   |------+------+------+------+------+------------|
- * |            |   #  |   $  |   (  |   )  |   *  |------|       |------|      | Left | Down |Right |      | (un)lck    |
+ * |            |   #  |   $  |   (  |   )  |   *  |------|       |------| Play | Left | Down |Right |      | (un)lck    |
  * |------------+------+------+------+------+------| PgDn |       | PgDn |------+------+------+------+------+------------|
- * |            |   @  |   ^  |   [  |   ]  |   ~  |      |       |      |Mute  | VolDn|VolUp |      |   \  |     |      |
+ * |            |   @  |   ^  |   [  |   ]  |   ~  |      |       |      | VolDn|VolUp |NextTk|PrevTk|   \  |     |      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
  *                           |  Ctrl |      |      |      |       |      |      | Del  |      |
@@ -303,10 +303,10 @@ KEYMAPS(
    OSM(LeftControl), ___, ___, ___,
    ShiftToLayer(LAYSEL),
 
-   M(M_RS),        Key_F6,         Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
-   Key_GT,         Consumer_ScanNextTrack,            Key_Home,                 Key_UpArrow,              Key_End,         Key_Insert,       Key_F12,
-                   Consumer_PlaySlashPause,            Key_LeftArrow,            Key_DownArrow,            Key_RightArrow,  ___,              TD(CT_LCK),
-   Key_PageDown,   Consumer_Mute,  Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
+   M(M_RS),        Key_F6,                    Key_F7,                   Key_F8,                     Key_F9,                 Key_F10,          Key_F11,
+   Key_GT,         Consumer_Mute,             Key_Home,                 Key_UpArrow,                Key_End,                Key_Insert,       Key_F12,
+                   Consumer_PlaySlashPause,   Key_LeftArrow,            Key_DownArrow,              Key_RightArrow,         ___,              TD(CT_LCK),
+   Key_PageDown,   Consumer_VolumeDecrement,  Consumer_VolumeIncrement, Consumer_ScanPreviousTrack, Consumer_ScanNextTrack, Key_Backslash,    Key_Pipe,
    ___, ___, Key_Delete, ___,
    ___),
 
