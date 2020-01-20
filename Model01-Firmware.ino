@@ -488,8 +488,8 @@ static void compose2(Key key1, bool shift1, Key key2, bool shift2, uint8_t keySt
   if (!keyToggledOn(keyState)) {
     return;
   }
-    bool shifted = kaleidoscope::hid::wasModifierKeyActive(Key_LeftShift)
-  || kaleidoscope::hid::wasModifierKeyActive(Key_RightShift);
+    bool shifted = Kaleidoscope.hid().keyboard().wasModifierKeyActive(Key_LeftShift)
+  || Kaleidoscope.hid().keyboard().wasModifierKeyActive(Key_RightShift);
 
   tap(Key_RightAlt);
   if (shifted && shift1) press(Key_LeftShift);
@@ -502,13 +502,13 @@ static void compose2(Key key1, bool shift1, Key key2, bool shift2, uint8_t keySt
 }
 
 static void press(Key key) {
-  kaleidoscope::hid::pressKey(key);
-  kaleidoscope::hid::sendKeyboardReport();
+  Kaleidoscope.hid().keyboard().pressKey(key);
+  Kaleidoscope.hid().keyboard().sendReport();
 }
 
 static void release(Key key) {
-  kaleidoscope::hid::releaseKey(key);
-  kaleidoscope::hid::sendKeyboardReport();
+  Kaleidoscope.hid().keyboard().releaseKey(key);
+  Kaleidoscope.hid().keyboard().sendReport();
 }
 
 static void tap(Key key) {
@@ -538,29 +538,26 @@ void tapDanceAction(uint8_t tap_dance_index, byte row, byte col, uint8_t tap_cou
 }
 
 /** toggleLedsOnSuspendResume toggles the LEDs off when the host goes to sleep,
-   and turns them back on when it wakes up.
-*/
-void toggleLedsOnSuspendResume(kaleidoscope::HostPowerManagement::Event event) {
+ * and turns them back on when it wakes up.
+ */
+void toggleLedsOnSuspendResume(kaleidoscope::plugin::HostPowerManagement::Event event) {
   switch (event) {
-    case kaleidoscope::HostPowerManagement::Suspend:
-      LEDControl.paused = true;
-      LEDControl.set_all_leds_to({0, 0, 0});
-      LEDControl.syncLeds();
-      break;
-    case kaleidoscope::HostPowerManagement::Resume:
-      LEDControl.paused = false;
-      LEDControl.refreshAll();
-      break;
-    case kaleidoscope::HostPowerManagement::Sleep:
-      break;
+  case kaleidoscope::plugin::HostPowerManagement::Suspend:
+    LEDControl.disable();
+    break;
+  case kaleidoscope::plugin::HostPowerManagement::Resume:
+    LEDControl.enable();
+    break;
+  case kaleidoscope::plugin::HostPowerManagement::Sleep:
+    break;
   }
 }
 
 /** hostPowerManagementEventHandler dispatches power management events (suspend,
-   resume, and sleep) to other functions that perform action based on these
-   events.
-*/
-void hostPowerManagementEventHandler(kaleidoscope::HostPowerManagement::Event event) {
+ * resume, and sleep) to other functions that perform action based on these
+ * events.
+ */
+void hostPowerManagementEventHandler(kaleidoscope::plugin::HostPowerManagement::Event event) {
   toggleLedsOnSuspendResume(event);
 }
 
