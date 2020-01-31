@@ -95,7 +95,9 @@ enum {CT_LCK,
       CT_BLD,
       CT_CLN,
       CT_MNS,
-      CT_ST
+      CT_ST,
+      CT_LPB,
+      CT_RPB
      };
 
 
@@ -147,37 +149,37 @@ enum { QWERTY, COLEMAK, GAME, ARWGAME, FUNCTION, NUMPAD, LAYSEL, MaxLayerNum}; /
 // *INDENT-OFF*
 
 KEYMAPS(
-/*   
+/*
  * ,------------------------------------------------------.       ,------------------------------------------------------.
 *  |  Esc/prg   |   1  |   2  |   3  |   4  |   5  | Rofi |       |  GUI |   6  |   7  |   8  |   9  |   0  | OS LaySel  |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |    Tab     |   Q  |   W  |   E  |   R  |   T  |      |       |      |   Y  |   U  |   I  |   O  |   P  |    +=      |
- * |------------+------+------+------+------+------| :/;  |       | Ent  |------+------+------+------+------+------------|
+ * |    Tab     |   Q  |   W  |   E  |   R  |   T  |{/(/[ |       |]/)/} |   Y  |   U  |   I  |   O  |   P  |    +=      |
+ * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
  * |    Shft    |   A  |   S  |   D  |   F  |   G  |------|       |------|   H  |   J  |   K  |   L  |   ;  |    '"      |
- * |------------+------+------+------+------+------|      |       | GUI  |------+------+------+------+------+------------|
- * |    Ctrl    |   Z  |   X  |   C  |   V  |   B  |  Esc |       |      |   N  |   M  |   ,  |   .  |  /   |    _-      |
+ * |------------+------+------+------+------+------|      |       |  -_  |------+------+------+------+------+------------|
+ * |    Ctrl    |   Z  |   X  |   C  |   V  |   B  | :/;  |       |      |   N  |   M  |   ,  |   .  |  /   |    _-      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           | Ctrl  |Space | Ent  | Shft |       | Shft | Alt  |BckSP | Ctrl |
+ *                           | Ctrl  |Space | Ent  | Esc  |       | GUI  | Shft |BckSP | Alt  |
  *                           `----------------------------'       `---------------------------'
  *
  *                                    ,-----------.                        ,-----------.
- *                                    | Layer FUN |                        | Layer FUN |
+ *                                    | Layer Num |                        | Layer FUN |
  *                                    `-----------'                        `-----------'
  */
   [QWERTY] = KEYMAP_STACKED
   (Key_Escape,           Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     LGUI(Key_P),
-   Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     TD(CT_CLN),
+   Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     TD(CT_LPB),
    OSM(LeftControl),     Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
-   OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     Key_Escape,
-   OSM(LeftControl), Key_Spacebar, Key_Enter, OSM(LeftShift),
+   OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     TD(CT_CLN),
+   OSM(LeftControl), Key_Spacebar, Key_Enter, Key_Escape,
    ShiftToLayer(NUMPAD),
 
    Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
-   Key_Enter,        Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
+   TD(CT_RPB),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
-   OSM(LeftGui),      Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
-   OSM(LeftShift), OSM(LeftAlt), Key_Backspace, OSM(LeftControl),
+   Key_Minus,        Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,    Key_Minus,
+   OSM(LeftGui), OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
    ShiftToLayer(FUNCTION)),
 
  /*   Colemake DH Matrix https://colemakmods.github.io/mod-dh/keyboards.html
@@ -213,9 +215,9 @@ KEYMAPS(
    OSM(LeftAlt), OSM(LeftShift), Key_Backspace, OSM(RightControl),
    ShiftToLayer(FUNCTION)),
 
-/* Gaming  
+/* Gaming
  * ,------------------------------------------------------.       ,------------------------------------------------------.
- * |  Esc/prg   |   1  |   2  |   3  |   4  |   5  |  N   |       |  GUI |   6  |   7  |   8  |   9  |   0  | OS LaySel  |
+ * |  Esc/prg   |   1  |   2  |   3  |   4  |   5  |  Y   |       |  GUI |   6  |   7  |   8  |   9  |   0  | OS LaySel  |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
  * |    Tab     |   Q  |   W  |   E  |   R  |   T  |      |       |      |   Y  |   U  |   I  |   O  |   P  |    +=      |
  * |------------+------+------+------+------+------|  M   |       | -/_  |------+------+------+------+------+------------|
@@ -232,7 +234,7 @@ KEYMAPS(
  *                                    `-----------'                        `-----------'
  */
 [GAME] = KEYMAP_STACKED
-  (Key_Escape,           Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     Key_N,
+  (Key_Escape,           Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     Key_Y,
    Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_M,
    Key_LeftControl,      Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
    Key_LeftShift,        Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     Key_Enter,
@@ -246,7 +248,7 @@ KEYMAPS(
    Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
    ShiftToLayer(NUMPAD)),
 
-   /* Gaming  
+   /* Gaming
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |  Esc/prg   |   1  |   2  |   3  |   4  |   5  |  N   |       |  GUI |   6  |   7  |   8  |   9  |   0  | OS LaySel  |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
@@ -280,7 +282,7 @@ KEYMAPS(
    ShiftToLayer(NUMPAD)),
 
 
-/* 
+/*
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |            |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |  Rst |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
@@ -298,7 +300,7 @@ KEYMAPS(
   [FUNCTION] =  KEYMAP_STACKED
   (___,      Key_F1,        Key_F2,        Key_F3,               Key_F4,                Key_F5,              ___,
    ___,      Key_Pipe,      Key_PRCNT,     Key_LeftCurlyBracket, Key_RightCurlyBracket, Key_AND,             Key_LT,
-   ___,      Key_HASH,      Key_DOLLR,     Key_LeftParen,        Key_RightParen,        Key_STAR, 
+   ___,      Key_HASH,      Key_DOLLR,     Key_LeftParen,        Key_RightParen,        Key_STAR,
    ___,      Key_AT,        Key_CARET,     Key_LeftBracket,      Key_RightBracket,      Key_TILDE,           Key_PageUp,
    OSM(LeftControl), ___, ___, ___,
    ShiftToLayer(LAYSEL),
@@ -310,7 +312,7 @@ KEYMAPS(
    ___, ___, Key_Delete, ___,
    ___),
 
-/*  
+/*
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |            |      |      |      |      |      |      |       |      |      |      |      |      |   -  |            |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
@@ -341,7 +343,7 @@ M(MACRO_VERSION_INFO),     ___,         XXX,   XXX,        XXX,           Key_Mi
    ___, ___, ___, ___,
    ShiftToLayer(LAYSEL)),
 
-/*  
+/*
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |            |      |      |      |      |      |      |       |      |      |      |      |      |      |            |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
@@ -391,7 +393,7 @@ static void versionInfoMacro(uint8_t keyState) {
 
 static void macroSwitchQwerty(uint8_t keyState) {
   if (keyToggledOn(keyState))
-  {     
+  {
     Layer.move(QWERTY);
     Layer.activate(QWERTY);
     OneShot.enableStickabilityForModifiers();
@@ -400,7 +402,7 @@ static void macroSwitchQwerty(uint8_t keyState) {
 
 static void macroSwitchColemak(uint8_t keyState) {
   if (keyToggledOn(keyState))
-  { 
+  {
     Layer.move(COLEMAK);
     Layer.activate(COLEMAK);
     OneShot.enableStickabilityForModifiers();
@@ -534,6 +536,15 @@ void tapDanceAction(uint8_t tap_dance_index, byte row, byte col, uint8_t tap_cou
                                 LSHIFT(Key_Minus));
     case CT_ST:
       return tapDanceActionKeys(tap_count, tap_dance_action, Key_Esc, ___ );
+
+     case CT_LPB:
+      return tapDanceActionKeys(tap_count, tap_dance_action,
+                                Key_LeftBracket,
+                                Key_LeftParen);
+      case CT_RPB:
+      return tapDanceActionKeys(tap_count, tap_dance_action,
+                                Key_RightBracket,
+                                Key_RightParen);
   }
 }
 
@@ -572,12 +583,12 @@ KALEIDOSCOPE_INIT_PLUGINS(
                           // Focus allows bi-directional communication with the host, and is the
                           // interface through which the keymap in EEPROM can be edited.
                           Focus,
-                        
+
                           // FocusSettingsCommand adds a few Focus commands, intended to aid in
                           // changing some settings of the keyboard, such as the default layer (via the
                           // `settings.defaultLayer` command)
                           FocusSettingsCommand,
-                          
+
                           // FocusEEPROMCommand adds a set of Focus commands, which are very helpful in
                           // both debugging, and in backing up one's EEPROM contents.
                           FocusEEPROMCommand,
@@ -605,7 +616,7 @@ void setup() {
   Kaleidoscope.setup();
 
     // Important for LED Custom Palette, how many paletts we should reserve
-  ColormapEffect.max_layers(MaxLayerNum);  
+  ColormapEffect.max_layers(MaxLayerNum);
   EEPROMKeymap.setup(MaxLayerNum);
 
   OneShot.double_tap_time_out = 5;
@@ -613,7 +624,7 @@ void setup() {
   // http://www.color-hex.com/color-palette/5361
   ActiveModColorEffect.highlight_color = CRGB(0xba, 0xff, 0xc9);
   ActiveModColorEffect.sticky_color = CRGB(0xff, 0xdf, 0xba);
-  TapDance.time_out = 170;
+  TapDance.time_out = 200;
   MouseKeys.wheelDelay = 20;
   MouseKeys.wheelSpeed = 2;
   OneShot.time_out = 1000;
