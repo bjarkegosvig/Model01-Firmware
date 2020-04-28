@@ -1,4 +1,4 @@
-# Keyboardio Model 01 Firmware 
+# Keyboardio Model 01 Firmware
 My keymaps. Current there are two branches bgk which contains my daily layout and the gaming branch containing a layout for gaming
 
 The daily layout uses my own plugin which colors the active keys on the non default keymap
@@ -11,16 +11,20 @@ The daily layout uses my own plugin which colors the active keys on the non defa
 
 ```sh
 mkdir -p $HOME/Arduino
-cd $HOME/Arduino 
+cd $HOME/Arduino
 ```
 
-## Download hardware platform, including library source code 
+## Download hardware platform, including library source code
 
 ```sh
 mkdir -p hardware/keyboardio
 
 ## then clone the hardware definitions to make them available to the arduino environment
 git clone --recursive https://github.com/keyboardio/Arduino-Boards.git hardware/keyboardio/avr
+cd keyboardio
+make
+ln -s /home/bjarke/Arduino/hardware/keyboardio/arduino-1.8.10 /usr/local/arduino
+
 ````
 
 
