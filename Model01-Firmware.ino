@@ -62,7 +62,9 @@
 #define Key_TILDE LSHIFT(Key_Backtick)
 #define Key_LT    LSHIFT(Key_Comma)
 #define Key_GT    LSHIFT(Key_Period)
-
+#define Key_AWDW  LALT(LSHIFT(Key_H))
+#define Key_AWIW  LALT(LSHIFT(Key_L))
+#define Key_AWMM  LCTRL(LGUI(Key_Enter))
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
     The names aren't particularly important. What is important is that each
@@ -328,7 +330,7 @@ KEYMAPS(
  */
   [NUMPAD] =  KEYMAP_STACKED
   (___, ___,     ___,     ___,    ___,                  ___,                  ___,
-   ___, ___,     ___,     ___,    ___,                  ___,                  ___,
+   ___, Key_AWDW,    Key_AWIW,    Key_AWMM,    ___,                  ___,                  ___,
         ___,     ___,     ___,    Key_mouseScrollDn,    Key_mouseScrollUp,    ___,
    ___, ___,     ___,     ___,    ___,                  ___,                  ___,
    ___, ___, ___, ___,
