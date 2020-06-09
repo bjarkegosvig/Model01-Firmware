@@ -15,7 +15,7 @@
 
 set -e
 
-DEVICE="${DEVICE:-/dev/model01}"
+DEVICE="${DEVICE:-/dev/ttyACM0}"
 
 stty -F "${DEVICE}" 9600 raw -echo
 
