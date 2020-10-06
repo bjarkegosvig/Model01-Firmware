@@ -66,6 +66,14 @@
 #define Key_AWIW  LALT(LSHIFT(Key_L))
 #define Key_AWMM  LCTRL(LGUI(Key_Enter))
 #define Key_MCHAT  LCTRL(LSHIFT(Key_M))
+#define Key_MMON  LGUI(LSHIFT(Key_LeftArrow))
+#define Key_MXL   LGUI(Key_LeftArrow)
+#define Key_MXR   LGUI(Key_RightArrow)
+#define Key_MAX   LGUI(Key_UpArrow)
+#define Key_MIN   LGUI(Key_DownArrow)
+#define Key_MDT   LGUI(LCTRL(Key_D))
+#define Key_DTL   LGUI(LCTRL(Key_LeftArrow))
+#define Key_DTR   LGUI(LCTRL(Key_RightArrow))
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
     The names aren't particularly important. What is important is that each
@@ -182,7 +190,7 @@ KEYMAPS(
    TD(CT_RPB),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    Key_Minus,        Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,    Key_Minus,
-   OSM(LeftGui), OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
+   Key_LeftGui, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
    ShiftToLayer(FUNCTION)),
 
  /*   Colemake DH Matrix https://colemakmods.github.io/mod-dh/keyboards.html
@@ -357,21 +365,21 @@ KEYMAPS(
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |            |      |      |      |      |      |      |       |      |      |      |      |      |   -  |            |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |            |AW DW |AW IW |AW MM |      |      |      |       |      |   .  |   7  |   8  |   9  |   +  |      *     |
+ * |            |MV2Mon|VD LFT|VD RGT|MakeVD|      |      |       |      |   .  |   7  |   8  |   9  |   +  |      *     |
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
- * |            |      |      |  MSD | MSU  |      |------|       |------|   0  |   4  |   5  |   6  |   =  |      '     |
+ * |            |MaxL  |MaxDn |MaxUp |MaxR  |      |------|       |------|   0  |   4  |   5  |   6  |   =  |      '     |
  * |------------+------+------+------+------+------|Mute  |       |      |------+------+------+------+------+------------|
- * |            |      |      |      |      |      |Teams |       |      |   ,  |   1  |   2  |   3  |   /  |  Enter     |
+ * |            |      |      |  MSD |MSU   |      |Teams |       |      |   ,  |   1  |   2  |   3  |   /  |  Enter     |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
  *                           |       |      |      |      |       |      |      |      |      |
  *                           `----------------------------'       `---------------------------'
  */
   [NUMPAD] =  KEYMAP_STACKED
-  (___, ___,     ___,     ___,    ___,                  ___,                  ___,
-   ___, Key_AWDW,    Key_AWIW,    Key_AWMM,    ___,                  ___,                  ___,
-   ___,     ___,     ___,    Key_mouseScrollDn,    Key_mouseScrollUp,    ___,
-   ___, ___,     ___,     ___,    ___,                  ___,                  Key_MCHAT,
+  (___, ___,         ___,        ___,                  ___,                      ___,                  ___,
+   ___, Key_MMON,    Key_DTL,    Key_DTR,              Key_MDT,                  ___,                  ___,
+   ___, Key_MXL,     Key_MIN,    Key_MAX,              Key_MXR,                  ___,
+   ___, ___,         ___,        Key_mouseScrollDn,    Key_mouseScrollUp,        ___,                  Key_MCHAT,
    ___, ___, ___, ___,
    ___,
 
