@@ -17,8 +17,6 @@
 // The Kaleidoscope core
 #include <Kaleidoscope.h>
 
-#include "Kaleidoscope-LEDEffect-BootGreeting.h"
-
 #include <Kaleidoscope-SpaceCadet.h>
 
 // Support for macros
@@ -39,14 +37,11 @@
 #include <Kaleidoscope-Escape-OneShot.h>
 #include <Kaleidoscope-LED-ActiveModColor.h>
 #include <Kaleidoscope-Colormap.h>
-#include <Kaleidoscope-LEDEffect-BootGreeting.h>
-//#include "src/Kaleidoscope-LayerColor.h"
 
 #include <Kaleidoscope-FocusSerial.h>
 #include <Kaleidoscope-EEPROM-Settings.h>
 #include "Kaleidoscope-EEPROM-Keymap.h"
 #include <Kaleidoscope-LED-Palette-Theme.h>
-#include <Kaleidoscope-Colormap.h>
 
 
 #define Key_AT    LSHIFT(Key_2)
@@ -569,7 +564,8 @@ static void tap(Key key) {
 
 /**  Tapdance imp
 */
-void tapDanceAction(uint8_t tap_dance_index, byte row, byte col, uint8_t tap_count, kaleidoscope::plugin::TapDance::ActionType tap_dance_action) {
+void tapDanceAction(uint8_t tap_dance_index, KeyAddr key_addr, uint8_t tap_count,
+                    kaleidoscope::plugin::TapDance::ActionType tap_dance_action){
   switch (tap_dance_index) {
     case CT_LCK:
       return tapDanceActionKeys(tap_count, tap_dance_action, LGUI(Key_L), LCTRL(LALT(Key_Delete)));
