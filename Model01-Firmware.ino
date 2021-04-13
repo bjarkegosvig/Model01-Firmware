@@ -179,14 +179,14 @@ KEYMAPS(
    OSM(LeftControl),     Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
    OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     TD(CT_CLN),
    OSM(LeftControl), Key_Spacebar, Key_Enter, Key_Escape,
-   ShiftToLayer(NUMPAD),
+   ShiftToLayer(FUNCTION),
 
    Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
    TD(CT_RPB),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    Key_Minus,        Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,    Key_Minus,
    Key_LeftGui, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
-   ShiftToLayer(FUNCTION)),
+   ShiftToLayer(NUMPAD)),
 
  /*   Colemake DH Matrix https://colemakmods.github.io/mod-dh/keyboards.html
  * ,------------------------------------------------------.       ,------------------------------------------------------.
@@ -330,11 +330,11 @@ KEYMAPS(
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |            |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |  Rst |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |            |   |  |   %  |   {  |   }  |   &  |      |       |      | Mute | Home |  Up  | End  |Insert|    F12     |
- * |------------+------+------+------+------+------|  <   |       |  >   |------+------+------+------+------+------------|
- * |            |   #  |   $  |   (  |   )  |   *  |------|       |------| Play | Left | Down |Right |      | (un)lck    |
+ * |            |      |   <  |   $  |   >  |      |      |       |      |      |   [  |   _  |   ]  |      |    F12     |
+ * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
+ * |            |   \  |   (  |   "  |   )  |   #  |------|       |------|      |   {  |   =  |   }  |   |  |   ;        |0
  * |------------+------+------+------+------+------| PgDn |       | PgDn |------+------+------+------+------+------------|
- * |            |   @  |   ^  |   [  |   ]  |   ~  |      |       |      | VolDn|VolUp |NextTk|PrevTk|   \  |     |      |
+ * |            |   @  |   :  |   *  |   +  |   '  |      |       |      |      |   &  |   ^  |   ~  |      |            |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
  *                           |  Ctrl |      |      |      |       |      |      | Del  |      |
@@ -342,29 +342,29 @@ KEYMAPS(
 */
 
   [FUNCTION] =  KEYMAP_STACKED
-  (___,      Key_F1,        Key_F2,        Key_F3,               Key_F4,                Key_F5,              ___,
-   ___,      Key_Pipe,      Key_PRCNT,     Key_LeftCurlyBracket, Key_RightCurlyBracket, Key_AND,             Key_LT,
-   ___,      Key_HASH,      Key_DOLLR,     Key_LeftParen,        Key_RightParen,        Key_STAR,
-   ___,      Key_AT,        Key_CARET,     Key_LeftBracket,      Key_RightBracket,      Key_TILDE,           Key_PageUp,
+  (___,      Key_F1,        Key_F2,                     Key_F3,               Key_F4,                Key_F5,              ___,
+   ___,      ___,           Key_LT,                     Key_DOLLR,            Key_GT,                ___,                 ___,
+   ___,      Key_Backslash, Key_LeftParen,              LSHIFT(Key_Quote),    Key_RightParen,        Key_HASH,
+   ___,      Key_AT,        LSHIFT(Key_Semicolon),      Key_STAR,             LSHIFT(Key_Equals),    Key_Quote,           Key_PageUp,
    OSM(LeftControl), ___, ___, ___,
    ShiftToLayer(LAYSEL),
 
-   M(M_RS),        Key_F6,                    Key_F7,                   Key_F8,                     Key_F9,                 Key_F10,          Key_F11,
-   Key_GT,         Consumer_Mute,             Key_Home,                 Key_UpArrow,                Key_End,                Key_Insert,       Key_F12,
-                   Consumer_PlaySlashPause,   Key_LeftArrow,            Key_DownArrow,              Key_RightArrow,         ___,              TD(CT_LCK),
-   Key_PageDown,   Consumer_VolumeDecrement,  Consumer_VolumeIncrement, Consumer_ScanPreviousTrack, Consumer_ScanNextTrack, Key_Backslash,    Key_Pipe,
-   ___, ___, Key_Delete, ___,
+   M(M_RS),        Key_F6,  Key_F7,                   Key_F8,                     Key_F9,                 Key_F10,          Key_F11,
+   ___,            ___,     Key_LeftBracket,          LSHIFT(Key_Minus) ,         Key_RightParen,         ___,              Key_F12,
+                   ___,     Key_LCB,                  Key_Equals,                 Key_RCB,                Key_Pipe,         Key_Semicolon,
+   Key_PageDown,   ___,     Key_AND,                  Key_CARET,                  Key_TILDE,              ___,              ___,
+   ___, ___, Key_Delete, ___,   
    ___),
 
 /*
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |            |      |      |      |      |      |      |       |      |      |      |      |      |   -  |            |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |            |MV2Mon|VD LFT|VD RGT|MakeVD|      |      |       |      |   .  |   7  |   8  |   9  |   +  |      *     |
+ * |            |MV2Mon|VD LFT|VD RGT|MakeVD|      |      |       |      | Mute | Home |  Up  | End  |Insert|    F12     |
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
- * |            |MaxL  |MaxDn |MaxUp |MaxR  |      |------|       |------|   0  |   4  |   5  |   6  |   =  |      '     |
+ * |            |MaxL  |MaxDn |MaxUp |MaxR  |      |------|       |------| Play | Left | Down |Right |      | (un)lck    |
  * |------------+------+------+------+------+------|Mute  |       |      |------+------+------+------+------+------------|
- * |            |      |      |  MSD |MSU   |      |Teams |       |      |   ,  |   1  |   2  |   3  |   /  |  Enter     |
+ * |            |      |      |  MSD |MSU   |      |Teams |       |      | VolDn|VolUp |NextTk|PrevTk|      |            |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
  *                           |       |      |      |      |       |      |      |      |      |
@@ -380,10 +380,10 @@ KEYMAPS(
 
 
 
-M(MACRO_VERSION_INFO),     ___,         XXX,   XXX,        XXX,           Key_Minus,          ___,
-   ___,                    Key_Period,  Key_7, Key_8,      Key_9,         LSHIFT(Key_Equals), LSHIFT(Key_9),
-                           Key_0,       Key_4, Key_5,      Key_6,         Key_Equals,         Key_Quote,
-   ___,                    Key_Comma,   Key_1, Key_2,      Key_3,         Key_Slash,          Key_Enter,
+M(MACRO_VERSION_INFO),     ___,                       XXX,                      XXX,                        XXX,                    ___,              ___,
+   ___,                    Consumer_Mute,             Key_Home,                 Key_UpArrow,                Key_End,                Key_Insert,       ___,
+                           Consumer_PlaySlashPause,   Key_LeftArrow,            Key_DownArrow,              Key_RightArrow,         ___,              TD(CT_LCK),
+   ___,                    Consumer_VolumeDecrement,  Consumer_VolumeIncrement, Consumer_ScanPreviousTrack, Consumer_ScanNextTrack, ___,              ___,
    ___, ___, ___, ___,
    ShiftToLayer(LAYSEL)),
 
