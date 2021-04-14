@@ -148,7 +148,7 @@ enum {CT_LCK,
     the numbers 0, 1 and 2.
 */
 
-enum { QWERTY, COLEMAK, GAME, GAMEFCN, ARWGAME, FUNCTION, NUMPAD, LAYSEL, MaxLayerNum}; // layer
+enum { QWERTY, COLEMAK, GAME, GAMEFCN, ARWGAME, FUNCTION, ARROW, LAYSEL, NUMPAD, MaxLayerNum}; // layer
 /* This comment temporarily turns off astyle's indent enforcement
      so we can make the keymaps actually resemble the physical key layout better
 */
@@ -170,7 +170,7 @@ KEYMAPS(
  *                           `----------------------------'       `---------------------------'
  *
  *                                    ,-----------.                        ,-----------.
- *                                    | Layer Num |                        | Layer FUN |
+ *                                    | Layer Fun |                        | Layer NUM |
  *                                    `-----------'                        `-----------'
  */
   [QWERTY] = KEYMAP_STACKED
@@ -186,7 +186,7 @@ KEYMAPS(
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    Key_Minus,        Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,    Key_Minus,
    Key_LeftGui, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
-   ShiftToLayer(NUMPAD)),
+   ShiftToLayer(ARROW)),
 
  /*   Colemake DH Matrix https://colemakmods.github.io/mod-dh/keyboards.html
  * ,------------------------------------------------------.       ,------------------------------------------------------.
@@ -212,7 +212,7 @@ KEYMAPS(
    OSM(LeftControl),     Key_A,   Key_R,  Key_S,    Key_T,     Key_G,
    OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_D,     Key_V,     Key_Escape,
    OSM(LeftControl), Key_Spacebar, Key_Enter, OSM(LeftShift),
-   ShiftToLayer(NUMPAD),
+   ShiftToLayer(ARROW),
 
    Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
    TD(CT_MNS),       Key_J,     Key_L,     Key_U,     Key_Y,      Key_Semicolon, Key_Equals,
@@ -285,7 +285,7 @@ KEYMAPS(
             Key_Keypad0,    Key_Keypad4,     Key_Keypad5,     Key_Keypad6,      XXX,           XXX,
    XXX,     XXX,            Key_Keypad1,     Key_Keypad2,     Key_Keypad3,      XXX,           XXX,
    Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
-   ShiftToLayer(NUMPAD)),
+   ShiftToLayer(ARROW)),
 
 
 
@@ -321,7 +321,7 @@ KEYMAPS(
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    OSM(LeftAlt),     Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
    Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
-   ShiftToLayer(NUMPAD)),
+   ShiftToLayer(ARROW)),
 
 
 
@@ -347,14 +347,14 @@ KEYMAPS(
    ___,      Key_Backslash, Key_LeftParen,              LSHIFT(Key_Quote),    Key_RightParen,        Key_HASH,
    ___,      Key_AT,        LSHIFT(Key_Semicolon),      Key_STAR,             LSHIFT(Key_Equals),    Key_Quote,           Key_PageUp,
    OSM(LeftControl), ___, ___, ___,
-   ShiftToLayer(LAYSEL),
+   ___,
 
    M(M_RS),        Key_F6,  Key_F7,                   Key_F8,                     Key_F9,                 Key_F10,          Key_F11,
    ___,            ___,     Key_LeftBracket,          LSHIFT(Key_Minus) ,         Key_RightParen,         ___,              Key_F12,
                    ___,     Key_LCB,                  Key_Equals,                 Key_RCB,                Key_Pipe,         Key_Semicolon,
    Key_PageDown,   ___,     Key_AND,                  Key_CARET,                  Key_TILDE,              ___,              ___,
    ___, ___, Key_Delete, ___,   
-   ___),
+  ShiftToLayer(LAYSEL)),
 
 /*
  * ,------------------------------------------------------.       ,------------------------------------------------------.
@@ -364,28 +364,30 @@ KEYMAPS(
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
  * |            |MaxL  |MaxDn |MaxUp |MaxR  |      |------|       |------| Play | Left | Down |Right |      | (un)lck    |
  * |------------+------+------+------+------+------|Mute  |       |      |------+------+------+------+------+------------|
- * |            |      |      |  MSD |MSU   |      |Teams |       |      | VolDn|VolUp |NextTk|PrevTk|      |            |
+ * |            |      |      |  MSD |MSU   |      |Teams |       |      | VolDn|VolUp |NextTk|PrevTk|      |Numpad      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           |       |      |      |      |       |      |      |      |      |
+ *                           |       |      |      |      |       |      |      | Del |      |
  *                           `----------------------------'       `---------------------------'
  */
-  [NUMPAD] =  KEYMAP_STACKED
+  [ARROW] =  KEYMAP_STACKED
   (___, ___,         ___,        ___,                  ___,                      ___,                  ___,
    ___, Key_MMON,    Key_DTL,    Key_DTR,              Key_MDT,                  ___,                  ___,
    ___, Key_MXL,     Key_MIN,    Key_MAX,              Key_MXR,                  ___,
    ___, ___,         ___,        Key_mouseScrollDn,    Key_mouseScrollUp,        ___,                  Key_MCHAT,
    ___, ___, ___, ___,
-   ___,
+   ShiftToLayer(LAYSEL),
 
 
 
 M(MACRO_VERSION_INFO),     ___,                       XXX,                      XXX,                        XXX,                    ___,              ___,
    ___,                    Consumer_Mute,             Key_Home,                 Key_UpArrow,                Key_End,                Key_Insert,       ___,
                            Consumer_PlaySlashPause,   Key_LeftArrow,            Key_DownArrow,              Key_RightArrow,         ___,              TD(CT_LCK),
-   ___,                    Consumer_VolumeDecrement,  Consumer_VolumeIncrement, Consumer_ScanPreviousTrack, Consumer_ScanNextTrack, ___,              ___,
-   ___, ___, ___, ___,
-   ShiftToLayer(LAYSEL)),
+   ___,                    Consumer_VolumeDecrement,  Consumer_VolumeIncrement, Consumer_ScanPreviousTrack, Consumer_ScanNextTrack, ___,              LockLayer(NUMPAD),
+   ___, ___, Key_Delete, ___,
+   ___),
+
+
 
 /*
  * ,------------------------------------------------------.       ,------------------------------------------------------.
@@ -415,6 +417,37 @@ M(MACRO_VERSION_INFO),     ___,                       XXX,                      
    ___,   ___,    ___,      ___,        ___,      ___,    ___,
           ___,    M(L_AE),   M(L_OE),   M(L_AA),  ___,    ___,
    ___,   ___,    ___,      ___,        ___,      ___,    ___,
+   ___, ___, ___, ___,
+   ___),
+
+ /*
+ * ,------------------------------------------------------.       ,------------------------------------------------------.
+ * |            |      |      |      |      |      |      |       |      |      |      |      |      |  -   |            |
+ * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
+ * |            |      |      |      |      |      |      |       |      |   .  |   7  |   8  |   9  |   +  |      *     |
+ * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
+ * |            |      |      |      |      |      |------|       |------|   0  |   4  |   5  |   6  |   =  |      '     |
+ * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
+ * |            |      |      |      |      |      |      |       |      |   ,  |   1  |   2  |   3  |   /  |Unlck layer |
+ * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
+ *                           ,----------------------------.       ,---------------------------.
+ *                           |       |      |      |      |       |      |      |      |      |
+ *                           `----------------------------'       `---------------------------'
+ */
+  [NUMPAD] =  KEYMAP_STACKED
+  (___, ___,     ___,     ___,      ___,      ___, ___,
+   ___, ___,     ___,     ___,      ___,      ___, ___,
+   ___, ___,     ___,     ___,      ___,      ___,
+   ___, ___,     ___,     ___,      ___,      ___, ___,
+   ___, ___, ___, ___,
+   ___,
+
+
+
+   ___,                    ___,         XXX,    XXX,        XXX,           Key_Minus,           ___,
+   ___,                    Key_Period,  Key_7,  Key_8,      Key_9,         LSHIFT(Key_Equals),  LSHIFT(Key_9),
+                           Key_0,       Key_4,  Key_5,      Key_6,         Key_Equals,          Key_Quote,
+   ___,                    Key_Comma,   Key_1,  Key_2,      Key_3,         Key_Slash,           UnlockLayer(NUMPAD),
    ___, ___, ___, ___,
    ___),
 
