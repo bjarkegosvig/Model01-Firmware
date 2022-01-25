@@ -37,10 +37,13 @@
 #include <Kaleidoscope-Escape-OneShot.h>
 #include <Kaleidoscope-LED-ActiveModColor.h>
 #include <Kaleidoscope-Colormap.h>
+#include <Kaleidoscope-HostOS.h>
 
 #include <Kaleidoscope-FocusSerial.h>
+
 #include <Kaleidoscope-EEPROM-Settings.h>
-#include "Kaleidoscope-EEPROM-Keymap.h"
+#include <Kaleidoscope-Colormap.h>
+#include <Kaleidoscope-FocusSerial.h>
 #include <Kaleidoscope-LED-Palette-Theme.h>
 
 
@@ -52,6 +55,7 @@
 #define Key_EXCLM LSHIFT(Key_1)
 #define Key_HASH  LSHIFT(Key_3)
 #define Key_AND   LSHIFT(Key_7)
+#define Key_PLUS  LSHIFT(Key_Equals)
 #define Key_LCB   LSHIFT(Key_LeftBracket)
 #define Key_RCB   LSHIFT(Key_RightBracket)
 #define Key_TILDE LSHIFT(Key_Backtick)
@@ -103,7 +107,8 @@ enum {CT_LCK,
       CT_MNS,
       CT_ST,
       CT_LPB,
-      CT_RPB
+      CT_RPB,
+      CT_CP,      
      };
 
 
@@ -181,7 +186,7 @@ KEYMAPS(
    OSM(LeftControl), Key_Spacebar, Key_Enter, Key_Escape,
    ShiftToLayer(FUNCTION),
 
-   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
+   Key_LEDEffectNext,        Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
    TD(CT_RPB),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    Key_Minus,        Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,    Key_Minus,
@@ -214,7 +219,7 @@ KEYMAPS(
    OSM(LeftControl), Key_Spacebar, Key_Enter, OSM(LeftShift),
    ShiftToLayer(ARROW),
 
-   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
+   TD(CT_CP),        Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
    TD(CT_MNS),       Key_J,     Key_L,     Key_U,     Key_Y,      Key_Semicolon, Key_Equals,
                      Key_M,     Key_N,     Key_E,     Key_I,      Key_O,         Key_Quote,
    Key_Delete,       Key_K,     Key_H,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
@@ -326,15 +331,16 @@ KEYMAPS(
 
 
 
+
 /*
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |            |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |  Rst |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |            |      |   <  |   $  |   >  |      |      |       |      |      |   [  |   _  |   ]  |      |    F12     |
- * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
- * |            |   \  |   (  |   "  |   )  |   #  |------|       |------|      |   {  |   =  |   }  |   |  |   ;        |0
+ * |    +       |   |  |   {  |   %  |   }  |   &  |      |       |      | Mute | Home |  Up  | End  |Insert|    +       |
+ * |------------+------+------+------+------+------|  <   |       |  >   |------+------+------+------+------+------------|
+ * |            |   #  |   (  |   $  |   )  |   *  |------|       |------| Play | Left | Down |Right |      | (un)lck    |
  * |------------+------+------+------+------+------| PgDn |       | PgDn |------+------+------+------+------+------------|
- * |            |   @  |   :  |   *  |   +  |   '  |      |       |      |      |   &  |   ^  |   ~  |      |            |
+ * |            |   @  |   [  |   ^  |   ]  |   ~  |      |       |      | VolDn|VolUp |NextTk|PrevTk|   \  |     |      |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
  *                           |  Ctrl |      |      |      |       |      |      | Del  |      |
@@ -342,32 +348,32 @@ KEYMAPS(
 */
 
   [FUNCTION] =  KEYMAP_STACKED
-  (___,      Key_F1,        Key_F2,                     Key_F3,               Key_F4,                Key_F5,              ___,
-   ___,      ___,           Key_LT,                     Key_DOLLR,            Key_GT,                ___,                 ___,
-   ___,      Key_Backslash, Key_LeftParen,              LSHIFT(Key_Quote),    Key_RightParen,        Key_HASH,
-   ___,      Key_AT,        LSHIFT(Key_Semicolon),      Key_STAR,             LSHIFT(Key_Equals),    Key_Quote,           Key_PageUp,
+  (___,      Key_F1,        Key_F2,                 Key_F3,               Key_F4,                Key_F5,              ___,
+   Key_PLUS, Key_Pipe,      Key_LeftCurlyBracket,   Key_PRCNT,            Key_RightCurlyBracket, Key_AND,             Key_LT,
+   ___,      Key_HASH,      Key_LeftParen,          Key_DOLLR,            Key_RightParen,        Key_STAR,
+   ___,      Key_AT,        Key_LeftBracket,        Key_CARET,            Key_RightBracket,      Key_TILDE,           Key_PageUp,
    OSM(LeftControl), ___, ___, ___,
    ___,
 
-   M(M_RS),        Key_F6,  Key_F7,                   Key_F8,                     Key_F9,                 Key_F10,          Key_F11,
-   ___,            ___,     Key_LeftBracket,          LSHIFT(Key_Minus) ,         Key_RightParen,         ___,              Key_F12,
-                   ___,     Key_LCB,                  Key_Equals,                 Key_RCB,                Key_Pipe,         Key_Semicolon,
-   Key_PageDown,   ___,     Key_AND,                  Key_CARET,                  Key_TILDE,              ___,              ___,
-   ___, ___, Key_Delete, ___,   
-  ShiftToLayer(LAYSEL)),
+   M(M_RS),        Key_F6,                    Key_F7,                   Key_F8,                     Key_F9,                 Key_F10,          Key_F11,
+   Key_GT,         Consumer_Mute,             Key_Home,                 Key_UpArrow,                Key_End,                Key_Insert,       Key_PLUS,
+                   Consumer_PlaySlashPause,   Key_LeftArrow,            Key_DownArrow,              Key_RightArrow,         ___,              TD(CT_LCK),
+   Key_PageDown,   Consumer_VolumeDecrement,  Consumer_VolumeIncrement, Consumer_ScanPreviousTrack, Consumer_ScanNextTrack, Key_Backslash,    Key_Pipe,
+   ___, ___, Key_Delete, ___,
+   ShiftToLayer(LAYSEL)),
 
 /*
  * ,------------------------------------------------------.       ,------------------------------------------------------.
- * |            |      |      |      |      |      |      |       |      |      |      |      |      |   -  |            |
+ * |            |      |      |      |      |      |      |       |      |      |      |      |      |      |            |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |            |MV2Mon|VD LFT|VD RGT|MakeVD|      |      |       |      | Mute | Home |  Up  | End  |Insert|    F12     |
+ * |            |MV2Mon|VD LFT|VD RGT|MakeVD|      |      |       |      |      |      |      |      |      |            |
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
- * |            |MaxL  |MaxDn |MaxUp |MaxR  |      |------|       |------| Play | Left | Down |Right |      | (un)lck    |
+ * |            |MaxL  |MaxDn |MaxUp |MaxR  |      |------|       |------|      |      |      |      |      |            |
  * |------------+------+------+------+------+------|Mute  |       |      |------+------+------+------+------+------------|
- * |            |      |      |  MSD |MSU   |      |Teams |       |      | VolDn|VolUp |NextTk|PrevTk|      |Numpad      |
+ * |            |      |      |  MSD |MSU   |      |Teams |       |      |      |      |      |      |      |            |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           |       |      |      |      |       |      |      | Del |      |
+ *                           |       |      |      |      |       |      |      |      |      |
  *                           `----------------------------'       `---------------------------'
  */
   [ARROW] =  KEYMAP_STACKED
@@ -378,15 +384,12 @@ KEYMAPS(
    ___, ___, ___, ___,
    ShiftToLayer(LAYSEL),
 
-
-
-M(MACRO_VERSION_INFO),     ___,                       XXX,                      XXX,                        XXX,                    ___,              ___,
-   ___,                    Consumer_Mute,             Key_Home,                 Key_UpArrow,                Key_End,                Key_Insert,       ___,
-                           Consumer_PlaySlashPause,   Key_LeftArrow,            Key_DownArrow,              Key_RightArrow,         ___,              TD(CT_LCK),
-   ___,                    Consumer_VolumeDecrement,  Consumer_VolumeIncrement, Consumer_ScanPreviousTrack, Consumer_ScanNextTrack, ___,              LockLayer(NUMPAD),
-   ___, ___, Key_Delete, ___,
+   ___,   ___,    ___,                ___,            ___,              ___,    ___,
+   ___,   ___,    Key_Home,           Key_UpArrow,    Key_End,          ___,    ___,
+          LCTRL(Key_RightBracket),    Key_LeftArrow,  Key_DownArrow,  Key_RightArrow,   ___,    ___,
+   ___,   ___,    ___,                ___,            ___,              ___,    ___,
+   ___, ___, ___, ___,
    ___),
-
 
 
 /*
@@ -449,7 +452,7 @@ M(MACRO_VERSION_INFO),     ___,                       XXX,                      
                            Key_0,       Key_4,  Key_5,      Key_6,         Key_Equals,          Key_Quote,
    ___,                    Key_Comma,   Key_1,  Key_2,      Key_3,         Key_Slash,           UnlockLayer(NUMPAD),
    ___, ___, ___, ___,
-   ___),
+   ___)
 
 ) // KEYMAPS(
 
@@ -623,6 +626,11 @@ void tapDanceAction(uint8_t tap_dance_index, KeyAddr key_addr, uint8_t tap_count
       return tapDanceActionKeys(tap_count, tap_dance_action,
                                 Key_RightBracket,
                                 Key_RightParen);
+      
+      case CT_CP:
+      return tapDanceActionKeys(tap_count, tap_dance_action,
+                                LCTRL(Key_Insert),
+                                LSHIFT(Key_Insert));
   }
 }
 
@@ -651,31 +659,22 @@ void hostPowerManagementEventHandler(kaleidoscope::plugin::HostPowerManagement::
 }
 
 KALEIDOSCOPE_INIT_PLUGINS(
-                          LEDControl,
                           Macros,
                           TapDance,
                           EscapeOneShot,
                           OneShot,
                           ActiveModColorEffect,
                           MouseKeys,
-                          // Focus allows bi-directional communication with the host, and is the
-                          // interface through which the keymap in EEPROM can be edited.
-                          Focus,
-
-                          // FocusSettingsCommand adds a few Focus commands, intended to aid in
-                          // changing some settings of the keyboard, such as the default layer (via the
-                          // `settings.defaultLayer` command)
                           FocusSettingsCommand,
-
-                          // FocusEEPROMCommand adds a set of Focus commands, which are very helpful in
-                          // both debugging, and in backing up one's EEPROM contents.
                           FocusEEPROMCommand,
+                          FocusHostOSCommand,
+                          LEDControl,
                           // The EEPROMSettings & EEPROMKeymap plugins make it possible to have an
                           // editable keymap in EEPROM.
                           EEPROMSettings,
-                          EEPROMKeymap,
                           LEDPaletteTheme,
                           ColormapEffect,
+                          Focus,
                           // The HostPowerManagement plugin allows us to turn LEDs off when then host
                           // goes to sleep, and resume them when it wakes up.
                           HostPowerManagement
@@ -695,17 +694,18 @@ void setup() {
 
     // Important for LED Custom Palette, how many paletts we should reserve
   ColormapEffect.max_layers(MaxLayerNum);
+  //ColormapEffect.activate();  
 //  EEPROMKeymap.setup(MaxLayerNum);
 
-  OneShot.double_tap_time_out = 5;
+  OneShot.setDoubleTapTimeout(5);
 
   // http://www.color-hex.com/color-palette/5361
-  ActiveModColorEffect.highlight_color = CRGB(0xba, 0xff, 0xc9);
-  ActiveModColorEffect.sticky_color = CRGB(0xff, 0xdf, 0xba);
+  ActiveModColorEffect.setHighlightColor(CRGB(0xba, 0xff, 0xc9));
+  ActiveModColorEffect.setOnestickyColor(CRGB(0xff, 0xdf, 0xba));
   TapDance.time_out = 200;
   MouseKeys.wheelDelay = 20;
   MouseKeys.wheelSpeed = 2;
-  OneShot.time_out = 1000;
+  OneShot.setTimeout(1000);
   Layer.move(QWERTY);
 }
 
