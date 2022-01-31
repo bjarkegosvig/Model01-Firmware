@@ -16,7 +16,6 @@
 
 // The Kaleidoscope core
 #include <Kaleidoscope.h>
-
 #include <Kaleidoscope-SpaceCadet.h>
 
 // Support for macros
@@ -550,7 +549,7 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
       compose2(Key_A, true, Key_E, true, keyState);
       break;
     case L_OE:
-      compose2(Key_Slash, false, Key_O, true, keyState);
+      compose2(Key_O, true, Key_Slash, false, keyState);
       break;
     case L_AA:
       compose2(Key_O, false, Key_A, true, keyState);
@@ -572,7 +571,9 @@ static void compose2(Key key1, bool shift1, Key key2, bool shift2, uint8_t keySt
   }
     bool shifted = Kaleidoscope.hid().keyboard().wasModifierKeyActive(Key_LeftShift)
   || Kaleidoscope.hid().keyboard().wasModifierKeyActive(Key_RightShift);
-
+  
+  if(shifted) release(Key_LeftShift);
+  
   tap(Key_RightAlt);
   if (shifted && shift1) press(Key_LeftShift);
   tap(key1);
