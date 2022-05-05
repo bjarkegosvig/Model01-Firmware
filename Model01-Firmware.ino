@@ -163,7 +163,7 @@ KEYMAPS(
  * ,------------------------------------------------------.       ,------------------------------------------------------.
 *  |  Esc/prg   |   1  |   2  |   3  |   4  |   5  | Rofi |       |  GUI |   6  |   7  |   8  |   9  |   0  | OS LaySel  |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |    Tab     |   Q  |   W  |   E  |   R  |   T  |{/(/[ |       |]/)/} |   Y  |   U  |   I  |   O  |   P  |    +=      |
+ * |    Tab     |   Q  |   W  |   E  |   R  |   T  | Tab  |       |      |   Y  |   U  |   I  |   O  |   P  |    +=      |
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
  * |    Shft    |   A  |   S  |   D  |   F  |   G  |------|       |------|   H  |   J  |   K  |   L  |   ;  |    '"      |
  * |------------+------+------+------+------+------|      |       |  -_  |------+------+------+------+------+------------|
@@ -179,14 +179,14 @@ KEYMAPS(
  */
   [QWERTY] = KEYMAP_STACKED
   (Key_Escape,           Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     LGUI(Key_P),
-   Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     TD(CT_LPB),
+   Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_Tab,
    OSM(LeftControl),     Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
    OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     TD(CT_CLN),
    OSM(LeftControl), Key_Spacebar, Key_Enter, Key_Escape,
    ShiftToLayer(FUNCTION),
 
    Key_LEDEffectNext,        Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
-   TD(CT_RPB),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
+   Key_Escape,       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    Key_Minus,        Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,    Key_Minus,
    Key_LeftGui, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
@@ -369,7 +369,7 @@ KEYMAPS(
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
  * |            |MaxL  |MaxDn |MaxUp |MaxR  |      |------|       |------|      |      |      |      |      |            |
  * |------------+------+------+------+------+------|Mute  |       |      |------+------+------+------+------+------------|
- * |            |      |      |  MSD |MSU   |      |Teams |       |      |      |      |      |      |      |            |
+ * |            |      |      |  MSD |MSU   |      |Teams |       |  `   |      |      |      |      |      |            |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
  *                           |       |      |      |      |       |      |      |      |      |
@@ -377,17 +377,17 @@ KEYMAPS(
  */
   [ARROW] =  KEYMAP_STACKED
   (___, ___,         ___,        ___,                  ___,                      ___,                  ___,
-   ___, Key_MMON,    Key_DTL,    Key_DTR,              Key_MDT,                  ___,                  ___,
+   ___, Key_MMON,    Key_DTL,    Key_DTR,              Key_MDT,                  ___,                  LCTRL(LALT(Key_Tab)),
    ___, Key_MXL,     Key_MIN,    Key_MAX,              Key_MXR,                  ___,
    ___, ___,         ___,        Key_mouseScrollDn,    Key_mouseScrollUp,        ___,                  Key_MCHAT,
    ___, ___, ___, ___,
    ShiftToLayer(LAYSEL),
 
-   ___,   ___,    ___,                ___,            ___,              ___,    ___,
-   ___,   ___,    Key_Home,           Key_UpArrow,    Key_End,          ___,    ___,
-          LCTRL(Key_RightBracket),    Key_LeftArrow,  Key_DownArrow,  Key_RightArrow,   ___,    ___,
-   ___,   ___,    ___,                ___,            ___,              ___,    ___,
-   ___, ___, ___, ___,
+   ___,   ___,      ___,                        ___,            ___,            ___,                ___,
+   ___,   ___,      Key_Home,                   Key_UpArrow,    Key_End,        ___,                ___,
+                    LCTRL(Key_RightBracket),    Key_LeftArrow,  Key_DownArrow,  Key_RightArrow,     ___,    ___,
+   Key_Backtick,    ___,                        ___,            ___,            ___,                ___,    ___,
+   ___, ___, Key_Delete, ___,
    ___),
 
 
