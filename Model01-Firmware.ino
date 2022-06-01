@@ -183,10 +183,10 @@ KEYMAPS(
    OSM(LeftControl), Key_Spacebar, Key_Enter, Key_Escape,
    ShiftToLayer(FUNCTION),
 
-   Key_LEDEffectNext,        Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
-   Key_Escape,       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
-                     Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
-   Key_Minus,        Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,    Key_Minus,
+   Key_LEDEffectNext, Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
+   Key_Escape,        Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
+                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
+   Key_Minus,         Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
    Key_LeftGui, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
    ShiftToLayer(ARROW)),
 
@@ -288,7 +288,7 @@ KEYMAPS(
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |            |      |      |      |      |      |      |       |      |      |      |      |      |      |            |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |            |Qwerty|Colmak| Game |G Arw |      |      |       |      |      |      |      |      |      |            |
+ * |            |Numpad|Qwerty|Colmak|      |      |      |       |      |      |      |      |      |      |            |
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
  * |            |      |      |      |      |      |------|       |------|      |   æ  |   ø  |   å  |      |            |
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
@@ -299,10 +299,10 @@ KEYMAPS(
  *                           `----------------------------'       `---------------------------'
  */
   [LAYSEL] =  KEYMAP_STACKED
-  (___, ___,     ___,     ___,      ___,      ___, ___,
-   ___, M(M_SQ), M(M_SC), ___,      ___,      ___, ___,
-   ___, ___,     ___,     ___,      ___,      ___,
-   ___, ___,     ___,     ___,      ___,      ___, ___,
+  (___, ___,               ___,     ___,      ___,      ___, ___,
+   ___, LockLayer(NUMPAD), M(M_SQ), M(M_SC),  ___,      ___, ___,
+   ___, ___,              ___,      ___,      ___,      ___,
+   ___, ___,              ___,      ___,      ___,      ___, ___,
    ___, ___, ___, ___,
    ___,
 
@@ -339,7 +339,7 @@ KEYMAPS(
 
 
 
-   ___,                    ___,         XXX,    XXX,        XXX,           Key_Minus,           ___,
+   OSL(LAYSEL),            ___,         XXX,    XXX,        XXX,           Key_Minus,           UnlockLayer(NUMPAD),
    ___,                    Key_Period,  Key_7,  Key_8,      Key_9,         LSHIFT(Key_Equals),  LSHIFT(Key_9),
                            Key_0,       Key_4,  Key_5,      Key_6,         Key_Equals,          Key_Quote,
    ___,                    Key_Comma,   Key_1,  Key_2,      Key_3,         Key_Slash,           UnlockLayer(NUMPAD),

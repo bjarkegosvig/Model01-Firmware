@@ -11,7 +11,7 @@ palette
 255 255 255 # white                  -  9
  30 187 215 # bluish                 - 10
  30 215 151 # greensih               - 11
-  0   0   0 # Unused                 - 12
+255   0 128 # pink                   - 12
   0   0   0 # Unused                 - 13
   0   0   0 # Unused                 - 14
   0   0   0 # Transparent            - 15
