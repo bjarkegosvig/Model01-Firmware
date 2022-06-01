@@ -463,15 +463,15 @@ KEYMAPS(
     prints out the firmware build information as virtual keystrokes
 */
 
-static void versionInfoMacro(uint8_t keyState) {
-  if (keyToggledOn(keyState)) {
+static void versionInfoMacro(KeyEvent &event) {
+  if (keyToggledOn(event.state)) {
     Macros.type(PSTR("Keyboardio Model 01 - Kaleidoscope "));
     Macros.type(PSTR(BUILD_INFORMATION));
   }
 }
 
-static void macroSwitchQwerty(uint8_t keyState) {
-  if (keyToggledOn(keyState))
+static void macroSwitchQwerty(KeyEvent &event) {
+  if (keyToggledOn(event.state))
   {
     Layer.move(QWERTY);
     Layer.activate(QWERTY);
@@ -479,8 +479,8 @@ static void macroSwitchQwerty(uint8_t keyState) {
   }
 }
 
-static void macroSwitchColemak(uint8_t keyState) {
-  if (keyToggledOn(keyState))
+static void macroSwitchColemak(KeyEvent &event) {
+  if (keyToggledOn(event.state))
   {
     Layer.move(COLEMAK);
     Layer.activate(COLEMAK);
@@ -488,8 +488,8 @@ static void macroSwitchColemak(uint8_t keyState) {
   }
 }
 
-static void macroSwitchGame(uint8_t keyState) {
-  if (keyToggledOn(keyState))
+static void macroSwitchGame(KeyEvent &event) {
+  if (keyToggledOn(event.state))
   {
     Layer.move(GAME);
     Layer.activate(GAME);
@@ -498,8 +498,8 @@ static void macroSwitchGame(uint8_t keyState) {
 }
 
 
-static void macroSwitchArwGame(uint8_t keyState) {
-  if (keyToggledOn(keyState))
+static void macroSwitchArwGame(KeyEvent &event) {
+  if (keyToggledOn(event.state))
   {
     Layer.move(ARWGAME);
     Layer.activate(ARWGAME);
@@ -507,8 +507,8 @@ static void macroSwitchArwGame(uint8_t keyState) {
   }
 }
 
-static void macroReset(uint8_t keyState) {
-  if (keyToggledOn(keyState))
+static void macroReset(KeyEvent &event) {
+  if (keyToggledOn(event.state))
   {
     wdt_enable(WDTO_120MS);
     while (1) {}
@@ -527,35 +527,35 @@ static void macroReset(uint8_t keyState) {
 
 */
 
-const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
-  switch (macroIndex) {
+const macro_t *macroAction(uint8_t macro_id, KeyEvent &event) {
+  switch (macro_id) {
 
     case MACRO_VERSION_INFO:
-      versionInfoMacro(keyState);
+      versionInfoMacro(event);
       break;
     case M_SQ:
-      macroSwitchQwerty(keyState);
+      macroSwitchQwerty(event);
       break;
     case M_SC:
-      macroSwitchColemak(keyState);
+      macroSwitchColemak(event);
       break;
     case M_SG:
-      macroSwitchGame(keyState);
+      macroSwitchGame(event);
       break;
     case M_RS:
-      macroReset(keyState);
+      macroReset(event);
       break;
      case L_AE:
-      compose2(Key_A, true, Key_E, true, keyState);
+      compose2(Key_A, true, Key_E, true, event);
       break;
     case L_OE:
-      compose2(Key_O, true, Key_Slash, false, keyState);
+      compose2(Key_O, true, Key_Slash, false, event);
       break;
     case L_AA:
-      compose2(Key_O, false, Key_A, true, keyState);
+      compose2(Key_O, false, Key_A, true, event);
       break;
     case M_ARW:
-      macroSwitchArwGame(keyState);
+      macroSwitchArwGame(event);
       break;
   }
 
@@ -565,8 +565,8 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
 
 // compose2, press, release and tap functions are taken from https://github.com/lldata/Model01-Firmware/blob/master/Model01-Firmware.ino
 // uses right alt as compose key
-static void compose2(Key key1, bool shift1, Key key2, bool shift2, uint8_t keyState) {
-  if (!keyToggledOn(keyState)) {
+static void compose2(Key key1, bool shift1, Key key2, bool shift2, KeyEvent &event) {
+  if (!keyToggledOn(event.state)) {
     return;
   }
     bool shifted = Kaleidoscope.hid().keyboard().wasModifierKeyActive(Key_LeftShift)
