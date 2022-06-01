@@ -214,14 +214,14 @@ KEYMAPS(
    OSM(LeftControl),     Key_A,   Key_R,  Key_S,    Key_T,     Key_G,
    OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_D,     Key_V,     Key_Escape,
    OSM(LeftControl), Key_Spacebar, Key_Enter, OSM(LeftShift),
-   ShiftToLayer(ARROW),
+   ShiftToLayer(FUNCTION),
 
    TD(CT_CP),        Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
    TD(CT_MNS),       Key_J,     Key_L,     Key_U,     Key_Y,      Key_Semicolon, Key_Equals,
                      Key_M,     Key_N,     Key_E,     Key_I,      Key_O,         Key_Quote,
    Key_Delete,       Key_K,     Key_H,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
    OSM(LeftAlt), OSM(LeftShift), Key_Backspace, OSM(RightControl),
-   ShiftToLayer(FUNCTION)),
+   ShiftToLayer(ARROW)),
 
 
 /*
