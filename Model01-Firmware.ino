@@ -226,7 +226,7 @@ KEYMAPS(
 
 /*
  * ,------------------------------------------------------.       ,------------------------------------------------------.
- * |            |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |  Rst |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
+ * |     `       |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |  Rst |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
  * |    +       |   |  |   {  |   %  |   }  |   &  |      |       |      | Mute | Home |  Up  | End  |Insert|    +       |
  * |------------+------+------+------+------+------|  <   |       |  >   |------+------+------+------+------+------------|
@@ -240,7 +240,7 @@ KEYMAPS(
 */
 
   [FUNCTION] =  KEYMAP_STACKED
-  (___,      Key_F1,        Key_F2,                 Key_F3,               Key_F4,                Key_F5,              ___,
+  (Key_Backtick,      Key_F1,        Key_F2,                 Key_F3,               Key_F4,                Key_F5,              ___,
    Key_PLUS, Key_Pipe,      Key_LeftCurlyBracket,   Key_PRCNT,            Key_RightCurlyBracket, Key_AND,             Key_LT,
    ___,      Key_HASH,      Key_LeftParen,          Key_DOLLR,            Key_RightParen,        Key_STAR,
    ___,      Key_AT,        Key_LeftBracket,        Key_CARET,            Key_RightBracket,      Key_TILDE,           Key_PageUp,
