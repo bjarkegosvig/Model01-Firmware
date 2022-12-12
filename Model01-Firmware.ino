@@ -572,9 +572,7 @@ void setup() {
   ActiveModColorEffect.setHighlightColor(CRGB(0xff, 0xff, 0xba));
   ActiveModColorEffect.setStickyColor(CRGB(0xba, 0xe1, 0xff));
   ActiveModColorEffect.setOneShotColor(CRGB(0xba, 0xff, 0xc9));
-  TapDance.time_out = 200;
-  MouseKeys.wheelDelay = 20;
-  MouseKeys.wheelSpeed = 2;
+  TapDance.setTimeout(200);
   OneShot.setTimeout(1000);
   Layer.move(QWERTY);
 }
