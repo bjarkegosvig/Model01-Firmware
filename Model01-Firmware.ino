@@ -15,35 +15,37 @@
 #include <avr/wdt.h>
 
 // The Kaleidoscope core
-#include <Kaleidoscope.h>
-#include <Kaleidoscope-SpaceCadet.h>
+#include "Kaleidoscope.h"
+#include "Kaleidoscope-SpaceCadet.h"
 
 // Support for macros
-#include <Kaleidoscope-Macros.h>
+#include "Kaleidoscope-Macros.h"
 
 // Support for TapDance
-#include <Kaleidoscope-TapDance.h>
+#include "Kaleidoscope-TapDance.h"
+
 
 // Support for controlling the keyboard's LEDs
-#include <Kaleidoscope-LEDControl.h>
+#include "Kaleidoscope-LEDControl.h"
+
 
 // Support for host power management (suspend & wakeup)
-#include <Kaleidoscope-HostPowerManagement.h>
+#include "Kaleidoscope-HostPowerManagement.h"
 
-#include <Kaleidoscope-MouseKeys.h>
+#include "Kaleidoscope-MouseKeys.h"
 
-#include <Kaleidoscope-OneShot.h>
-#include <Kaleidoscope-Escape-OneShot.h>
-#include <Kaleidoscope-LED-ActiveModColor.h>
-#include <Kaleidoscope-Colormap.h>
-#include <Kaleidoscope-HostOS.h>
+#include "Kaleidoscope-OneShot.h"
+#include "Kaleidoscope-Escape-OneShot.h"
+#include "Kaleidoscope-LED-ActiveModColor.h"
+#include "Kaleidoscope-Colormap.h"
+#include "Kaleidoscope-HostOS.h"
 
-#include <Kaleidoscope-FocusSerial.h>
+#include "Kaleidoscope-FocusSerial.h"
 
-#include <Kaleidoscope-EEPROM-Settings.h>
-#include <Kaleidoscope-Colormap.h>
-#include <Kaleidoscope-FocusSerial.h>
-#include <Kaleidoscope-LED-Palette-Theme.h>
+#include "Kaleidoscope-EEPROM-Settings.h"
+#include "Kaleidoscope-Colormap.h"
+#include "Kaleidoscope-FocusSerial.h"
+#include "Kaleidoscope-LED-Palette-Theme.h"
 
 
 #define Key_AT    LSHIFT(Key_2)
@@ -74,17 +76,17 @@
 #define Key_DTR   LGUI(LCTRL(Key_RightArrow))
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
-    The names aren't particularly important. What is important is that each
-    is unique.
-
-    These are the names of your macros. They'll be used in two places.
-    The first is in your keymap definitions. There, you'll use the syntax
-    `M(MACRO_NAME)` to mark a specific keymap position as triggering `MACRO_NAME`
-
-    The second usage is in the 'switch' statement in the `macroAction` function.
-    That switch statement actually runs the code associated with a macro when
-    a macro key is pressed.
-*/
+  * The names aren't particularly important. What is important is that each
+  * is unique.
+  *
+  * These are the names of your macros. They'll be used in two places.
+  * The first is in your keymap definitions. There, you'll use the syntax
+  * `M(MACRO_NAME)` to mark a specific keymap position as triggering `MACRO_NAME`
+  *
+  * The second usage is in the 'switch' statement in the `macroAction` function.
+  * That switch statement actually runs the code associated with a macro when
+  * a macro key is pressed.
+  */
 
 enum { MACRO_VERSION_INFO,
        MACRO_ANY,
@@ -93,7 +95,8 @@ enum { MACRO_VERSION_INFO,
        M_RS,
        L_AE,
        L_OE,
-       L_AA
+       L_AA,
+       M_RCTRL_F
      };
 
 /** Tapdance enum
@@ -110,50 +113,57 @@ enum {CT_LCK,
 
 
 /** The Model 01's key layouts are defined as 'keymaps'. By default, there are three
-    keymaps: The standard QWERTY keymap, the "Function layer" keymap and the "Numpad"
-    keymap.
+  * keymaps: The standard QWERTY keymap, the "Function layer" keymap and the "Numpad"
+  * keymap.
+  *
+  * Each keymap is defined as a list using the 'KEYMAP_STACKED' macro, built
+  * of first the left hand's layout, followed by the right hand's layout.
+  *
+  * Keymaps typically consist mostly of `Key_` definitions. There are many, many keys
+  * defined as part of the USB HID Keyboard specification. You can find the names
+  * (if not yet the explanations) for all the standard `Key_` defintions offered by
+  * Kaleidoscope in these files:
+  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs_keyboard.h
+  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs_consumerctl.h
+  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs_sysctl.h
+  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs_keymaps.h
+  *
+  * Additional things that should be documented here include
+  *   using ___ to let keypresses fall through to the previously active layer
+  *   using XXX to mark a keyswitch as 'blocked' on this layer
+  *   using ShiftToLayer() and LockLayer() keys to change the active keymap.
+  *   keeping NUM and FN consistent and accessible on all layers
+  *
+  * The PROG key is special, since it is how you indicate to the board that you
+  * want to flash the firmware. However, it can be remapped to a regular key.
+  * When the keyboard boots, it first looks to see whether the PROG key is held
+  * down; if it is, it simply awaits further flashing instructions. If it is
+  * not, it continues loading the rest of the firmware and the keyboard
+  * functions normally, with whatever binding you have set to PROG. More detail
+  * here: https://community.keyboard.io/t/how-the-prog-key-gets-you-into-the-bootloader/506/8
+  *
+  * The "keymaps" data structure is a list of the keymaps compiled into the firmware.
+  * The order of keymaps in the list is important, as the ShiftToLayer(#) and LockLayer(#)
+  * macros switch to key layers based on this list.
+  *
+  *
 
-    Each keymap is defined as a list using the 'KEYMAP_STACKED' macro, built
-    of first the left hand's layout, followed by the right hand's layout.
-
-    Keymaps typically consist mostly of `Key_` definitions. There are many, many keys
-    defined as part of the USB HID Keyboard specification. You can find the names
-    (if not yet the explanations) for all the standard `Key_` defintions offered by
-    Kaleidoscope in these files:
-       https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_keyboard.h
-       https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_consumerctl.h
-       https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_sysctl.h
-       https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_keymaps.h
-
-    Additional things that should be documented here include
-      using ___ to let keypresses fall through to the previously active layer
-      using XXX to mark a keyswitch as 'blocked' on this layer
-      using ShiftToLayer() and LockLayer() keys to change the active keymap.
-      the special nature of the PROG key
-      keeping NUM and FN consistent and accessible on all layers
-
-
-    The "keymaps" data structure is a list of the keymaps compiled into the firmware.
-    The order of keymaps in the list is important, as the ShiftToLayer(#) and LockLayer(#)
-    macros switch to key layers based on this list.
-
-
-
-    A key defined as 'ShiftToLayer(FUNCTION)' will switch to FUNCTION while held.
-    Similarly, a key defined as 'LockLayer(NUMPAD)' will switch to NUMPAD when tapped.
-*/
+  * A key defined as 'ShiftToLayer(FUNCTION)' will switch to FUNCTION while held.
+  * Similarly, a key defined as 'LockLayer(NUMPAD)' will switch to NUMPAD when tapped.
+  */
 
 /**
-    Layers are "0-indexed" -- That is the first one is layer 0. The second one is layer 1.
-    The third one is layer 2.
-    This 'enum' lets us use names like QWERTY, FUNCTION, and NUMPAD in place of
-    the numbers 0, 1 and 2.
-*/
+  * Layers are "0-indexed" -- That is the first one is layer 0. The second one is layer 1.
+  * The third one is layer 2.
+  * This 'enum' lets us use names like QWERTY, FUNCTION, and NUMPAD in place of
+  * the numbers 0, 1 and 2.
+  *
+  */
 
 enum { QWERTY, COLEMAK, FUNCTION, ARROW, LAYSEL, NUMPAD, MaxLayerNum}; // layer
 /* This comment temporarily turns off astyle's indent enforcement
-     so we can make the keymaps actually resemble the physical key layout better
-*/
+ *   so we can make the keymaps actually resemble the physical key layout better
+ */
 // *INDENT-OFF*
 
 KEYMAPS(
@@ -183,7 +193,7 @@ KEYMAPS(
    OSM(LeftControl), Key_Spacebar, Key_Enter, Key_Escape,
    ShiftToLayer(FUNCTION),
 
-   Key_LEDEffectNext, Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
+   LSHIFT(LGUI(Key_TILDE)), Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
    Key_Escape,        Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                       Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    Key_Minus,         Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
@@ -276,7 +286,7 @@ KEYMAPS(
    ___, ___, ___, ___,
    ShiftToLayer(LAYSEL),
 
-   ___,   ___,      ___,                        ___,            ___,            ___,                ___,
+   M(M_RCTRL_F),   ___,      ___,                        ___,            ___,            ___,                ___,
    ___,   ___,      Key_Home,                   Key_UpArrow,    Key_End,        ___,                ___,
                     LCTRL(Key_RightBracket),    Key_LeftArrow,  Key_DownArrow,  Key_RightArrow,     ___,    ___,
    Key_Backtick,    ___,                        ___,            ___,            ___,                ___,    ___,
@@ -352,9 +362,9 @@ KEYMAPS(
 // *INDENT-ON*
 
 /** versionInfoMacro handles the 'firmware version info' macro
-    When a key bound to the macro is pressed, this macro
-    prints out the firmware build information as virtual keystrokes
-*/
+ *  When a key bound to the macro is pressed, this macro
+ *  prints out the firmware build information as virtual keystrokes
+ */
 
 static void versionInfoMacro(KeyEvent &event) {
   if (keyToggledOn(event.state)) {
@@ -386,6 +396,13 @@ static void macroReset(KeyEvent &event) {
   {
     wdt_enable(WDTO_120MS);
     while (1) {}
+  }
+}
+
+static void macroRCTRLF(KeyEvent &event) {
+  if (keyToggledOn(event.state))
+  {
+    MACRO(I(25), D(RightControl), T(F), U(RightControl) );
   }
 }
 
@@ -424,6 +441,13 @@ const macro_t *macroAction(uint8_t macro_id, KeyEvent &event) {
       break;
     case L_AA:
       compose2(Key_O, false, Key_A, true, event);
+      break;
+    case M_RCTRL_F:
+      if (keyToggledOn(event.state)) 
+      {
+      return MACRO(I(25),
+                   D(RightControl), T(F), U(RightControl) );
+      }
       break;
   }
 
