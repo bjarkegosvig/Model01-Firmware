@@ -65,7 +65,7 @@
 #define Key_AWDW  LALT(LSHIFT(Key_H))
 #define Key_AWIW  LALT(LSHIFT(Key_L))
 #define Key_AWMM  LCTRL(LGUI(Key_Enter))
-#define Key_MCHAT  LCTRL(LSHIFT(Key_M))
+#define Key_MCHAT LGUI(LSHIFT(Key_A))
 #define Key_MMON  LGUI(LSHIFT(Key_LeftArrow))
 #define Key_MXL   LGUI(Key_LeftArrow)
 #define Key_MXR   LGUI(Key_RightArrow)
@@ -233,6 +233,7 @@ KEYMAPS(
    OSM(LeftAlt), OSM(LeftShift), Key_Backspace, OSM(RightControl),
    ShiftToLayer(ARROW)),
 
+{}{%|(#$#($})])}
 
 /*
  * ,------------------------------------------------------.       ,------------------------------------------------------.
