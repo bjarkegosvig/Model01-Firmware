@@ -1,6 +1,4 @@
 // -*- mode: c++ -*-
-// Copyright 2016 Keyboardio, inc. <jesse@keyboard.io>
-// See "LICENSE" for license details
 
 #ifndef BUILD_INFORMATION
 #define BUILD_INFORMATION "locally built"
@@ -46,6 +44,8 @@
 #include "Kaleidoscope-Colormap.h"
 #include "Kaleidoscope-FocusSerial.h"
 #include "Kaleidoscope-LED-Palette-Theme.h"
+
+#include "kaleidoscope/device/device.h"    
 
 
 #define Key_AT    LSHIFT(Key_2)
@@ -125,10 +125,10 @@ enum {CT_LCK,
   * defined as part of the USB HID Keyboard specification. You can find the names
   * (if not yet the explanations) for all the standard `Key_` defintions offered by
   * Kaleidoscope in these files:
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs_keyboard.h
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs_consumerctl.h
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs_sysctl.h
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs_keymaps.h
+  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs/keyboard.h
+  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs/consumerctl.h
+  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs/sysctl.h
+  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs/keymaps.h
   *
   * Additional things that should be documented here include
   *   using ___ to let keypresses fall through to the previously active layer
@@ -286,17 +286,17 @@ KEYMAPS(
  *                                    `-----------'                        `-----------'
  */
 [GAMEFCN] = KEYMAP_STACKED
-  (Key_TILDE,           Key_F1,          Key_F2,           Key_F3,           Key_F4,    Key_F5,    Key_N,
-   Key_CapsLock,        Key_Q,           Key_UpArrow,      Key_E,            Key_R,     Key_T,     Key_6,
-   Key_PageUp,          Key_1,           Key_2,            Key_3,            Key_4,     Key_5,
-   Key_PageDown,        Key_Z,           Key_X,            Key_C,            Key_V,     Key_B,     Key_Enter,
+  (Key_KeypadNumLock,   Key_F1,          Key_F2,          Key_F3,         Key_F4,       XXX,    XXX,
+   Key_CapsLock,        Key_Keypad7,     Key_Keypad8,     Key_Keypad9,    Key_R,        XXX,    XXX,
+   Key_PageUp,          Key_Keypad4,     Key_Keypad5,     Key_Keypad6,    Key_Keypad0,  XXX,
+   Key_PageDown,        Key_Keypad1,     Key_Keypad2,     Key_Keypad3,    XXX,          XXX,    XXX,
    Key_LeftControl, Key_Spacebar, Key_LeftShift,    Key_LeftAlt,
    ShiftToLayer(FUNCTION),
 
-   XXX,     Key_F6,         Key_F7,          Key_F8,          Key_F9,           Key_F10,       OSL(LAYSEL),
-   XXX,     XXX,            Key_Keypad7,     Key_Keypad8,     Key_Keypad9,      XXX,           XXX,
-            Key_Keypad0,    Key_Keypad4,     Key_Keypad5,     Key_Keypad6,      XXX,           XXX,
-   XXX,     XXX,            Key_Keypad1,     Key_Keypad2,     Key_Keypad3,      XXX,           XXX,
+   XXX,     Key_F6,         Key_F7,  Key_F8,  Key_F9,   Key_F10,       OSL(LAYSEL),
+   XXX,     XXX,            XXX,     XXX,     XXX,      XXX,           XXX,
+            XXX,            XXX,     XXX,     XXX,      XXX,           XXX,
+   XXX,     XXX,            XXX,     XXX,     XXX,      XXX,           XXX,
    Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
    ShiftToLayer(ARROW)),
 
@@ -738,8 +738,28 @@ void setup() {
     For Kaleidoscope-based keyboard firmware, you usually just want to
     call Kaleidoscope.loop(); and not do anything custom here.
 */
-
 void loop() {
   Kaleidoscope.loop();
 
+  // Paint key 3 pink on all layers, if capslock is on
+  bool capsState = !!(Kaleidoscope.hid().keyboard().getKeyboardLEDs() & LED_CAPS_LOCK);
+  
+  // KeyAddr(row, column) matrix reference can be found at 
+  // https://github.com/keyboardio/Kaleidoscope/tree/master/plugins/Kaleidoscope-Qukeys
+  if (capsState) {
+    LEDControl.setCrgbAt(KeyAddr(1,0), CRGB(255, 0, 128));
+  } else {
+    LEDControl.refreshAt(KeyAddr(1,0));
+  }
+
+  // Paint key 4 pink on all layers, if numlock is on
+  bool numState = !!(Kaleidoscope.hid().keyboard().getKeyboardLEDs() & LED_NUM_LOCK);
+
+  if (numState) {
+    LEDControl.setCrgbAt(KeyAddr(0,0), CRGB(255, 0, 128));
+  } else {
+    LEDControl.refreshAt(KeyAddr(0,0));
+  }
 }
+
+
