@@ -92,6 +92,8 @@ enum { MACRO_VERSION_INFO,
        MACRO_ANY,
        M_SQ,
        M_SC,
+       M_SG,
+       M_ARW,
        M_RS,
        L_AE,
        L_OE,
@@ -153,17 +155,16 @@ enum {CT_LCK,
   */
 
 /**
-  * Layers are "0-indexed" -- That is the first one is layer 0. The second one is layer 1.
-  * The third one is layer 2.
-  * This 'enum' lets us use names like QWERTY, FUNCTION, and NUMPAD in place of
-  * the numbers 0, 1 and 2.
-  *
-  */
+    Layers are "0-indexed" -- That is the first one is layer 0. The second one is layer 1.
+    The third one is layer 2.
+    This 'enum' lets us use names like QWERTY, FUNCTION, and NUMPAD in place of
+    the numbers 0, 1 and 2.
+*/
 
-enum { QWERTY, COLEMAK, FUNCTION, ARROW, LAYSEL, NUMPAD, MaxLayerNum}; // layer
+enum { QWERTY, COLEMAK, GAME, GAMEFCN, ARWGAME, FUNCTION, ARROW, LAYSEL, NUMPAD, MaxLayerNum}; // layer
 /* This comment temporarily turns off astyle's indent enforcement
- *   so we can make the keymaps actually resemble the physical key layout better
- */
+     so we can make the keymaps actually resemble the physical key layout better
+*/
 // *INDENT-OFF*
 
 KEYMAPS(
@@ -233,11 +234,115 @@ KEYMAPS(
    OSM(LeftAlt), OSM(LeftShift), Key_Backspace, OSM(RightControl),
    ShiftToLayer(ARROW)),
 
-{}{%|(#$#($})])}
+/* Gaming
+ * ,------------------------------------------------------.       ,------------------------------------------------------.
+ * |  Esc/prg   |   1  |   2  |   3  |   4  |   5  |  N   |       |  GUI |   6  |   7  |   8  |   9  |   0  | OS LaySel  |
+ * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
+ * |    M       |   Q  |   W  |   E  |   R  |   T  |      |       |      |   Y  |   U  |   I  |   O  |   P  |    +=      |
+ * |------------+------+------+------+------+------|  M   |       | -/_  |------+------+------+------+------+------------|
+ * |    Shft    |   A  |   S  |   D  |   F  |   G  |------|       |------|   H  |   J  |   K  |   L  |   ;  |    '"      |
+ * |------------+------+------+------+------+------|      |       |  Alt |------+------+------+------+------+------------|
+ * |    Ctrl    |   Z  |   X  |   C  |   V  |   B  |  Ent |       |      |   N  |   M  |   ,  |   .  |  /   |    _-      |
+ * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
+ *                           ,----------------------------.       ,---------------------------.
+ *                           | Ctrl  |Space | Shft | Alt  |       | Del  | Shft |BckSP | Alt  |
+ *                           `----------------------------'       `---------------------------'
+ *
+ *                                    ,-----------.                        ,-----------.
+ *                                    | Layer FUN |                        | Layer FUN |
+ *                                    `-----------'                        `-----------'
+ */
+[GAME] = KEYMAP_STACKED
+  (Key_Escape,           Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     Key_N,
+   Key_M,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_M,
+   Key_LeftControl,      Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
+   Key_LeftShift,        Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     Key_Enter,
+   Key_LeftControl, Key_Spacebar, Key_LeftShift,    Key_LeftAlt,
+   ShiftToLayer(GAMEFCN),
+
+   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
+   TD(CT_MNS),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
+                     Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
+   OSM(LeftAlt),     Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
+   Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
+   ShiftToLayer(GAMEFCN)),
+
+/* Gaming function
+ * ,------------------------------------------------------.       ,------------------------------------------------------.
+ * |      ~     |   F1 |  F2  |  F3  |   F4 |  F5  |      |       |      |  F6  |   F7 |   F8 |   F9 |  F10 | OS LaySel  |
+ * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
+ * |  CapsLck   |      |      |      |      |      |      |       |      |      |   7  |   8  |   9  |      |            |
+ * |------------+------+------+------+------+------|  6   |       |      |------+------+------+------+------+------------|
+ * |    PgUp    |   1  |   2  |   3  |   4  |   5  |------|       |------|   0  |   4  |   5  |   6  |      |            |
+ * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
+ * |    PgDn    |      |      |      |      |      |  Ent |       |      |      |   1  |   2  |   3  |      |            |
+ * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
+ *                           ,----------------------------.       ,---------------------------.
+ *                           | Ctrl  |Space | Shft | Alt  |       | Del  | Shft |BckSP | Alt  |
+ *                           `----------------------------'       `---------------------------'
+ *
+ *                                    ,-----------.                        ,-----------.
+ *                                    | Layer FUN |                        | Layer FUN |
+ *                                    `-----------'                        `-----------'
+ */
+[GAMEFCN] = KEYMAP_STACKED
+  (Key_TILDE,           Key_F1,          Key_F2,           Key_F3,           Key_F4,    Key_F5,    Key_N,
+   Key_CapsLock,        Key_Q,           Key_UpArrow,      Key_E,            Key_R,     Key_T,     Key_6,
+   Key_PageUp,          Key_1,           Key_2,            Key_3,            Key_4,     Key_5,
+   Key_PageDown,        Key_Z,           Key_X,            Key_C,            Key_V,     Key_B,     Key_Enter,
+   Key_LeftControl, Key_Spacebar, Key_LeftShift,    Key_LeftAlt,
+   ShiftToLayer(FUNCTION),
+
+   XXX,     Key_F6,         Key_F7,          Key_F8,          Key_F9,           Key_F10,       OSL(LAYSEL),
+   XXX,     XXX,            Key_Keypad7,     Key_Keypad8,     Key_Keypad9,      XXX,           XXX,
+            Key_Keypad0,    Key_Keypad4,     Key_Keypad5,     Key_Keypad6,      XXX,           XXX,
+   XXX,     XXX,            Key_Keypad1,     Key_Keypad2,     Key_Keypad3,      XXX,           XXX,
+   Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
+   ShiftToLayer(ARROW)),
+
+
+
+
+  /* Gaming
+ * ,------------------------------------------------------.       ,------------------------------------------------------.
+ * |  Esc/prg   |   1  |   2  |   3  |   4  |   5  |  N   |       |  GUI |   6  |   7  |   8  |   9  |   0  | OS LaySel  |
+ * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
+ * |    Tab     |   Q  |  Up  |   E  |   R  |   T  |      |       |      |   Y  |   U  |   I  |   O  |   P  |    +=      |
+ * |------------+------+------+------+------+------|  M   |       | -/_  |------+------+------+------+------+------------|
+ * |    Shft    | Left | Down |Right |   F  |   G  |------|       |------|   H  |   J  |   K  |   L  |   ;  |    '"      |
+ * |------------+------+------+------+------+------|      |       |  Alt |------+------+------+------+------+------------|
+ * |    Ctrl    |   Z  |   X  |   C  |   V  |   B  |  Ent |       |      |   N  |   M  |   ,  |   .  |  /   |    _-      |
+ * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
+ *                           ,----------------------------.       ,---------------------------.
+ *                           | Ctrl  |Space | Shft | Alt  |       | Del  | Shft |BckSP | Alt  |
+ *                           `----------------------------'       `---------------------------'
+ *
+ *                                    ,-----------.                        ,-----------.
+ *                                    | Layer FUN |                        | Layer FUN |
+ *                                    `-----------'                        `-----------'
+ */
+[ARWGAME] = KEYMAP_STACKED
+  (Key_Escape,           Key_1,           Key_2,            Key_3,            Key_4,     Key_5,     Key_N,
+   Key_Tab,              Key_Q,           Key_UpArrow,      Key_E,            Key_R,     Key_T,     Key_M,
+   Key_LeftControl,      Key_LeftArrow,   Key_DownArrow,    Key_RightArrow,   Key_F,     Key_G,
+   Key_LeftShift,        Key_Z,           Key_X,            Key_C,            Key_V,     Key_B,     Key_Enter,
+   Key_LeftControl, Key_Spacebar, Key_LeftShift,    Key_LeftAlt,
+   ShiftToLayer(FUNCTION),
+
+   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
+   TD(CT_MNS),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
+                     Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
+   OSM(LeftAlt),     Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
+   Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
+   ShiftToLayer(ARROW)),
+
+
+
+
 
 /*
  * ,------------------------------------------------------.       ,------------------------------------------------------.
- * |     `       |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |  Rst |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
+ * |            |  F1  |  F2  |  F3  |  F4  |  F5  |      |       |  Rst |  F6  |  F7  |  F8  |  F9  |  F10 |    F11     |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
  * |    +       |   |  |   {  |   %  |   }  |   &  |      |       |      | Mute | Home |  Up  | End  |Insert|    +       |
  * |------------+------+------+------+------+------|  <   |       |  >   |------+------+------+------+------+------------|
@@ -310,10 +415,10 @@ KEYMAPS(
  *                           `----------------------------'       `---------------------------'
  */
   [LAYSEL] =  KEYMAP_STACKED
-  (___, ___,               ___,     ___,      ___,      ___, ___,
-   ___, LockLayer(NUMPAD), M(M_SQ), M(M_SC),  ___,      ___, ___,
-   ___, ___,              ___,      ___,      ___,      ___,
-   ___, ___,              ___,      ___,      ___,      ___, ___,
+  (___, ___,     ___,     ___,      ___,      ___, ___,
+   ___, M(M_SQ), M(M_SC), M(M_SG),  M(M_ARW),  ___, ___,
+   ___, ___,     ___,     ___,      ___,      ___,
+   ___, ___,     ___,     ___,      ___,      ___, ___,
    ___, ___, ___, ___,
    ___,
 
@@ -392,6 +497,25 @@ static void macroSwitchColemak(KeyEvent &event) {
   }
 }
 
+static void macroSwitchGame(KeyEvent &event) {
+  if (keyToggledOn(event.state))
+  {
+    Layer.move(GAME);
+    Layer.activate(GAME);
+    OneShot.disableStickabilityForModifiers();
+  }
+}
+
+
+static void macroSwitchArwGame(KeyEvent &event) {
+  if (keyToggledOn(event.state))
+  {
+    Layer.move(ARWGAME);
+    Layer.activate(ARWGAME);
+    OneShot.disableStickabilityForModifiers();
+  }
+}
+
 static void macroReset(KeyEvent &event) {
   if (keyToggledOn(event.state))
   {
@@ -430,6 +554,12 @@ const macro_t *macroAction(uint8_t macro_id, KeyEvent &event) {
       break;
     case M_SC:
       macroSwitchColemak(event);
+      break;
+    case M_SG:
+      macroSwitchGame(event);
+      break;
+    case M_ARW:
+      macroSwitchArwGame(event);
       break;
     case M_RS:
       macroReset(event);
