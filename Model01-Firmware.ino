@@ -98,7 +98,9 @@ enum { MACRO_VERSION_INFO,
        L_AE,
        L_OE,
        L_AA,
-       M_RCTRL_F
+       M_RCTRL_F,
+       M_PW,
+       M_LPW
      };
 
 /** Tapdance enum
@@ -392,10 +394,10 @@ KEYMAPS(
    ___, ___, ___, ___,
    ShiftToLayer(LAYSEL),
 
-   M(M_RCTRL_F),   ___,      ___,                        ___,            ___,            ___,                ___,
-   ___,   ___,      Key_Home,                   Key_UpArrow,    Key_End,        ___,                ___,
-                    LCTRL(Key_RightBracket),    Key_LeftArrow,  Key_DownArrow,  Key_RightArrow,     ___,    ___,
-   Key_Backtick,    ___,                        ___,            ___,            ___,                ___,    ___,
+   M(M_RCTRL_F),     ___,                       ___,            ___,            ___,            ___,                M(M_PW),
+   ___,              ___,                       Key_Home,       Key_UpArrow,    Key_End,        ___,                M(M_LPW),
+                    LCTRL(Key_RightBracket),    Key_LeftArrow,  Key_DownArrow,  Key_RightArrow, ___,                ___,
+   Key_Backtick,    ___,                        ___,            ___,            ___,            ___,                ___,
    ___, ___, Key_Delete, ___,
    ___),
 
@@ -531,6 +533,20 @@ static void macroRCTRLF(KeyEvent &event) {
   }
 }
 
+static void pwMacro(KeyEvent &event) {
+  if (keyToggledOn(event.state)) {
+    Macros.type(PSTR("CorrectHorseBatteryStaple"));
+    Macros.tap(Key_Enter);
+  }
+}
+
+static void pwLinuxMacro(KeyEvent &event) {
+  if (keyToggledOn(event.state)) {
+    Macros.type(PSTR("CorrectHorseBatteryStaple"));
+    Macros.tap(Key_Enter);
+  }
+}
+
 /** macroAction dispatches keymap events that are tied to a macro
     to that macro. It takes two uint8_t parameters.
 
@@ -579,6 +595,14 @@ const macro_t *macroAction(uint8_t macro_id, KeyEvent &event) {
       return MACRO(I(25),
                    D(RightControl), T(F), U(RightControl) );
       }
+      break;
+      
+      case M_PW:
+      pwMacro(event);
+      break;
+
+      case M_LPW:
+      pwLinuxMacro(event);
       break;
   }
 
@@ -664,12 +688,11 @@ void tapDanceAction(uint8_t tap_dance_index, KeyAddr key_addr, uint8_t tap_count
 void toggleLedsOnSuspendResume(kaleidoscope::plugin::HostPowerManagement::Event event) {
   switch (event) {
   case kaleidoscope::plugin::HostPowerManagement::Suspend:
+  case kaleidoscope::plugin::HostPowerManagement::Sleep:
     LEDControl.disable();
     break;
   case kaleidoscope::plugin::HostPowerManagement::Resume:
     LEDControl.enable();
-    break;
-  case kaleidoscope::plugin::HostPowerManagement::Sleep:
     break;
   }
 }
