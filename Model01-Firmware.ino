@@ -240,7 +240,7 @@ KEYMAPS(
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |  Esc/prg   |   1  |   2  |   3  |   4  |   5  |  N   |       |  GUI |   6  |   7  |   8  |   9  |   0  | OS LaySel  |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |    M       |   Q  |   W  |   E  |   R  |   T  |      |       |      |   Y  |   U  |   I  |   O  |   P  |    +=      |
+ * |    Tab     |   Q  |   W  |   E  |   R  |   T  |      |       |      |   Y  |   U  |   I  |   O  |   P  |    +=      |
  * |------------+------+------+------+------+------|  M   |       | -/_  |------+------+------+------+------+------------|
  * |    Shft    |   A  |   S  |   D  |   F  |   G  |------|       |------|   H  |   J  |   K  |   L  |   ;  |    '"      |
  * |------------+------+------+------+------+------|      |       |  Alt |------+------+------+------+------+------------|
@@ -256,7 +256,7 @@ KEYMAPS(
  */
 [GAME] = KEYMAP_STACKED
   (Key_Escape,           Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     Key_N,
-   Key_M,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_M,
+   Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_M,
    Key_LeftControl,      Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
    Key_LeftShift,        Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     Key_Enter,
    Key_LeftControl, Key_Spacebar, Key_LeftShift,    Key_LeftAlt,
