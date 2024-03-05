@@ -100,7 +100,15 @@ enum { MACRO_VERSION_INFO,
        L_AA,
        M_RCTRL_F,
        M_PW,
-       M_LPW
+       M_LPW,
+       HD_REI,
+       HD_RS,
+       HD_S1,
+       HD_S2,
+       HD_S3,
+       HD_S4,
+       HD_S5, 
+       HS_S6
      };
 
 /** Tapdance enum
@@ -196,7 +204,7 @@ KEYMAPS(
    OSM(LeftControl), Key_Spacebar, Key_Enter, Key_Escape,
    ShiftToLayer(FUNCTION),
 
-   LSHIFT(LGUI(Key_TILDE)), Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
+   LSHIFT(LGUI(Key_TILDE)), Key_6,     Key_7,     Key_8,     Key_9,      Key_0,   LockLayer(NUMPAD),
    Key_Escape,        Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                       Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    Key_Minus,         Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
@@ -254,6 +262,7 @@ KEYMAPS(
  *                                    | Layer FUN |                        | Layer FUN |
  *                                    `-----------'                        `-----------'
  */
+
 [GAME] = KEYMAP_STACKED
   (Key_Escape,           Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     Key_N,
    Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_M,
@@ -262,12 +271,22 @@ KEYMAPS(
    Key_LeftControl, Key_Spacebar, Key_LeftShift,    Key_LeftAlt,
    ShiftToLayer(GAMEFCN),
 
-   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
+  
+   M(M_RS),        Key_6,                     Key_7,                    Key_8,                      Key_9,                  Key_0,            M(HD_REI),
+   Key_GT,         Consumer_Mute,             Key_Home,                 Key_UpArrow,                Key_End,                Key_Insert,       Key_PLUS,
+                   Consumer_PlaySlashPause,   Key_LeftArrow,            Key_DownArrow,              Key_RightArrow,         ___,              TD(CT_LCK),
+   Key_PageDown,   Consumer_VolumeDecrement,  Consumer_VolumeIncrement, Consumer_ScanPreviousTrack, Consumer_ScanNextTrack, Key_Backslash,    Key_Pipe,
+   ___, ___, Key_Delete, ___,
+   ShiftToLayer(GAMEFCN)),
+
+
+  /* Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
    TD(CT_MNS),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    OSM(LeftAlt),     Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
    Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
    ShiftToLayer(GAMEFCN)),
+   */
 
 /* Gaming function
  * ,------------------------------------------------------.       ,------------------------------------------------------.
@@ -526,13 +545,6 @@ static void macroReset(KeyEvent &event) {
   }
 }
 
-static void macroRCTRLF(KeyEvent &event) {
-  if (keyToggledOn(event.state))
-  {
-    MACRO(I(25), D(RightControl), T(F), U(RightControl) );
-  }
-}
-
 static void pwMacro(KeyEvent &event) {
   if (keyToggledOn(event.state)) {
     Macros.type(PSTR("CorrectHorseBatteryStaple"));
@@ -546,6 +558,26 @@ static void pwLinuxMacro(KeyEvent &event) {
     Macros.tap(Key_Enter);
   }
 }
+
+static void helldiver_reinforce(KeyEvent &event) {
+      Macros.play(
+        MACRO(I(10), D(LeftControl), W(100),
+                 T(UpArrow), T(DownArrow), T(RightArrow), T(LeftArrow), T(UpArrow),
+                 U(LeftControl) )
+      );
+}
+
+
+static void helldiver_resupply(KeyEvent &event) {
+  if (keyToggledOn(event.state)) {
+       Macros.play(
+        MACRO(I(10), W(100), D(LeftControl), W(100),
+                 T(DownArrow), T(DownArrow), T(UpArrow), T(RightArrow),
+                 U(LeftControl) )
+      );      
+  }
+}
+
 
 /** macroAction dispatches keymap events that are tied to a macro
     to that macro. It takes two uint8_t parameters.
@@ -603,6 +635,14 @@ const macro_t *macroAction(uint8_t macro_id, KeyEvent &event) {
 
       case M_LPW:
       pwLinuxMacro(event);
+      break;
+
+      case HD_REI:
+          helldiver_reinforce(event);
+      break;
+
+      case HD_RS:
+        helldiver_resupply(event);
       break;
   }
 
