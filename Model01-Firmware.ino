@@ -108,7 +108,7 @@ enum { MACRO_VERSION_INFO,
        HD_S3,
        HD_S4,
        HD_S5, 
-       HS_S6
+       HD_S6
      };
 
 /** Tapdance enum
@@ -272,10 +272,10 @@ KEYMAPS(
    ShiftToLayer(GAMEFCN),
 
   
-   M(M_RS),        Key_6,                     Key_7,                    Key_8,                      Key_9,                  Key_0,            M(HD_REI),
-   Key_GT,         Consumer_Mute,             Key_Home,                 Key_UpArrow,                Key_End,                Key_Insert,       Key_PLUS,
-                   Consumer_PlaySlashPause,   Key_LeftArrow,            Key_DownArrow,              Key_RightArrow,         ___,              TD(CT_LCK),
-   Key_PageDown,   Consumer_VolumeDecrement,  Consumer_VolumeIncrement, Consumer_ScanPreviousTrack, Consumer_ScanNextTrack, Key_Backslash,    Key_Pipe,
+   M(M_RS),        Key_6,                     Key_7,                    Key_8,                      Key_9,                  M(HD_S3),    M(HD_REI),
+   Key_GT,         Consumer_Mute,             Key_Home,                 Key_UpArrow,                Key_End,                M(HD_S4),    M(HD_RS),
+                   Consumer_PlaySlashPause,   Key_LeftArrow,            Key_DownArrow,              Key_RightArrow,         M(HD_S5),    M(HD_S1),
+   Key_PageDown,   Consumer_VolumeDecrement,  Consumer_VolumeIncrement, Consumer_ScanPreviousTrack, Consumer_ScanNextTrack, M(HD_S6),    M(HD_S2),
    ___, ___, Key_Delete, ___,
    ShiftToLayer(GAMEFCN)),
 
@@ -571,7 +571,72 @@ static void helldiver_reinforce(KeyEvent &event) {
 static void helldiver_resupply(KeyEvent &event) {
   if (keyToggledOn(event.state)) {
        Macros.play(
-        MACRO(I(10), W(100), D(LeftControl), W(100),
+        MACRO(I(10), D(LeftControl), W(100),
+                 T(DownArrow), T(DownArrow), T(UpArrow), T(RightArrow),
+                 U(LeftControl) )
+      );      
+  }
+}
+
+// currently A/G-16 Gatling Sentry
+static void hd_s1(KeyEvent &event) {
+  if (keyToggledOn(event.state)) {
+       Macros.play(
+        MACRO(I(10), D(LeftControl), W(100),
+                 T(UpArrow), T(DownArrow), T(RightArrow), T(LeftArrow),
+                 U(LeftControl) )
+      );      
+  }
+}
+
+// currently Mortar Sentry
+static void hd_s2(KeyEvent &event) {
+  if (keyToggledOn(event.state)) {
+       Macros.play(
+        MACRO(I(10), D(LeftControl), W(100),
+                 T(UpArrow), T(DownArrow), T(RightArrow), T(RightArrow), T(DownArrow),
+                 U(LeftControl) )
+      );      
+  }
+}
+
+// currently Eagle Airstrike
+static void hd_s3(KeyEvent &event) {
+  if (keyToggledOn(event.state)) {
+       Macros.play(
+        MACRO(I(10), D(LeftControl), W(100),
+                 T(UpArrow), T(RightArrow), T(DownArrow), T(RightArrow),
+                 U(LeftControl) )
+      );      
+  }
+}
+
+// currently eagle 110MM Rocket pods
+static void hd_s4(KeyEvent &event) {
+  if (keyToggledOn(event.state)) {
+       Macros.play(
+        MACRO(I(10), D(LeftControl), W(100),
+                 T(UpArrow), T(RightArrow), T(UpArrow), T(LeftArrow),
+                 U(LeftControl) )
+      );      
+  }
+}
+
+// currently Eagle rearm
+static void hd_s5(KeyEvent &event) {
+  if (keyToggledOn(event.state)) {
+       Macros.play(
+        MACRO(I(10), D(LeftControl), W(100),
+                 T(UpArrow), T(UpArrow), T(LeftArrow), T(UpArrow), T(RightArrow),
+                 U(LeftControl) )
+      );      
+  }
+}
+
+static void hd_s6(KeyEvent &event) {
+  if (keyToggledOn(event.state)) {
+       Macros.play(
+        MACRO(I(10), D(LeftControl), W(100),
                  T(DownArrow), T(DownArrow), T(UpArrow), T(RightArrow),
                  U(LeftControl) )
       );      
@@ -632,7 +697,6 @@ const macro_t *macroAction(uint8_t macro_id, KeyEvent &event) {
       case M_PW:
       pwMacro(event);
       break;
-
       case M_LPW:
       pwLinuxMacro(event);
       break;
@@ -640,9 +704,26 @@ const macro_t *macroAction(uint8_t macro_id, KeyEvent &event) {
       case HD_REI:
           helldiver_reinforce(event);
       break;
-
       case HD_RS:
         helldiver_resupply(event);
+      break;
+      case HD_S1:
+        hd_s1(event);
+      break;
+      case HD_S2:
+        hd_s2(event);
+      break;
+      case HD_S3:
+        hd_s3(event);
+      break;
+      case HD_S4:
+        hd_s4(event);
+      break;
+      case HD_S5:
+        hd_s5(event);
+      break;
+      case HD_S6:
+        hd_s6(event);
       break;
   }
 
