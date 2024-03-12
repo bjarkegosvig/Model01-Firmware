@@ -74,6 +74,7 @@
 #define Key_MDT   LGUI(LCTRL(Key_D))
 #define Key_DTL   LGUI(LCTRL(Key_LeftArrow))
 #define Key_DTR   LGUI(LCTRL(Key_RightArrow))
+#define Key_VBFS  LSHIFT(LGUI(Key_TILDE)) // Toggle Virtualbox fullscreen
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
   * The names aren't particularly important. What is important is that each
@@ -204,11 +205,11 @@ KEYMAPS(
    OSM(LeftControl), Key_Spacebar, Key_Enter, Key_Escape,
    ShiftToLayer(FUNCTION),
 
-   LSHIFT(LGUI(Key_TILDE)), Key_6,     Key_7,     Key_8,     Key_9,      Key_0,   LockLayer(NUMPAD),
+   Key_VBFS,          Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
    Key_Escape,        Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                       Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    Key_Minus,         Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
-   Key_LeftGui, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
+   OSM(LeftGui), OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
    ShiftToLayer(ARROW)),
 
  /*   Colemake DH Matrix https://colemakmods.github.io/mod-dh/keyboards.html
@@ -547,14 +548,14 @@ static void macroReset(KeyEvent &event) {
 
 static void pwMacro(KeyEvent &event) {
   if (keyToggledOn(event.state)) {
-    Macros.type(PSTR("CorrectHorseBatteryStaple"));
+    Macros.type(PSTR("Correct Horse Battery Staple"));
     Macros.tap(Key_Enter);
   }
 }
 
 static void pwLinuxMacro(KeyEvent &event) {
   if (keyToggledOn(event.state)) {
-    Macros.type(PSTR("CorrectHorseBatteryStaple"));
+    Macros.type(PSTR("Correct Horse Battery Staple"));
     Macros.tap(Key_Enter);
   }
 }
@@ -872,7 +873,7 @@ void setup() {
   ActiveModColorEffect.setStickyColor(CRGB(0xba, 0xe1, 0xff));
   ActiveModColorEffect.setOneShotColor(CRGB(0xba, 0xff, 0xc9));
   TapDance.setTimeout(200);
-  OneShot.setTimeout(1000);
+  OneShot.setTimeout(500);
   Layer.move(QWERTY);
 }
 
