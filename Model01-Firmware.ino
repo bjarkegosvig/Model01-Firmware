@@ -313,14 +313,14 @@ KEYMAPS(
    Key_PageUp,          Key_Keypad4,     Key_Keypad5,     Key_Keypad6,    Key_Keypad0,  XXX,
    Key_PageDown,        Key_Keypad1,     Key_Keypad2,     Key_Keypad3,    XXX,          XXX,    XXX,
    Key_LeftControl, Key_Spacebar, Key_LeftShift,    Key_LeftAlt,
-   ShiftToLayer(FUNCTION),
+   ___,
 
    XXX,     Key_F6,         Key_F7,  Key_F8,  Key_F9,   Key_F10,       OSL(LAYSEL),
    XXX,     XXX,            XXX,     XXX,     XXX,      XXX,           XXX,
             XXX,            XXX,     XXX,     XXX,      XXX,           XXX,
    XXX,     XXX,            XXX,     XXX,     XXX,      XXX,           XXX,
    Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
-   ShiftToLayer(ARROW)),
+   ___),
 
 
 
@@ -706,7 +706,11 @@ const macro_t *macroAction(uint8_t macro_id, KeyEvent &event) {
           helldiver_reinforce(event);
       break;
       case HD_RS:
-        helldiver_resupply(event);
+      //if (keyToggledOn(event.state)) 
+      //{
+      // return  MACRO( I(255), T(DownArrow), T(DownArrow), T(UpArrow), T(RightArrow));
+      //}
+        hd_rs(event);
       break;
       case HD_S1:
         hd_s1(event);
@@ -766,6 +770,19 @@ static void release(Key key) {
 static void tap(Key key) {
   press(key);
   release(key);
+}
+
+static void hd_rs(KeyEvent &event)
+{
+  bool ctrled = Kaleidoscope.hid().keyboard().wasModifierKeyActive(Key_LeftControl);
+  
+  if(ctrled) release(Key_LeftControl);
+  press(Key_LeftControl);
+  tap(Key_DownArrow);
+  tap(Key_DownArrow);
+  tap(Key_UpArrow);
+  tap(Key_RightArrow); 
+  release(Key_LeftControl);
 }
 
 /**  Tapdance imp
