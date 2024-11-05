@@ -62,18 +62,21 @@
 #define Key_TILDE LSHIFT(Key_Backtick)
 #define Key_LT    LSHIFT(Key_Comma)
 #define Key_GT    LSHIFT(Key_Period)
-#define Key_AWDW  LALT(LSHIFT(Key_H))
-#define Key_AWIW  LALT(LSHIFT(Key_L))
-#define Key_AWMM  LCTRL(LGUI(Key_Enter))
 #define Key_MCHAT LGUI(LSHIFT(Key_A))
-#define Key_MMON  LGUI(LSHIFT(Key_LeftArrow))
-#define Key_MXL   LGUI(Key_LeftArrow)
-#define Key_MXR   LGUI(Key_RightArrow)
-#define Key_MAX   LGUI(Key_UpArrow)
-#define Key_MIN   LGUI(Key_DownArrow)
-#define Key_MDT   LGUI(LCTRL(Key_D))
-#define Key_DTL   LGUI(LCTRL(Key_LeftArrow))
-#define Key_DTR   LGUI(LCTRL(Key_RightArrow))
+
+#define Key_MWL   LGUI(LCTRL(Key_LeftArrow))
+#define Key_MWR   LGUI(LCTRL(Key_RightArrow))
+#define Key_MXL   LGUI(LSHIFT(Key_LeftArrow))
+#define Key_MXR   LGUI(LSHIFT(Key_RightArrow))
+#define Key_MAX   LGUI(Key_LeftArrow)
+#define Key_MIN   LGUI(Key_RightArrow)
+#define Key_GMX   LGUI(Key_M)
+
+#define Key_MMON  LCTRL(LSHIFT(Key_Enter))
+#define Key_MDT   LSHIFT(LCTRL(Key_L))
+#define Key_DTL   LSHIFT(LCTRL(Key_LeftBracket))
+#define Key_DTR   LSHIFT(LCTRL(Key_RightBracket))
+
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
   * The names aren't particularly important. What is important is that each
@@ -189,7 +192,7 @@ KEYMAPS(
  *                                    `-----------'                        `-----------'
  */
   [QWERTY] = KEYMAP_STACKED
-  (Key_Escape,           Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     LGUI(Key_P),
+  (Key_Escape,           Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     LGUI(Key_Slash),
    Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_Tab,
    OSM(LeftControl),     Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
    OSM(LeftShift),       Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     TD(CT_CLN),
@@ -200,7 +203,7 @@ KEYMAPS(
    Key_Escape,        Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                       Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    Key_Minus,         Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
-   Key_LeftGui, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
+   OSM(LeftGui), OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
    ShiftToLayer(ARROW)),
 
  /*   Colemake DH Matrix https://colemakmods.github.io/mod-dh/keyboards.html
@@ -388,9 +391,9 @@ KEYMAPS(
  */
   [ARROW] =  KEYMAP_STACKED
   (___, ___,         ___,        ___,                  ___,                      ___,                  ___,
-   ___, Key_MMON,    Key_DTL,    Key_DTR,              Key_MDT,                  ___,                  LCTRL(LALT(Key_Tab)),
-   ___, Key_MXL,     Key_MIN,    Key_MAX,              Key_MXR,                  ___,
-   ___, ___,         ___,        Key_mouseScrollDn,    Key_mouseScrollUp,        ___,                  Key_MCHAT,
+   ___, Key_MMON,    Key_DTL,    Key_DTR,              Key_MDT,                  ___,                  LGUI(Key_O),
+   ___, Key_MXL,     Key_MXR,    Key_MAX,              Key_MIN,                  Key_GMX,
+   ___, ___,         ___,        Key_MWL,              Key_MWR,                  ___,                  Key_MCHAT,
    ___, ___, ___, ___,
    ShiftToLayer(LAYSEL),
 
@@ -542,7 +545,7 @@ static void pwMacro(KeyEvent &event) {
 
 static void pwLinuxMacro(KeyEvent &event) {
   if (keyToggledOn(event.state)) {
-    Macros.type(PSTR("CorrectHorseBatteryStaple"));
+    Macros.type(PSTR("nadia'hanna"));
     Macros.tap(Key_Enter);
   }
 }
