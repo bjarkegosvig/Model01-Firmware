@@ -1,7 +1,7 @@
 // -*- mode: c++ -*-
 
 #ifndef BUILD_INFORMATION
-#define BUILD_INFORMATION "locally built"
+#define BUILD_INFORMATION "locally built on " __DATE__ " at " __TIME__
 #endif
 
 /**
@@ -130,10 +130,10 @@ enum {CT_LCK,
   * defined as part of the USB HID Keyboard specification. You can find the names
   * (if not yet the explanations) for all the standard `Key_` defintions offered by
   * Kaleidoscope in these files:
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs/keyboard.h
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs/consumerctl.h
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs/sysctl.h
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs/keymaps.h
+  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs_keyboard.h
+  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs_consumerctl.h
+  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs_sysctl.h
+  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/kaleidoscope/key_defs_keymaps.h
   *
   * Additional things that should be documented here include
   *   using ___ to let keypresses fall through to the previously active layer
@@ -160,16 +160,17 @@ enum {CT_LCK,
   */
 
 /**
-    Layers are "0-indexed" -- That is the first one is layer 0. The second one is layer 1.
-    The third one is layer 2.
-    This 'enum' lets us use names like QWERTY, FUNCTION, and NUMPAD in place of
-    the numbers 0, 1 and 2.
-*/
+  * Layers are "0-indexed" -- That is the first one is layer 0. The second one is layer 1.
+  * The third one is layer 2.
+  * This 'enum' lets us use names like QWERTY, FUNCTION, and NUMPAD in place of
+  * the numbers 0, 1 and 2.
+  *
+  */
 
 enum { QWERTY, COLEMAK, GAME, GAMEFCN, ARWGAME, FUNCTION, ARROW, LAYSEL, NUMPAD, MaxLayerNum}; // layer
 /* This comment temporarily turns off astyle's indent enforcement
      so we can make the keymaps actually resemble the physical key layout better
-*/
+ */
 // *INDENT-OFF*
 
 KEYMAPS(
@@ -477,8 +478,8 @@ KEYMAPS(
  *  prints out the firmware build information as virtual keystrokes
  */
 
-static void versionInfoMacro(KeyEvent &event) {
-  if (keyToggledOn(event.state)) {
+static void versionInfoMacro(uint8_t key_state) {
+  if (keyToggledOn(key_state)) {
     Macros.type(PSTR("Keyboardio Model 01 - Kaleidoscope "));
     Macros.type(PSTR(BUILD_INFORMATION));
   }
@@ -558,7 +559,7 @@ static void pwLinuxMacro(KeyEvent &event) {
     if the key has just been toggled on, is currently pressed or if it's just been released.
 
     The 'switch' statement should have a 'case' for each entry of the macro enum.
-    Each 'case' statement should call out to a function to handle the macro in question.e
+    Each 'case' statement should call out to a function to handle the macro in question.
 
 */
 
@@ -566,7 +567,7 @@ const macro_t *macroAction(uint8_t macro_id, KeyEvent &event) {
   switch (macro_id) {
 
     case MACRO_VERSION_INFO:
-      versionInfoMacro(event);
+    versionInfoMacro(event.state);
       break;
     case M_SQ:
       macroSwitchQwerty(event);
@@ -691,11 +692,12 @@ void tapDanceAction(uint8_t tap_dance_index, KeyAddr key_addr, uint8_t tap_count
 void toggleLedsOnSuspendResume(kaleidoscope::plugin::HostPowerManagement::Event event) {
   switch (event) {
   case kaleidoscope::plugin::HostPowerManagement::Suspend:
-  case kaleidoscope::plugin::HostPowerManagement::Sleep:
     LEDControl.disable();
     break;
   case kaleidoscope::plugin::HostPowerManagement::Resume:
     LEDControl.enable();
+    break;
+  case kaleidoscope::plugin::HostPowerManagement::Sleep:
     break;
   }
 }
@@ -734,10 +736,9 @@ KALEIDOSCOPE_INIT_PLUGINS(
 
 
 /** The 'setup' function is one of the two standard Arduino sketch functions.
-    It's called when your keyboard first powers up. This is where you set up
-    Kaleidoscope and any plugins.
-*/
-
+ * It's called when your keyboard first powers up. This is where you set up
+ * Kaleidoscope and any plugins.
+ */
 void setup() {
   // First, call Kaleidoscope's internal setup function
   Kaleidoscope.setup();
@@ -759,11 +760,12 @@ void setup() {
 }
 
 /** loop is the second of the standard Arduino sketch functions.
-    As you might expect, it runs in a loop, never exiting.
+  * As you might expect, it runs in a loop, never exiting.
+  *
+  * For Kaleidoscope-based keyboard firmware, you usually just want to
+  * call Kaleidoscope.loop(); and not do anything custom here.
+  */
 
-    For Kaleidoscope-based keyboard firmware, you usually just want to
-    call Kaleidoscope.loop(); and not do anything custom here.
-*/
 void loop() {
   Kaleidoscope.loop();
 
