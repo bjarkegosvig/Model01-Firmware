@@ -77,6 +77,37 @@
 #define Key_DTL   LSHIFT(LCTRL(Key_LeftBracket))
 #define Key_DTR   LSHIFT(LCTRL(Key_RightBracket))
 
+// https://kaleidoscope.readthedocs.io/en/latest/UPGRADING.html#releasing-keys-with-macros-release-or-u-ur-uc
+namespace kaleidoscope {
+namespace plugin {
+
+// When activated, this plugin will suppress any `shift` key (including modifier
+// combos with `shift` a flag) before it's added to the HID report.
+class ShiftBlocker : public Plugin {
+
+ public:
+  EventHandlerResult onAddToReport(Key key) {
+    if (active_ && key.isKeyboardShift())
+      return EventHandlerResult::ABORT;
+    return EventHandlerResult::OK;
+  }
+
+  void enable() {
+    active_ = true;
+  }
+  void disable() {
+    active_ = false;
+  }
+
+ private:
+  bool active_{false};
+
+};
+
+} // namespace plugin
+} // namespace kaleidoscope
+
+kaleidoscope::plugin::ShiftBlocker ShiftBlocker;
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
   * The names aren't particularly important. What is important is that each
@@ -614,6 +645,48 @@ const macro_t *macroAction(uint8_t macro_id, KeyEvent &event) {
   return MACRO_NONE;
 }
 
+
+static void handleDanish(uint8_t macro_id, KeyEvent &event) {
+    if (!keyToggledOn(event.state))
+        return;
+
+  bool should_capitalize = Kaleidoscope.hid().keyboard().wasModifierKeyActive(Key_LeftShift) || Kaleidoscope.hid().keyboard().wasModifierKeyActive(Key_RightShift);
+    static constexpr Key compose = Key_RightAlt;
+    static const macro_t *symbols[] = {
+        MACRO(Tr(compose), T(A), T(E)),
+        MACRO(Tr(compose), T(A), D(LeftShift), T(E)),
+
+        // ø is <compose o/>
+        MACRO(Tr(compose), T(O), T(Slash)), 
+        // Ø is <compose  O/> handled with ShiftBlocker on the / part
+        MACRO(Tr(compose), T(LeftShift), T(O)),
+      
+        // å is <ComposeKey aa>
+        MACRO(Tr(compose), T(A), T(A)),
+        // Å is <ComposeKey aA>
+        MACRO(Tr(compose), T(A), T(LeftShift), T(A)),
+        
+    };
+
+    if (should_capitalize) {
+        OneShot.cancel();
+        Macros.play(symbols[(macro_id - L_AE) * 2 + 1]);
+        if (macro_id == L_OE)
+        {
+            // Handle typing slash even though shift is held
+            ShiftBlocker.enable();
+            Macros.play(MACRO(T(Slash)));
+            ShiftBlocker.disable();
+        }
+    } else {
+        Macros.play(symbols[(macro_id - L_AE) * 2]);
+    }
+    
+
+}
+
+
+
 // compose2, press, release and tap functions are taken from https://github.com/lldata/Model01-Firmware/blob/master/Model01-Firmware.ino
 // uses right alt as compose key
 static void compose2(Key key1, bool shift1, Key key2, bool shift2, KeyEvent &event) {
@@ -727,6 +800,7 @@ KALEIDOSCOPE_INIT_PLUGINS(
                           LEDPaletteTheme,
                           ColormapEffect,
                           Focus,
+                          ShiftBlocker,
                           // The HostPowerManagement plugin allows us to turn LEDs off when then host
                           // goes to sleep, and resume them when it wakes up.
                           HostPowerManagement
