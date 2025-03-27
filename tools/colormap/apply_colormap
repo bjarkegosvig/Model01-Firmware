@@ -6,7 +6,7 @@ clean_command () {
     sed -e "s,#.*,,"
 }
 
-FOCUS="$(dirname $0)/../focus"
+FOCUS="$(dirname $0)/focus"
 
 PALETTE="$(echo $(grep -v "^#" "$(dirname $0)/palette/${PALETTE}.txt" | clean_command))"
 ${FOCUS} "${PALETTE}"

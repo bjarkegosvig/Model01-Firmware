@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License along with
 # this program. If not, see <http://www.gnu.org/licenses/>.
 
+# Modified from https://github.com/keyboardio/Kaleidoscope/blob/master/bin/focus-send
+
 set -e
 
 OS=$(uname -s)
@@ -63,5 +65,8 @@ read_reply () {
 # This could happen after a failed upload.
 echo ' ' > "${DEVICE}"
 read_reply > /dev/null
+
+echo "Sending command: " "$@"
 echo "$@" >"${DEVICE}"
+echo "Response"
 read_reply
