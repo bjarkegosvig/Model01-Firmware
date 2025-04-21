@@ -168,12 +168,19 @@ KEYMAPS(
    Key_LeftControl, Key_Spacebar, Key_LeftShift,    Key_LeftAlt,
    ShiftToLayer(GAMEFCN),
 
-   Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
+   ___,            Key_6,                     Key_7,                    Key_8,                      Key_9,                  Key_0,            OSL(LAYSEL),
+   Key_GT,         ___,                       Key_Home,                 Key_UpArrow,                Key_End,                Key_Insert,       Key_PLUS,
+                   ___,                       Key_LeftArrow,            Key_DownArrow,              Key_RightArrow,         ___,              ___,
+   Key_PageDown,   ___,                       ___,                      ___,                        ___, Key_Backslash,    Key_Pipe,
+   ___, ___, ___, ___,
+   ShiftToLayer(GAMEFCN)),
+
+   /*Key_LeftGui,      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         OSL(LAYSEL),
    TD(CT_MNS),       Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                      Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    OSM(LeftAlt),     Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,
    Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
-   ShiftToLayer(GAMEFCN)),
+   ShiftToLayer(GAMEFCN)),*/
 
 /* Gaming function
  * ,------------------------------------------------------.       ,------------------------------------------------------.
