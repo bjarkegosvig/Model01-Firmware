@@ -74,14 +74,14 @@ static void macroRCTRLF(KeyEvent &event) {
 
 static void pwMacro(KeyEvent &event) {
   if (keyToggledOn(event.state)) {
-    Macros.type(PSTR("CorrectHorseBatteryStaple"));
+    Macros.type(PSTR("lalal"));
     Macros.tap(Key_Enter);
   }
 }
 
 static void pwLinuxMacro(KeyEvent &event) {
   if (keyToggledOn(event.state)) {
-    Macros.type(PSTR("CorrectHorseBatteryStaple"));
+    Macros.type(PSTR("lalal"));
     Macros.tap(Key_Enter);
   }
 }
@@ -109,9 +109,9 @@ static void handleDanish(uint8_t macro_id, KeyEvent &event) {
         MACRO(Tr(compose), T(LeftShift), T(O)),
       
         // å is <ComposeKey aa>
-        MACRO(Tr(compose), T(A), T(A)),
+        MACRO(Tr(compose), T(O), T(A)),
         // Å is <ComposeKey aA>
-        MACRO(Tr(compose), T(A), T(LeftShift), T(A)),
+        MACRO(Tr(compose), T(O), T(LeftShift), T(A)),
         
     };
 

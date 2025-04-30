@@ -72,7 +72,7 @@
 #define Key_MDT   LSHIFT(LCTRL(Key_L))
 #define Key_DTL   LSHIFT(LCTRL(Key_LeftBracket))
 #define Key_DTR   LSHIFT(LCTRL(Key_RightBracket))
-
+#define Key_Launch LGUI(LALT(Key_Space))
 // clang-format off
 
 KEYMAPS(
@@ -95,14 +95,14 @@ KEYMAPS(
  *                                    `-----------'                        `-----------'
  */
   [QWERTY] = KEYMAP_STACKED
-  (Key_Escape,            Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     LGUI(Key_Slash),
+  (Key_Escape,            Key_1,   Key_2,  Key_3,    Key_4,     Key_5,     Key_Launch,
    Key_Tab,               Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_Tab,
    OSM(LeftControl),      Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
    OSM(LeftShift),        Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     TD(CT_CLN),
    OSM(LeftControl), Key_Spacebar, Key_Enter, Key_Escape,
    ShiftToLayer(FUNCTION),
 
-   OSM(LeftGui),      Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
+   TD(CT_WEZ),        Key_6,     Key_7,     Key_8,     Key_9,      Key_0,         LockLayer(NUMPAD),
    Key_Escape,        Key_Y,     Key_U,     Key_I,     Key_O,      Key_P,         Key_Equals,
                       Key_H,     Key_J,     Key_K,     Key_L,      Key_Semicolon, Key_Quote,
    Key_Minus,         Key_N,     Key_M,     Key_Comma, Key_Period, Key_Slash,     Key_Minus,

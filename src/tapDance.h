@@ -10,6 +10,7 @@ enum {CT_LCK,   // lock/unlock PC
       CT_LPB,   // [/(
       CT_RPB,   // ]/)
       CT_CP,    // Windows cmd copy/paste
+      CT_WEZ,    // Windows cmd copy/paste
      };
 
 /**  Tapdance imp
@@ -45,6 +46,10 @@ void tapDanceAction(uint8_t tap_dance_index, KeyAddr key_addr, uint8_t tap_count
       return tapDanceActionKeys(tap_count, tap_dance_action,
                                 LCTRL(Key_Insert),
                                 LSHIFT(Key_Insert));
+     case CT_WEZ:
+     return tapDanceActionKeys(tap_count, tap_dance_action,
+                                LALT(Key_L),
+                                LCTRL(LSHIFT(Key_P)));
   }
 }
 
