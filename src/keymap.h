@@ -173,7 +173,7 @@ KEYMAPS(
    Key_Tab,              Key_Q,   Key_W,  Key_E,    Key_R,     Key_T,     Key_M,
    Key_LeftControl,      Key_A,   Key_S,  Key_D,    Key_F,     Key_G,
    Key_LeftShift,        Key_Z,   Key_X,  Key_C,    Key_V,     Key_B,     Key_Enter,
-   Key_LeftControl, Key_Spacebar, Key_LeftShift,    Key_LeftAlt,
+   Key_LeftControl, Key_Spacebar, Key_Enter,    Key_LeftAlt,
    ShiftToLayer(GAMEFCN),
 
    ___,            Key_6,                     Key_7,                    Key_8,                      Key_9,                  Key_0,            OSL(LAYSEL),
@@ -194,14 +194,14 @@ KEYMAPS(
  * ,------------------------------------------------------.       ,------------------------------------------------------.
  * |      ~     |   F1 |  F2  |  F3  |   F4 |  F5  |      |       |      |  F6  |   F7 |   F8 |   F9 |  F10 | OS LaySel  |
  * |------------+------+------+------+------+-------------|       |------+------+------+------+------+------+------------|
- * |  CapsLck   |  KP7 |  KP8 |  KP9 |   R  |      |      |       |      |      |      |      |      |      |            |
+ * |  CapsLck   |  KP7 |  KP8 |  KP9 |   R  |      |      |       |      |      | Home | Up   |Insert|      |            |
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
- * |    PgUp    |  KP4 |  KP5 |  KP6 |  KP0 |      |------|       |------|      |      |      |      |      |            |
+ * |    PgUp    |  KP4 |  KP5 |  KP6 |  KP0 |      |------|       |------|      | Left | Down |Right |      |            |
  * |------------+------+------+------+------+------|      |       |      |------+------+------+------+------+------------|
  * |    PgDn    |  KP1 |  KP2 |  KP3 |      |      |      |       |      |      |      |      |      |      |            |
  * `------------+------+------+------+------+-------------'       `-------------+------+------+------+------+------------'
  *                           ,----------------------------.       ,---------------------------.
- *                           | Ctrl  |Space | Shft | Alt  |       | Del  | Shft |BckSP | Alt  |
+ *                           | Ctrl  |Space | Shft | Alt  |       |      |      |      |      |
  *                           `----------------------------'       `---------------------------'
  *
  *                                    ,-----------.                        ,-----------.
@@ -216,11 +216,11 @@ KEYMAPS(
    Key_LeftControl, Key_Spacebar, Key_LeftShift,    Key_LeftAlt,
    ShiftToLayer(FUNCTION),
 
-   XXX,     Key_F6,         Key_F7,  Key_F8,  Key_F9,   Key_F10,       OSL(LAYSEL),
-   XXX,     XXX,            XXX,     XXX,     XXX,      XXX,           XXX,
-            XXX,            XXX,     XXX,     XXX,      XXX,           XXX,
-   XXX,     XXX,            XXX,     XXX,     XXX,      XXX,           XXX,
-   Key_Delete, OSM(LeftShift), Key_Backspace, OSM(LeftAlt),
+    ___,    Key_F6, Key_F7,         Key_F8,         Key_F9,             Key_F10,        Key_F11,
+    ___,    ___,    Key_Home,       Key_UpArrow,    Key_End,            Key_Insert,     ___,
+            ___,    Key_LeftArrow,  Key_DownArrow,  Key_RightArrow,     ___,            ___,
+    ___,    ___,    ___,            ___,            ___,                ___,            ___,
+    ___, ___, Key_Delete, ___,
    ShiftToLayer(ARROW)),
 
 
