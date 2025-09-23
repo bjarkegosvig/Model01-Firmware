@@ -74,14 +74,15 @@ static void macroRCTRLF(KeyEvent &event) {
 
 static void pwMacro(KeyEvent &event) {
   if (keyToggledOn(event.state)) {
-    Macros.type(PSTR("lalal"));
-    Macros.tap(Key_Enter);
+    Macros.play(MACRO(I(75), T(2), T(7), T(1), T(3), T(0), T(7), T(Enter)));
+//    Macros.type(PSTR("271307"));
+//    Macros.tap(Key_Enter);
   }
 }
 
 static void pwLinuxMacro(KeyEvent &event) {
   if (keyToggledOn(event.state)) {
-    Macros.type(PSTR("lalal"));
+    Macros.type(PSTR("nadia'hanna"));
     Macros.tap(Key_Enter);
   }
 }

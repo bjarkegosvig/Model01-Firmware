@@ -64,14 +64,22 @@
 #define Key_MWR   LGUI(LCTRL(Key_RightArrow))
 #define Key_MXL   LGUI(LSHIFT(Key_LeftArrow))
 #define Key_MXR   LGUI(LSHIFT(Key_RightArrow))
+#define Key_MWSL  LGUI(LCTRL(LSHIFT(Key_LeftArrow)))
+#define Key_MWSR  LGUI(LCTRL(LSHIFT(Key_RightArrow)))
 #define Key_MAX   LGUI(Key_LeftArrow)
 #define Key_MIN   LGUI(Key_RightArrow)
-#define Key_GMX   LGUI(Key_M)
+#define Key_MAXI  LGUI(Key_UpArrow)
+#define Key_MINI  LGUI(Key_DownArrow)
+#define Key_GMX   LGUI(LSHIFT(Key_Backtick))
 
-#define Key_MMON  LCTRL(LSHIFT(Key_Enter))
-#define Key_MDT   LSHIFT(LCTRL(Key_L))
-#define Key_DTL   LSHIFT(LCTRL(Key_LeftBracket))
-#define Key_DTR   LSHIFT(LCTRL(Key_RightBracket))
+#define Key_WSV  LCTRL(LSHIFT(Key_Enter)) // wezterm split pane vertical
+#define Key_WSH  LCTRL(LSHIFT(Key_Equals)) // wezterm split pane horizontal
+#define Key_WRP  LALT(LCTRL(Key_F)) // wezterm rotate/promote pane
+#define Key_WNP  LSHIFT(LCTRL(Key_LeftBracket)) // wezterm move to next pane
+#define Key_WPP  LSHIFT(LCTRL(Key_RightBracket)) // wezterm move to previously pane
+#define Key_WIF  LCTRL(Key_Equals) // wezterm increase front size
+#define Key_WDF  LCTRL(Key_Minus) // wezterm decrease font size
+#define Key_WRF  LCTRL(Key_0) // wezterm reset front size
 #define Key_Launch LGUI(LALT(Key_Space))
 // clang-format off
 
@@ -262,10 +270,10 @@ KEYMAPS(
  *                           `----------------------------'       `---------------------------'
  */
   [ARROW] =  KEYMAP_STACKED
-  (___, ___,         ___,        ___,                  ___,                      ___,                  ___,
-   ___, Key_MMON,    Key_DTL,    Key_DTR,              Key_MDT,                  ___,                  LGUI(Key_O),
-   ___, Key_MXL,     Key_MXR,    Key_MAX,              Key_MIN,                  Key_GMX,
-   ___, ___,         ___,        Key_MWL,              Key_MWR,                  ___,                  Key_MCHAT,
+  (___,     ___,         ___,        ___,                  ___,                      ___,                  Key_WIF,
+   Key_WSH, Key_WSV,     Key_WNP,    Key_WPP,              Key_WRP,                  Key_WRF,              Key_WDF,
+   ___,     Key_MXL,     Key_MXR,    Key_MAX,              Key_MIN,                  Key_MAXI,
+   ___,     Key_MWSL,    Key_MWSR,   Key_MWL,              Key_MWR,                  Key_MINI,             Key_GMX,
    ___, ___, ___, ___,
    ShiftToLayer(LAYSEL),
 
